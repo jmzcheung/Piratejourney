@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>ONE PIECE FIGHTER 3D</title>
+<title>ONE PIECE FIGHTER</title>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;}
@@ -14,14 +13,15 @@ body{background:#000;font-family:"Press Start 2P",monospace;overflow:hidden;widt
 .screen.on{display:flex;}
 #st{background:radial-gradient(ellipse at 50% 40%,#0d1a3a,#020508);}
 #st h1{font-size:clamp(16px,6vw,38px);color:#FFD700;text-shadow:3px 3px #8B6000,0 0 40px #FFD700;letter-spacing:3px;animation:glow 1.2s infinite alternate;text-align:center;}
+#st h2{font-size:clamp(7px,2.5vw,13px);color:#f55;text-align:center;}
+.blink{animation:blink 1s steps(1) infinite;font-size:clamp(7px,2.2vw,11px);color:#FFD700;}
 @keyframes glow{from{text-shadow:3px 3px #8B6000,0 0 20px #FFD700}to{text-shadow:3px 3px #8B6000,0 0 60px #FFD700,0 0 90px #f80}}
 @keyframes blink{50%{opacity:0}}
-.blink{animation:blink 1s steps(1) infinite;font-size:clamp(7px,2.2vw,11px);color:#FFD700;}
 #sc{background:linear-gradient(160deg,#06060f,#0f0605);}
 #sc h2{font-size:clamp(8px,2.8vw,15px);color:#FFD700;text-align:center;}
-.cgrid{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;max-width:620px;}
-.ccard{width:clamp(70px,18vw,88px);border:2px solid #444;cursor:pointer;padding:5px;text-align:center;background:#080808;}
-.ccard.sel,.ccard:active{border-color:#FFD700;background:rgba(255,215,0,.12);}
+.cgrid{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;max-width:640px;}
+.ccard{width:clamp(70px,18vw,92px);border:2px solid #444;cursor:pointer;padding:5px;text-align:center;background:#080808;transition:all .2s;}
+.ccard.sel{border-color:#FFD700;background:rgba(255,215,0,.12);}
 .ccard canvas{display:block;margin:0 auto;}
 .ccard .cn{font-size:clamp(4px,1.3vw,6.5px);color:#fff;margin-top:3px;}
 .ccard .ca{font-size:clamp(3px,1vw,5px);color:#888;margin-top:1px;}
@@ -42,25 +42,25 @@ body{background:#000;font-family:"Press Start 2P",monospace;overflow:hidden;widt
 #hud{width:100%;display:flex;align-items:center;justify-content:space-between;padding:4px 7px;gap:5px;background:#000;flex-shrink:0;}
 .hs{flex:1;}
 .hn{font-size:clamp(4px,1.5vw,7px);color:#FFD700;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.hpbg{height:11px;background:#180000;border:2px solid #555;}
-.hpb{height:100%;background:linear-gradient(90deg,#00bb00,#55ff55);transition:width .1s;}
+.hpbg{height:12px;background:#180000;border:2px solid #555;}
+.hpb{height:100%;background:linear-gradient(90deg,#00bb00,#55ff55);transition:width .12s;}
 .hpb.lo{background:linear-gradient(90deg,#c00,#f44);}
 .hpb.mi{background:linear-gradient(90deg,#b70,#fa0);}
-.hsbg{height:5px;background:#000;border:1px solid #333;margin-top:2px;}
+.hsbg{height:6px;background:#000;border:1px solid #333;margin-top:2px;}
 .hsb{height:100%;background:linear-gradient(90deg,#06f,#0ff);transition:width .15s;}
 #tmr{font-size:clamp(13px,4vw,22px);color:#FFD700;text-shadow:0 0 12px #f80;text-align:center;min-width:32px;}
 #rnd{font-size:clamp(4px,1.3vw,6px);color:#fff;text-align:center;line-height:1.7;}
 #cvw{position:relative;flex:1;overflow:hidden;width:100%;}
 #gc{display:block;}
 #ctxt{position:absolute;top:7px;left:50%;transform:translateX(-50%);font-size:clamp(8px,2.8vw,14px);color:#FFD700;text-shadow:0 0 14px #f80;pointer-events:none;opacity:0;transition:opacity .3s;white-space:nowrap;}
-#htxt{position:absolute;pointer-events:none;opacity:0;font-family:inherit;white-space:nowrap;text-shadow:2px 2px #000;transition:opacity 0.3s;}
+#htxt{position:absolute;pointer-events:none;opacity:0;font-family:inherit;white-space:nowrap;text-shadow:2px 2px #000;}
 #movl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;}
 #mtxt{font-size:clamp(12px,4.5vw,26px);color:#FFD700;text-shadow:4px 4px #000,0 0 28px #f80;opacity:0;transform:scale(2);transition:all .3s;text-align:center;padding:0 10px;}
 #mtxt.show{opacity:1;transform:scale(1);}
-#ability-bar{position:absolute;top:2px;left:50%;transform:translateX(-50%);display:flex;gap:3px;pointer-events:none;}
-.ab-slot{width:clamp(24px,6vw,32px);height:clamp(24px,6vw,32px);border:1.5px solid #444;background:rgba(0,0,0,0.7);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:clamp(8px,2.5vw,14px);position:relative;}
-.ab-slot .cd-ov{position:absolute;inset:0;border-radius:2px;pointer-events:none;}
-.ab-slot .ab-key{position:absolute;bottom:1px;right:2px;font-size:clamp(3px,0.8vw,5px);color:#666;}
+#abilpop{position:absolute;top:38%;left:50%;transform:translateX(-50%);pointer-events:none;opacity:0;transition:opacity .2s;z-index:10;text-align:center;}
+#abilpop.show{opacity:1;}
+.apname{font-size:clamp(9px,3vw,15px);color:#FFD700;text-shadow:0 0 20px #f80,3px 3px #000;white-space:nowrap;}
+.apdesc{font-size:clamp(4px,1.5vw,7px);color:#eee;text-shadow:1px 1px #000;margin-top:3px;}
 #tc{width:100%;display:flex;justify-content:space-between;align-items:flex-end;padding:4px 7px 6px;flex-shrink:0;background:#0a0a0a;border-top:1px solid #1a1a1a;gap:5px;}
 .dp{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);width:clamp(80px,22vw,108px);height:clamp(80px,22vw,108px);gap:2px;}
 .db{background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.18);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:clamp(11px,3.2vw,17px);cursor:pointer;touch-action:none;}
@@ -68,10 +68,10 @@ body{background:#000;font-family:"Press Start 2P",monospace;overflow:hidden;widt
 .de{background:rgba(20,20,20,.4);border-radius:4px;}
 .abs2{display:flex;flex-direction:column;align-items:flex-end;gap:3px;}
 .arow{display:flex;gap:3px;}
-.ab{width:clamp(34px,9.5vw,48px);height:clamp(34px,9.5vw,48px);border-radius:50%;border:2px solid rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px;cursor:pointer;touch-action:none;position:relative;overflow:hidden;}
+.ab{width:clamp(35px,9.5vw,48px);height:clamp(35px,9.5vw,48px);border-radius:50%;border:2px solid rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px;cursor:pointer;touch-action:none;position:relative;overflow:hidden;}
 .ab.pr{transform:scale(.87);filter:brightness(1.6);}
-.ab .ic{font-size:clamp(10px,3vw,15px);line-height:1;}
-.ab .lb{font-size:clamp(3px,.8vw,5px);line-height:1;opacity:.75;}
+.ab .ic{font-size:clamp(10px,2.8vw,14px);line-height:1;}
+.ab .lb{font-size:clamp(2.5px,.75vw,4px);line-height:1;opacity:.75;}
 .cdo{position:absolute;inset:0;border-radius:50%;pointer-events:none;}
 .abp{background:rgba(255,50,50,.38);border-color:#f33;}
 .abk{background:rgba(255,130,0,.38);border-color:#f90;}
@@ -79,975 +79,897 @@ body{background:#000;font-family:"Press Start 2P",monospace;overflow:hidden;widt
 .abco{background:rgba(255,195,0,.38);border-color:#fd0;}
 .absu{background:rgba(165,0,255,.48);border-color:#b0f;}
 .abj{background:rgba(60,255,60,.22);border-color:#4f4;}
-.aba1{background:rgba(255,0,150,.38);border-color:#f09;}
-.aba2{background:rgba(0,200,255,.38);border-color:#0cf;}
-.aba3{background:rgba(200,100,0,.38);border-color:#c60;}
+.abq{background:rgba(0,220,255,.35);border-color:#0df;}
+.abw{background:rgba(255,0,180,.38);border-color:#f0b;}
 </style>
 </head>
 <body>
 <div id="st" class="screen on">
-  <div style="font-size:clamp(7px,2.2vw,11px);color:#444;letter-spacing:7px;">GRAND LINE</div>
-  <h1>ONE PIECE</h1>
-  <div style="font-size:clamp(5px,1.5vw,8px);color:#f84;text-align:center;">PIRATE KING'S JOURNEY</div>
-  <div style="font-size:clamp(4px,1.3vw,6.5px);color:#444;margin-top:2px;">30 ROUNDS - STORY MODE - DEVIL FRUITS</div>
-  <div class="blink" style="margin-top:26px;">TAP TO BEGIN</div>
+ <div style="font-size:clamp(7px,2.2vw,11px);color:#444;letter-spacing:7px;">GRAND LINE</div>
+ <h1>ONE PIECE</h1>
+ <h2>PIRATE KING'S JOURNEY</h2>
+ <div style="font-size:clamp(4px,1.3vw,6.5px);color:#444;margin-top:2px;">30 ROUNDS - STORY MODE - 10 FIGHTERS</div>
+ <div class="blink" style="margin-top:26px;">TAP TO BEGIN</div>
 </div>
 <div id="sc" class="screen">
-  <h2>CHOOSE YOUR FIGHTER</h2>
-  <div style="font-size:clamp(4px,1.3vw,6px);color:#555;text-align:center;">TAP A CHARACTER</div>
-  <div class="cgrid" id="cgrid"></div>
-  <button class="sbtn" id="csbtn">SELECT A FIGHTER</button>
+ <h2>CHOOSE YOUR FIGHTER</h2>
+ <div style="font-size:clamp(4px,1.3vw,6px);color:#555;text-align:center;">EACH CHARACTER HAS UNIQUE DEVIL FRUIT ABILITIES</div>
+ <div class="cgrid" id="cgrid"></div>
+ <button class="sbtn" id="csbtn">SELECT A FIGHTER</button>
 </div>
 <div id="sh" class="screen">
-  <h2>DOMINANT HAND?</h2>
-  <div style="font-size:clamp(4px,1.5vw,6.5px);color:#666;text-align:center;">CONTROLS MIRROR TO YOUR PREFERENCE</div>
-  <div class="hrow">
-    <div class="hbtn" id="hL"><div class="hi">&#129120;</div>LEFT</div>
-    <div class="hbtn" id="hR"><div class="hi">&#129121;</div>RIGHT</div>
-  </div>
+ <h2>DOMINANT HAND?</h2>
+ <div class="hrow">
+   <div class="hbtn" id="hL"><div class="hi">&#129120;</div>LEFT</div>
+   <div class="hbtn" id="hR"><div class="hi">&#129121;</div>RIGHT</div>
+ </div>
 </div>
 <div id="si" class="screen">
-  <h3 id="sarc"></h3>
-  <div class="elbl" id="srnd"></div>
-  <div style="font-size:clamp(26px,8vw,48px);margin:6px 0;" id="semo"></div>
-  <div class="ebig" id="sname"></div>
-  <p class="edesc" id="sdesc"></p>
-  <button class="sbtn rdy" id="sfbtn">FIGHT!</button>
+ <h3 id="sarc"></h3>
+ <div class="elbl" id="srnd"></div>
+ <div style="font-size:clamp(26px,8vw,48px);margin:6px 0;" id="semo"></div>
+ <div class="ebig" id="sname"></div>
+ <p class="edesc" id="sdesc"></p>
+ <button class="sbtn rdy" id="sfbtn">FIGHT!</button>
 </div>
 <div id="sg" class="screen">
-  <div id="hud">
-    <div class="hs">
-      <div style="font-size:clamp(3.5px,1.1vw,5px);color:#4af;">YOU</div>
-      <div class="hn" id="p1n">LUFFY</div>
-      <div class="hpbg"><div class="hpb" id="p1h" style="width:100%"></div></div>
-      <div class="hsbg"><div class="hsb" id="p1s" style="width:0%"></div></div>
-    </div>
-    <div style="text-align:center;flex-shrink:0;"><div id="rnd">RD 1/30</div><div id="tmr">60</div></div>
-    <div class="hs" style="text-align:right;">
-      <div style="font-size:clamp(3.5px,1.1vw,5px);color:#f44;text-align:right;">ENEMY</div>
-      <div class="hn" style="text-align:right;" id="p2n">ENEMY</div>
-      <div class="hpbg"><div class="hpb" id="p2h" style="width:100%;margin-left:auto;"></div></div>
-      <div class="hsbg"><div class="hsb" id="p2s" style="width:0%;margin-left:auto;"></div></div>
-    </div>
-  </div>
-  <div id="cvw">
-    <canvas id="gc"></canvas>
-    <div id="ctxt"></div>
-    <div id="htxt"></div>
-    <div id="movl"><div id="mtxt"></div></div>
-    <div id="ability-bar"></div>
-  </div>
-  <div id="tc">
-    <div id="lside" style="display:flex;align-items:flex-end;gap:5px;">
-      <div class="dp" id="dpd">
-        <div class="de"></div><div class="db" id="dU">&#9650;</div><div class="de"></div>
-        <div class="db" id="dL">&#9664;</div><div class="de"></div><div class="db" id="dR">&#9654;</div>
-        <div class="de"></div><div class="de"></div><div class="de"></div>
-      </div>
-    </div>
-    <div class="abs2" id="rside">
-      <div class="arow">
-        <div class="ab aba1" data-a="a1"><div class="ic" id="a1ic">&#128293;</div><div class="lb">A1</div><div class="cdo" id="cd-a1"></div></div>
-        <div class="ab aba2" data-a="a2"><div class="ic" id="a2ic">&#128007;</div><div class="lb">A2</div><div class="cdo" id="cd-a2"></div></div>
-        <div class="ab aba3" data-a="a3"><div class="ic" id="a3ic">&#128293;</div><div class="lb">A3</div><div class="cdo" id="cd-a3"></div></div>
-      </div>
-      <div class="arow">
-        <div class="ab abco" data-a="combo"><div class="ic">&#128165;</div><div class="lb">COMBO</div><div class="cdo" id="cd-combo"></div></div>
-        <div class="ab absu" data-a="super"><div class="ic">&#9889;</div><div class="lb">SUPER</div></div>
-        <div class="ab abj" data-a="jump"><div class="ic">&#11014;</div><div class="lb">JUMP</div></div>
-      </div>
-      <div class="arow">
-        <div class="ab abp" data-a="punch"><div class="ic">&#128074;</div><div class="lb">PUNCH</div><div class="cdo" id="cd-punch"></div></div>
-        <div class="ab abk" data-a="kick"><div class="ic">&#129459;</div><div class="lb">KICK</div><div class="cdo" id="cd-kick"></div></div>
-        <div class="ab abs_" data-a="special"><div class="ic">&#10024;</div><div class="lb">SPEC</div><div class="cdo" id="cd-special"></div></div>
-      </div>
-    </div>
-  </div>
+ <div id="hud">
+   <div class="hs">
+     <div style="font-size:clamp(3.5px,1.1vw,5px);color:#4af;">YOU</div>
+     <div class="hn" id="p1n">LUFFY</div>
+     <div class="hpbg"><div class="hpb" id="p1h" style="width:100%"></div></div>
+     <div class="hsbg"><div class="hsb" id="p1s" style="width:0%"></div></div>
+   </div>
+   <div style="text-align:center;flex-shrink:0;"><div id="rnd">RD 1/30</div><div id="tmr">60</div></div>
+   <div class="hs" style="text-align:right;">
+     <div style="font-size:clamp(3.5px,1.1vw,5px);color:#f44;text-align:right;">ENEMY</div>
+     <div class="hn" style="text-align:right;" id="p2n">ENEMY</div>
+     <div class="hpbg"><div class="hpb" id="p2h" style="width:100%;"></div></div>
+     <div class="hsbg"><div class="hsb" id="p2s" style="width:0%;"></div></div>
+   </div>
+ </div>
+ <div id="cvw">
+   <canvas id="gc"></canvas>
+   <div id="ctxt"></div>
+   <div id="htxt"></div>
+   <div id="movl"><div id="mtxt"></div></div>
+   <div id="abilpop"><div class="apname" id="apn"></div><div class="apdesc" id="apd"></div></div>
+ </div>
+ <div id="tc">
+   <div id="lside" style="display:flex;align-items:flex-end;gap:5px;">
+     <div class="dp" id="dpd">
+       <div class="de"></div><div class="db" id="dU">&#9650;</div><div class="de"></div>
+       <div class="db" id="dL">&#9664;</div><div class="de"></div><div class="db" id="dR">&#9654;</div>
+       <div class="de"></div><div class="de"></div><div class="de"></div>
+     </div>
+   </div>
+   <div class="abs2" id="rside">
+     <div class="arow">
+       <div class="ab abq" data-a="q"><div class="ic">&#9889;</div><div class="lb" id="qlb">Q</div><div class="cdo" id="cd-q"></div></div>
+       <div class="ab abw" data-a="w"><div class="ic">&#128293;</div><div class="lb" id="wlb">W</div><div class="cdo" id="cd-w"></div></div>
+       <div class="ab abco" data-a="combo"><div class="ic">&#128165;</div><div class="lb">COMBO</div><div class="cdo" id="cd-combo"></div></div>
+       <div class="ab absu" data-a="super"><div class="ic">&#9889;</div><div class="lb">SUPER</div></div>
+     </div>
+     <div class="arow">
+       <div class="ab abp" data-a="punch"><div class="ic">&#128074;</div><div class="lb">PUNCH</div><div class="cdo" id="cd-punch"></div></div>
+       <div class="ab abk" data-a="kick"><div class="ic">&#129459;</div><div class="lb">KICK</div><div class="cdo" id="cd-kick"></div></div>
+       <div class="ab abs_" data-a="special"><div class="ic">&#10024;</div><div class="lb">SPEC</div><div class="cdo" id="cd-special"></div></div>
+       <div class="ab abj" data-a="jump"><div class="ic">&#11014;</div><div class="lb">JUMP</div></div>
+     </div>
+   </div>
+ </div>
 </div>
 <script>
 (function(){
-var GW=800,GH=400,FLOOR=330,GRAV=0.62,JF=-14;
-var gs="title",cr2=0,pc=null,hand2="right";
-var p1=null,p2=null,csc=1;
-var tv=60,ti=null,raf=null,shk=0,sx2=0,sy2=0;
-var CD={punch:0,kick:0,special:0,combo:0,a1:0,a2:0,a3:0};
-var CDM={punch:400,kick:650,special:2000,combo:2800,a1:3500,a2:5000,a3:6000};
-var PARTICLES=[];
-var t0=Date.now();
-
+// UTILS
 function G(id){return document.getElementById(id);}
-function show(scr){document.querySelectorAll(”.screen”).forEach(function(s){s.classList.remove(“on”);});G(scr).classList.add(“on”);resizeCanvas();}
 function clamp(lo,hi,v){return Math.max(lo,Math.min(hi,v));}
-function lerp(a,b,t){return a+(b-a)*t;}
-function rr(ctx,x,y,w,h,r){
-x=Math.floor(x);y=Math.floor(y);r=Math.max(0,Math.min(r,Math.abs(w)/2,Math.abs(h)/2));
-ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y,x+w,y+r,r);
-ctx.lineTo(x+w,y+h-r);ctx.arcTo(x+w,y+h,x+w-r,y+h,r);
-ctx.lineTo(x+r,y+h);ctx.arcTo(x,y+h,x,y+h-r,r);
-ctx.lineTo(x,y+r);ctx.arcTo(x,y,x+r,y,r);
-ctx.closePath();ctx.fill();
-}
-function bx(c,x,y,w,h,col){c.fillStyle=col;c.fillRect(Math.floor(x),Math.floor(y),w,h);}
-function cr(c,x,y,r,col){c.fillStyle=col;c.beginPath();c.arc(x,y,r,0,Math.PI*2);c.fill();}
-function shd(hex,a){
-var r=parseInt(hex.slice(1,3),16)||0,g=parseInt(hex.slice(3,5),16)||0,b=parseInt(hex.slice(5,7),16)||0;
-return “rgb(”+clamp(0,255,r+a)+”,”+clamp(0,255,g+a)+”,”+clamp(0,255,b+a)+”)”;
-}
+function show(scr){document.querySelectorAll(".screen").forEach(function(s){s.classList.remove("on");});G(scr).classList.add("on");resizeCanvas();}
+function rr(ctx,x,y,w,h,r){x=Math.floor(x);y=Math.floor(y);r=Math.max(0,Math.min(r,Math.abs(w)/2,Math.abs(h)/2));ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y,x+w,y+r,r);ctx.lineTo(x+w,y+h-r);ctx.arcTo(x+w,y+h,x+w-r,y+h,r);ctx.lineTo(x+r,y+h);ctx.arcTo(x,y+h,x,y+h-r,r);ctx.lineTo(x,y+r);ctx.arcTo(x,y,x+r,y,r);ctx.closePath();ctx.fill();}
+function bx(ctx,x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(Math.floor(x),Math.floor(y),Math.ceil(w),Math.ceil(h));}
+function cr(ctx,x,y,r,c){ctx.fillStyle=c;ctx.beginPath();ctx.arc(Math.floor(x),Math.floor(y),r,0,Math.PI*2);ctx.fill();}
+function shd(hex,a){try{var r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return"rgb("+clamp(0,255,r+a)+","+clamp(0,255,g+a)+","+clamp(0,255,b+a)+")";}catch(e){return hex;}}
+function line(ctx,x1,y1,x2,y2,c,w){ctx.strokeStyle=c;ctx.lineWidth=w||2;ctx.lineCap="round";ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();}
 
-var gc=G(“gc”),ctx=gc.getContext(“2d”);
+// CANVAS
+var GW=800,GH=400,gc=G(“gc”),ctx=gc.getContext(“2d”);
 gc.width=GW;gc.height=GH;
-
-function resizeCanvas(){
-var w=G(“cvw”);if(!w)return;
-var cw=w.clientWidth,ch=w.clientHeight;
-csc=Math.min(cw/GW,ch/GH);
-gc.style.width=Math.floor(GW*csc)+“px”;
-gc.style.height=Math.floor(GH*csc)+“px”;
-gc.style.display=“block”;gc.style.margin=“auto”;
-}
+var csc=1;
+function resizeCanvas(){var w=G(“cvw”);if(!w)return;var cw=w.clientWidth,ch=w.clientHeight;csc=Math.min(cw/GW,ch/GH);gc.style.width=Math.floor(GW*csc)+“px”;gc.style.height=Math.floor(GH*csc)+“px”;gc.style.display=“block”;gc.style.margin=“auto”;}
 window.addEventListener(“resize”,resizeCanvas);
 
-// ===== PARTICLE SYSTEM =====
-function spawnPart(x,y,vx,vy,col,life,size,type){
-PARTICLES.push({x:x,y:y,vx:vx,vy:vy,col:col,life:life,maxLife:life,size:size||5,type:type||“circle”,ang:Math.random()*Math.PI*2});
-}
-function spawnBurst(x,y,col,n,spd,size){
-for(var i=0;i<n;i++){
-var a=Math.random()*Math.PI*2;
-spawnPart(x,y,Math.cos(a)*spd*(0.5+Math.random()),Math.sin(a)*spd*(0.5+Math.random()),col,18+Math.random()*14,size||5);
-}
-}
-function spawnFire(x,y,n){
-for(var i=0;i<n;i++){
-spawnPart(x+(Math.random()-0.5)*20,y+(Math.random()-0.5)*10,
-(Math.random()-0.5)*3,-2-Math.random()*4,
-“hsl(”+(Math.random()*50)+”,100%,55%)”,20+Math.random()*10,4+Math.random()*6,“fire”);
-}
-}
-function spawnSlash(x,y,dir,col){
-for(var i=0;i<12;i++){
-var a=dir>0?(-0.3+Math.random()*0.6):Math.PI+(-0.3+Math.random()*0.6);
-spawnPart(x,y,Math.cos(a)*8*(0.6+Math.random()),Math.sin(a)*8*(0.6+Math.random()),col||”#fff”,10+Math.random()*8,3,“slash”);
-}
-}
-function spawnLightning(x,y,n){
-for(var i=0;i<n;i++){
-spawnPart(x+(Math.random()-0.5)*30,y+(Math.random()-0.5)*30,
-(Math.random()-0.5)*6,(Math.random()-0.5)*6,”#ff0”,8+Math.random()*8,3,“lightning”);
+// PARTICLES SYSTEM
+var PARTS=[];
+function addPart(x,y,vx,vy,life,size,col,type){PARTS.push({x:x,y:y,vx:vx,vy:vy,life:life,maxL:life,size:size,col:col,type:type||“circle”});}
+function stepParts(){for(var i=PARTS.length-1;i>=0;i–){var p=PARTS[i];p.x+=p.vx;p.y+=p.vy;p.vy+=0.18;p.life–;if(p.life<=0){PARTS.splice(i,1);}}}
+function drawParts(){PARTS.forEach(function(p){var al=p.life/p.maxL;ctx.globalAlpha=al;ctx.fillStyle=p.col;if(p.type===“circle”){ctx.beginPath();ctx.arc(p.x,p.y,p.size*al,0,Math.PI*2);ctx.fill();}else if(p.type===“rect”){ctx.fillRect(p.x-p.size/2,p.y-p.size/2,p.size,p.size);}else if(p.type===“star”){var s=p.size*al;ctx.font=s*2+“px serif”;ctx.textAlign=“center”;ctx.fillText(”*”,p.x,p.y);}ctx.globalAlpha=1;});}
+function fireParticles(x,y,dir,n,col){for(var i=0;i<n;i++){addPart(x,y,dir*(2+Math.random()*4)+(Math.random()-.5)*3,(Math.random()-.5)*4-1,12+Math.random()*10,4+Math.random()*5,col);}}
+function stretchEffect(fx,fy,tx,ty,col,w){ctx.strokeStyle=col;ctx.lineWidth=w||8;ctx.lineCap=“round”;ctx.beginPath();ctx.moveTo(fx,fy);ctx.lineTo(tx,ty);ctx.stroke();}
+
+// PROJECTILES
+var PROJS=[];
+function addProj(x,y,vx,vy,dmg,col,size,owner,type){PROJS.push({x:x,y:y,vx:vx,vy:vy,dmg:dmg,col:col,size:size,owner:owner,type:type||“ball”,life:80});}
+function stepProjs(){
+for(var i=PROJS.length-1;i>=0;i–){
+var p=PROJS[i];p.x+=p.vx;p.y+=p.vy;p.life–;
+if(p.type!==“gravity”)p.vy+=0.05;
+if(p.life<=0||p.x<0||p.x>GW||p.y>GH){PROJS.splice(i,1);continue;}
+var tgt=p.owner===“p1”?p2:p1;
+if(tgt&&Math.abs(p.x-tgt.x)<20+tgt.hitW&&Math.abs(p.y-(tgt.y-34))<34){
+doHit(p.owner===“p1”?p1:p2,tgt,p.dmg,p.type);
+for(var k=0;k<6;k++)addPart(p.x,p.y,(Math.random()-.5)*5,(Math.random()-0.7)*5,10,4,p.col);
+PROJS.splice(i,1);
 }
 }
-function spawnIce(x,y,n){
-for(var i=0;i<n;i++){
-var a=Math.random()*Math.PI*2;
-spawnPart(x,y,Math.cos(a)*4*(Math.random()+0.5),Math.sin(a)*4*(Math.random()+0.5),”#88eeff”,15+Math.random()*10,4+Math.random()*4,“ice”);
 }
-}
-function stepParticles(){
-for(var i=PARTICLES.length-1;i>=0;i–){
-var p=PARTICLES[i];
-p.x+=p.vx;p.y+=p.vy;
-if(p.type===“fire”){p.vy-=0.2;p.vx*=0.95;}
-else if(p.type===“ice”){p.vx*=0.9;p.vy*=0.9;}
-else{p.vy+=0.15;}
-p.life–;
-if(p.life<=0)PARTICLES.splice(i,1);
-}
-}
-function drawParticles(){
-PARTICLES.forEach(function(p){
-var a=p.life/p.maxLife;
-ctx.globalAlpha=a*0.9;
-if(p.type===“fire”){
-var g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.size*a);
-g.addColorStop(0,”#fff”);g.addColorStop(0.4,p.col);g.addColorStop(1,“transparent”);
-ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,p.size*(0.5+a*0.5),0,Math.PI*2);ctx.fill();
-} else if(p.type===“slash”){
-ctx.strokeStyle=p.col;ctx.lineWidth=2*a;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x+p.vx*3,p.y+p.vy*3);ctx.stroke();
-} else if(p.type===“lightning”){
-ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(p.x,p.y,p.size*a,0,Math.PI*2);ctx.fill();
-ctx.strokeStyle=”#fff”;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x+(Math.random()-0.5)*20,p.y+(Math.random()-0.5)*20);ctx.stroke();
+function drawProjs(){
+PROJS.forEach(function(p){
+ctx.fillStyle=p.col;
+if(p.type===“bullet”){
+ctx.save();ctx.translate(p.x,p.y);ctx.rotate(Math.atan2(p.vy,p.vx));
+bx(ctx,-10,-2,20,4,p.col);ctx.restore();
+cr(ctx,p.x,p.y,3,”#fff”);
+} else if(p.type===“fireball”){
+var g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.size);
+g.addColorStop(0,”#fff”);g.addColorStop(0.3,”#ff8800”);g.addColorStop(1,“rgba(255,40,0,0)”);
+ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill();
+for(var fi=0;fi<3;fi++)addPart(p.x+(Math.random()-.5)*p.size,p.y+(Math.random()-.5)*p.size,(Math.random()-.5)*1,(Math.random()-1)*2,6,3,”#ff6600”);
+} else if(p.type===“thunder”){
+ctx.strokeStyle=”#ffff00”;ctx.lineWidth=3;ctx.shadowColor=”#0ff”;ctx.shadowBlur=12;
+ctx.beginPath();var tx=p.x,ty=p.y;ctx.moveTo(tx,ty-p.size*2);
+for(var ti=0;ti<5;ti++){tx+=(Math.random()-.5)*10;ty+=p.size*.8;ctx.lineTo(tx,ty);}
+ctx.stroke();ctx.shadowBlur=0;
 } else if(p.type===“ice”){
-ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.ang+p.life*0.1);
-ctx.fillStyle=p.col;ctx.fillRect(-p.size*a,-p.size*a*0.3,p.size*a*2,p.size*a*0.6);
-ctx.fillRect(-p.size*a*0.3,-p.size*a,p.size*a*0.6,p.size*a*2);
-ctx.restore();
+ctx.fillStyle=p.col;ctx.strokeStyle=”#aaf”;ctx.lineWidth=2;
+for(var ia=0;ia<6;ia++){var ang=ia/6*Math.PI*2;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x+Math.cos(ang)*p.size,p.y+Math.sin(ang)*p.size);ctx.stroke();}
+cr(ctx,p.x,p.y,p.size*.4,”#ddf”);
+} else if(p.type===“sand”){
+ctx.globalAlpha=0.7;ctx.fillStyle=p.col;ctx.beginPath();ctx.ellipse(p.x,p.y,p.size,p.size*.5,0,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;
+} else if(p.type===“string”){
+ctx.strokeStyle=p.col;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(p.x,p.y-p.size*2);ctx.lineTo(p.x,p.y+p.size*2);ctx.stroke();
 } else {
-ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(p.x,p.y,p.size*a,0,Math.PI*2);ctx.fill();
+var rg=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.size);
+rg.addColorStop(0,”#fff”);rg.addColorStop(1,p.col);
+ctx.fillStyle=rg;ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill();
 }
 });
+}
+
+// CHARACTERS with DEVIL FRUIT ABILITIES
+var CHARS=[
+{id:“luffy”,name:“LUFFY”,sub:“Gum-Gum Fruit”,hp:120,spd:5,col:”#cc2200”,
+abilities:{
+punch:{name:“Gum-Gum Pistol”,desc:“Rubber fist stretches far!”,dmg:10,cd:380,rng:160},
+kick:{name:“Gum-Gum Whip”,desc:“Spinning rubber leg sweep!”,dmg:14,cd:600,rng:100},
+special:{name:“Gear 2nd Jet Bullet”,desc:“Superheated blood turbo punch!”,dmg:22,cd:2000,rng:200},
+combo:{name:“Gum-Gum Gatling”,desc:“Rapid rubber fist barrage!”,dmg:28,cd:2800,rng:120},
+q:{name:“Gear 3rd Giant Pistol”,desc:“Bone-inflated giant fist!”,dmg:36,cd:3500,rng:220},
+w:{name:“Gum-Gum Elephant Gun”,desc:“Haki-coated massive blow!”,dmg:42,cd:4500,rng:240},
+super:{name:“Gear 4th Boundman”,desc:“BOUNDMAN! Massive power surge!”,dmg:55,cd:0,rng:260}
+},draw:drawLuffy},
+{id:“zoro”,name:“ZORO”,sub:“3-Sword Style”,hp:130,spd:4,col:”#22aa33”,
+abilities:{
+punch:{name:“Oni Giri”,desc:“Three-sword simultaneous slash!”,dmg:12,cd:400,rng:105},
+kick:{name:“Tora Gari”,desc:“Tiger Hunt crossing blades!”,dmg:15,cd:650,rng:105},
+special:{name:“108 Pound Cannon”,desc:“Air pressure sword blast!”,dmg:24,cd:2100,rng:190},
+combo:{name:“Santoryu: Iai”,desc:“Lightning-fast three-sword draw!”,dmg:30,cd:2800,rng:110},
+q:{name:“Asura: Makyuu Senbon”,desc:“Nine-blade demon form!”,dmg:38,cd:3600,rng:130},
+w:{name:“Rengoku Oni Giri”,desc:“Purgatory three-sword slash!”,dmg:44,cd:4500,rng:120},
+super:{name:“Billion-Sword Dragon!”,desc:“Entire body becomes a blade!”,dmg:58,cd:0,rng:150}
+},draw:drawZoro},
+{id:“nami”,name:“NAMI”,sub:“Clima-Tact”,hp:100,spd:6,col:”#ff8800”,
+abilities:{
+punch:{name:“Thunder Bolt Tempo”,desc:“Lightning strike attack!”,dmg:9,cd:400,rng:180},
+kick:{name:“Mirage Tempo”,desc:“Illusion dodge and counter!”,dmg:11,cd:700,rng:90},
+special:{name:“Tornado Tempo”,desc:“Tornado barrage!”,dmg:20,cd:2000,rng:200},
+combo:{name:“Dark Cloud Tempo”,desc:“Thunder cloud barrage!”,dmg:26,cd:2900,rng:160},
+q:{name:“Cyclone Tempo”,desc:“Massive weather cyclone!”,dmg:34,cd:3600,rng:230},
+w:{name:“Zeus Thunderbolt”,desc:“Homie Zeus max voltage!”,dmg:42,cd:4600,rng:250},
+super:{name:“Clima-Tact Omega”,desc:“Storm of all elements!”,dmg:52,cd:0,rng:260}
+},draw:drawNami},
+{id:“sanji”,name:“SANJI”,sub:“Black Leg Style”,hp:115,spd:6,col:”#0033cc”,
+abilities:{
+punch:{name:“Flambe”,desc:“Diable Jambe kick!”,dmg:11,cd:380,rng:98},
+kick:{name:“Collier Strike”,desc:“Neck-level flaming kick!”,dmg:14,cd:600,rng:100},
+special:{name:“Diable Jambe: Flambe”,desc:“Flaming leg rotary kick!”,dmg:23,cd:2000,rng:110},
+combo:{name:“Poele a Frire: Spectre”,desc:“Multi-kick flaming combo!”,dmg:29,cd:2800,rng:105},
+q:{name:“Ifrit Jambe”,desc:“Mythological fire-leg power!”,dmg:38,cd:3500,rng:130},
+w:{name:“Raid Suit Stealth”,desc:“Invisibility counter-attack!”,dmg:44,cd:4500,rng:140},
+super:{name:“Blue Flames of Hell”,desc:“Supreme judge inferno!”,dmg:56,cd:0,rng:150}
+},draw:drawSanji},
+{id:“chopper”,name:“CHOPPER”,sub:“Rumble Ball”,hp:110,spd:5,col:”#cc3366”,
+abilities:{
+punch:{name:“Roseo Metel”,desc:“Cherry Blossom impact!”,dmg:10,cd:400,rng:95},
+kick:{name:“Jumping Point”,desc:“Leap and aerial slam!”,dmg:13,cd:620,rng:100},
+special:{name:“Monster Point”,desc:“Giant monster transformation!”,dmg:26,cd:2200,rng:140},
+combo:{name:“Guard Point Bash”,desc:“Fur-ball guard and smash!”,dmg:28,cd:2800,rng:120},
+q:{name:“Brain Point Kokutei”,desc:“Hoof of the Demon King!”,dmg:36,cd:3500,rng:130},
+w:{name:“Horn Point Drill”,desc:“Drill horn piercing!”,dmg:42,cd:4500,rng:145},
+super:{name:“Monster Point Rampage”,desc:“Unstoppable beast mode!”,dmg:54,cd:0,rng:200}
+},draw:drawChopper},
+{id:“robin”,name:“ROBIN”,sub:“Hana-Hana Fruit”,hp:105,spd:4,col:”#7722cc”,
+abilities:{
+punch:{name:“Dos Fleur Grab”,desc:“Two-arm grab and throw!”,dmg:10,cd:400,rng:140},
+kick:{name:“Seis Fleur Kick”,desc:“Six-arm simultaneous kicks!”,dmg:13,cd:640,rng:130},
+special:{name:“Clutch”,desc:“Back-breaking spine snap!”,dmg:25,cd:2000,rng:180},
+combo:{name:“Mil Fleur: Gigantesco”,desc:“Giant arms slam!”,dmg:30,cd:2800,rng:200},
+q:{name:“Cien Fleur Wing”,desc:“Hundred-arm bird wing!”,dmg:36,cd:3500,rng:220},
+w:{name:“Mil Fleur Hanagasa”,desc:“Giant flower-hat slam!”,dmg:42,cd:4600,rng:230},
+super:{name:“Demonio Fleur”,desc:“Demonic arm manifestation!”,dmg:55,cd:0,rng:240}
+},draw:drawRobin},
+{id:“usopp”,name:“USOPP”,sub:“Sniper King”,hp:95,spd:5,col:”#aa6600”,
+abilities:{
+punch:{name:“Impact Wolf”,desc:“Compressed air impact!”,dmg:8,cd:350,rng:200},
+kick:{name:“Firebird Star”,desc:“Flaming star shot!”,dmg:11,cd:600,rng:220},
+special:{name:“Kabuto Barrage”,desc:“Rapid slingshot barrage!”,dmg:20,cd:2000,rng:240},
+combo:{name:“Ten Ton Hammer”,desc:“Massive slingshot shot!”,dmg:27,cd:2800,rng:230},
+q:{name:“Midori Boshi Vine”,desc:“Triffid Spank vine trap!”,dmg:33,cd:3500,rng:250},
+w:{name:“Hissatsu Kaen Boshi”,desc:“Sure-kill flame star!”,dmg:40,cd:4500,rng:260},
+super:{name:“USOPP GOD!”,desc:“God Usopp 8-ton meteor!”,dmg:52,cd:0,rng:280}
+},draw:drawUsopp},
+{id:“franky”,name:“FRANKY”,sub:“Cyborg Body”,hp:125,spd:4,col:”#3366cc”,
+abilities:{
+punch:{name:“Franky Radical Beam”,desc:“Cola-powered laser blast!”,dmg:11,cd:400,rng:200},
+kick:{name:“Iron Boxing”,desc:“Cyborg steel fist combo!”,dmg:14,cd:640,rng:100},
+special:{name:“Franky Cannon”,desc:“Franky Shogun cannon!”,dmg:24,cd:2100,rng:230},
+combo:{name:“Giant Swing”,desc:“Spinning arm smash!”,dmg:29,cd:2800,rng:130},
+q:{name:“Coup de Boo”,desc:“Rocket boost ram attack!”,dmg:36,cd:3500,rng:180},
+w:{name:“Franky Laser”,desc:“Cerulean fire laser!”,dmg:43,cd:4500,rng:260},
+super:{name:“SUPER!!”,desc:“Full-power cyborg explosion!”,dmg:55,cd:0,rng:240}
+},draw:drawFranky},
+{id:“brook”,name:“BROOK”,sub:“Soul-Soul Fruit”,hp:100,spd:6,col:”#4455ff”,
+abilities:{
+punch:{name:“Polaris”,desc:“Soul solid slash!”,dmg:9,cd:380,rng:110},
+kick:{name:“Skull Bomb”,desc:“Explosive soul kick!”,dmg:12,cd:620,rng:105},
+special:{name:“Chill of the Underworld”,desc:“Ice blade chills the soul!”,dmg:22,cd:2000,rng:150},
+combo:{name:“Soul King Performance”,desc:“Musical soul storm!”,dmg:28,cd:2800,rng:170},
+q:{name:“Arrow Notch Slash”,desc:“High-speed sword draw!”,dmg:34,cd:3500,rng:130},
+w:{name:“Hanauta Sancho”,desc:“Song that freezes enemies!”,dmg:40,cd:4500,rng:200},
+super:{name:“Phrase d’Armes Oratorio”,desc:“Absolute zero freeze!”,dmg:53,cd:0,rng:220}
+},draw:drawBrook},
+{id:“ace”,name:“ACE”,sub:“Flame-Flame Fruit”,hp:115,spd:5,col:”#ff4400”,
+abilities:{
+punch:{name:“Fire Fist”,desc:“Iconic flame fist launch!”,dmg:12,cd:380,rng:190},
+kick:{name:“Hotarubi”,desc:“Firefly flaming kick!”,dmg:14,cd:580,rng:100},
+special:{name:“Higan”,desc:“Firefly light rain!”,dmg:23,cd:2000,rng:200},
+combo:{name:“Entei”,desc:“Pillar of fire explosion!”,dmg:30,cd:2800,rng:180},
+q:{name:“Daikakugo”,desc:“Great Conflagration ball!”,dmg:38,cd:3500,rng:220},
+w:{name:“Cross Fire”,desc:“Cross-shaped flame burst!”,dmg:44,cd:4500,rng:240},
+super:{name:“Flame Commandment!”,desc:“Absolute flame annihilation!”,dmg:58,cd:0,rng:280}
+},draw:drawAce}
+];
+
+// DRAW CHARACTERS - REALISTIC PROPORTIONS
+// Base character is ~28px wide, 72px tall at FLOOR
+// Body segments: head(14px), neck(4px), torso(22px), legs(28px)
+
+function drawBody(ctx,x,y,torsoCol,pantsCol,skinCol,hatCol,hairCol,dir,st,fr){
+var lw=st===“walk”?(fr%2?5:-4):0;
+// Shadow
+ctx.fillStyle=“rgba(0,0,0,0.25)”;ctx.beginPath();ctx.ellipse(x+14,y+70,17,4,0,0,Math.PI*2);ctx.fill();
+// Pants/Legs
+ctx.fillStyle=pantsCol;rr(ctx,x+3,y+44,11,26,3);rr(ctx,x+16,y+44+lw,11,26,3);
+// Shoes
+ctx.fillStyle=”#111”;
+ctx.beginPath();ctx.ellipse(x+8,y+70,7,3.5,0,0,Math.PI*2);ctx.fill();
+ctx.beginPath();ctx.ellipse(x+21,y+68+lw,7,3.5,0,0,Math.PI*2);ctx.fill();
+// Belt line
+bx(ctx,x+2,y+43,24,3,shd(torsoCol,-20));
+// Torso
+ctx.fillStyle=torsoCol;rr(ctx,x+1,y+21,26,24,5);
+// Collar/chest details
+ctx.fillStyle=shd(torsoCol,-30);rr(ctx,x+1,y+21,26,8,4);
+return lw;
+}
+
+function drawHeadBase(ctx,x,y,skinCol,dir){
+// Neck
+ctx.fillStyle=skinCol;rr(ctx,x+10,y+15,8,7,2);
+// Head
+ctx.fillStyle=skinCol;ctx.beginPath();ctx.ellipse(x+14,y+8,13,12,0,0,Math.PI*2);ctx.fill();
+// Ear
+var ex=dir>0?x+27:x+1;
+ctx.fillStyle=shd(skinCol,-15);ctx.beginPath();ctx.ellipse(ex,y+8,3,4,0,0,Math.PI*2);ctx.fill();
+}
+
+function drawEyes(ctx,x,y,eyeCol,dir,angry){
+var ex1=dir>0?x+8:x+12,ex2=dir>0?x+18:x+22;
+ctx.fillStyle=”#fff”;ctx.beginPath();ctx.ellipse(ex1,y+6,3.5,3.5,0,0,Math.PI*2);ctx.fill();
+ctx.beginPath();ctx.ellipse(ex2,y+6,3.5,3.5,0,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=eyeCol;ctx.beginPath();ctx.ellipse(ex1,y+6,2.2,2.2,0,0,Math.PI*2);ctx.fill();
+ctx.beginPath();ctx.ellipse(ex2,y+6,2.2,2.2,0,0,Math.PI*2);ctx.fill();
+// Pupils
+cr(ctx,ex1+0.5,y+6.5,1,”#000”);cr(ctx,ex2+0.5,y+6.5,1,”#000”);
+// Eye shine
+cr(ctx,ex1-0.5,y+5,0.8,”#fff”);cr(ctx,ex2-0.5,y+5,0.8,”#fff”);
+if(angry){ctx.fillStyle=shd(”#cc3300”,0);ctx.beginPath();ctx.moveTo(ex1-3,y+2);ctx.lineTo(ex1+3,y+4);ctx.closePath();ctx.fill();ctx.beginPath();ctx.moveTo(ex2+3,y+2);ctx.lineTo(ex2-3,y+4);ctx.closePath();ctx.fill();}
+}
+
+function drawMouth(ctx,x,y,grin){
+ctx.strokeStyle=”#552200”;ctx.lineWidth=1.8;ctx.lineCap=“round”;
+ctx.beginPath();
+if(grin){ctx.arc(x+14,y+12,5,0.2,Math.PI-0.2);}else{ctx.arc(x+14,y+14,3,-0.3,Math.PI+0.3);}
+ctx.stroke();
+}
+
+// LUFFY - detailed rubber man
+function drawLuffy(ctx,x,y,dir,st,fr,sup){
+var s=Math.floor(x),fy=Math.floor(y),t=Date.now()/1000;
+var lw=drawBody(ctx,s,fy,”#cc2200”,”#1a1a66”,”#f4b77a”,”#cc9900”,”#111”,dir,st,fr);
+// Straw hat
+ctx.fillStyle=”#e8b000”;ctx.beginPath();ctx.arc(s+14,fy-2,14,Math.PI,0,false);ctx.fill();
+ctx.fillStyle=”#cc9900”;ctx.beginPath();ctx.ellipse(s+14,fy,20,5,0,0,Math.PI*2);ctx.fill();
+ctx.strokeStyle=”#885500”;ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(s+14,fy,20,5,0,0,Math.PI*2);ctx.stroke();
+bx(ctx,s+2,fy-3,24,4,”#cc0000”);
+// Black hair
+ctx.fillStyle=”#111”;ctx.beginPath();ctx.arc(s+14,fy-2,13,Math.PI,0,false);ctx.fill();
+drawHeadBase(ctx,s,fy,”#f4b77a”,dir);
+drawEyes(ctx,s,fy,”#111”,dir,st===“hurt”);
+drawMouth(ctx,s,fy,true);
+// Scar under left eye
+ctx.strokeStyle=”#cc4422”;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(s+8,fy+10);ctx.lineTo(s+10,fy+15);ctx.stroke();
+// Arms
+var ao=st===“walk”?Math.sin(fr/2)*4:0;
+if(st===“punch”||st===“special”||st===“q”||st===“w”){
+// STRETCH ARM - Luffy’s rubber ability!
+var strLen=st===“w”?180:st===“q”?160:st===“special”?130:110;
+var armX=s+(dir>0?28:-5),armY=fy+28;
+var tipX=armX+(dir>0?strLen:-strLen),tipY=fy+30;
+// Rubber arm tube - multiple segments
+ctx.strokeStyle=”#f4b77a”;ctx.lineWidth=10;ctx.lineCap=“round”;
+ctx.beginPath();ctx.moveTo(s+(dir>0?22:6),fy+28);
+ctx.bezierCurveTo(s+(dir>0?40:0)+dir*strLen*.3,fy+20,armX+dir*strLen*.6,fy+35,tipX,tipY);
+ctx.stroke();
+// Segment lines on rubber arm
+ctx.strokeStyle=shd(”#f4b77a”,-25);ctx.lineWidth=1.5;
+for(var ri=0;ri<5;ri++){var rp=ri/5;var rx=s+(dir>0?22:6)+dir*strLen*rp;ctx.beginPath();ctx.arc(rx,fy+28+Math.sin(rp*Math.PI)*5,5,dir>0?Math.PI*1.5:Math.PI*0.5,dir>0?Math.PI*0.5:Math.PI*1.5);ctx.stroke();}
+// Fist at tip
+ctx.fillStyle=st===“w”?”#222”:”#f4b77a”;
+ctx.beginPath();ctx.ellipse(tipX,tipY,st===“w”?16:13,st===“w”?14:11,0,0,Math.PI*2);ctx.fill();
+if(st===“w”){ctx.strokeStyle=“rgba(0,0,0,0.8)”;ctx.lineWidth=2;ctx.stroke();// Haki black fist
+ctx.fillStyle=“rgba(0,0,0,0.4)”;ctx.beginPath();ctx.ellipse(tipX,tipY,20,18,0,0,Math.PI*2);ctx.fill();}
+// Impact burst
+if(st===“punch”||st===“q”||st===“w”){
+ctx.fillStyle=“rgba(255,200,0,0.6)”;ctx.beginPath();ctx.ellipse(tipX,tipY,22,18,0,0,Math.PI*2);ctx.fill();
+}
+ctx.fillStyle=”#f4b77a”;rr(ctx,s+(dir>0?-5:20),fy+24+ao,10,17,4); // other arm
+} else if(st===“combo”){
+// Gatling - multiple fists
+for(var gi=0;gi<3;gi++){
+var gOff=gi*18;ctx.fillStyle=”#f4b77a”;
+ctx.beginPath();ctx.ellipse(s+(dir>0?34+gOff:-8-gOff),fy+28+gi*4,10,9,0,0,Math.PI*2);ctx.fill();
+}
+ctx.fillStyle=”#f4b77a”;rr(ctx,s+(dir>0?-5:20),fy+24+ao,10,17,4);
+} else {
+ctx.fillStyle=”#f4b77a”;rr(ctx,s-5,fy+24+ao,10,17,4);rr(ctx,s+21,fy+24-ao,10,17,4);
+}
+// Gear 4 aura
+if(sup||st===“super”){
+for(var si=0;si<12;si++){ctx.fillStyle=“rgba(255,”+(80+si*10)+”,0,0.2)”;ctx.beginPath();ctx.ellipse(s+14,fy+30,34+si*2,40+si*2,0,0,Math.PI*2);ctx.fill();}
+ctx.strokeStyle=“rgba(255,120,0,0.6)”;ctx.lineWidth=3;ctx.beginPath();ctx.ellipse(s+14,fy+30,48,54,0,0,Math.PI*2);ctx.stroke();
+// Steam from body
+for(var sv=0;sv<5;sv++)addPart(s+5+sv*6,fy+20,(Math.random()-.5)*2,-3+Math.random()*-2,15,4+Math.random()*3,“rgba(200,100,0,0.5)”,“circle”);
+}
+}
+
+// ZORO - three swords slashing
+function drawZoro(ctx,x,y,dir,st,fr,sup){
+var s=Math.floor(x),fy=Math.floor(y),t=Date.now()/1000;
+var lw=drawBody(ctx,s,fy,”#228833”,”#111”,”#d4946a”,””,””,dir,st,fr);
+// Bandana
+bx(ctx,s+1,fy+0,26,5,”#22aa33”);
+ctx.fillStyle=”#22aa33”;rr(ctx,s+20,fy-4,12,10,4);
+drawHeadBase(ctx,s,fy,”#d4946a”,dir);
+drawEyes(ctx,s,fy,”#5a3a1a”,dir,true);
+drawMouth(ctx,s,fy,false);
+// Ear ring
+cr(ctx,s+(dir>0?27:1),fy+9,2.5,”#ffd700”);
+
+var swing=st===“punch”||st===“kick”||st===“special”||st===“combo”||st===“q”||st===“w”||st===“super”;
+var sa=swing?0.6:0.1;
+
+// Three swords with proper swing arcs
+function sword3(ox,oy,len,baseAng,col,guardC){
+var ang=baseAng+(swing?(dir>0?-sa:sa):0);
+ctx.save();ctx.translate(s+ox,fy+oy);ctx.rotate(dir>0?ang:-ang);
+var g=ctx.createLinearGradient(0,-2,len,2);g.addColorStop(0,col);g.addColorStop(0.3,”#eee”);g.addColorStop(0.8,col);g.addColorStop(1,”#666”);
+ctx.fillStyle=g;ctx.beginPath();ctx.moveTo(0,-3);ctx.lineTo(len-6,-1.5);ctx.lineTo(len,0);ctx.lineTo(len-6,1.5);ctx.lineTo(0,3);ctx.closePath();ctx.fill();
+ctx.strokeStyle=”#888”;ctx.lineWidth=0.5;ctx.stroke();
+ctx.fillStyle=guardC;ctx.beginPath();ctx.ellipse(0,0,5,8,0,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=”#552200”;rr(ctx,-12,-3.5,12,7,2);ctx.restore();
+if(swing){// Slash arc
+ctx.strokeStyle=“rgba(220,220,255,0.55)”;ctx.lineWidth=3;ctx.beginPath();
+ctx.arc(s+ox,fy+oy,len*.7,dir>0?Math.PI*1.2:Math.PI*1.8,dir>0?Math.PI*1.8:Math.PI*1.2);ctx.stroke();
+}
+}
+// Mouth sword (third sword)
+var mx=dir>0?x+18:x+8;
+ctx.strokeStyle=”#888”;ctx.lineWidth=3;ctx.lineCap=“round”;
+ctx.beginPath();ctx.moveTo(s+14,fy+14);ctx.lineTo(s+14+(dir>0?36:-36),fy+10+(swing?-15:5));ctx.stroke();
+ctx.fillStyle=”#aaa”;ctx.beginPath();ctx.ellipse(s+14,fy+14,5,6,0,0,Math.PI*2);ctx.fill();
+
+sword3(6,28,40,dir>0?0.15:-0.15,”#ddd”,”#aaa”);
+sword3(22,26,44,dir>0?-0.4:0.4,”#c44”,”#611”);
+
+var ao=st===“walk”?Math.sin(fr/2)*4:0;
+ctx.fillStyle=”#d4946a”;rr(ctx,s-5,fy+24+ao,10,17,4);rr(ctx,s+21,fy+24-ao,10,17,4);
+
+// Asura demon form aura
+if(sup||st===“super”||st===“q”){
+ctx.globalAlpha=0.5;
+// Extra ghostly swords
+for(var ai=0;ai<3;ai++){
+ctx.strokeStyle=[”#aa2222”,”#2222aa”,”#22aa22”][ai];ctx.lineWidth=2;
+ctx.beginPath();ctx.moveTo(s+14+(ai-1)*20,fy-20);ctx.lineTo(s+14+(ai-1)*20+dir*60,fy+30);ctx.stroke();
+}
+ctx.globalAlpha=0.25;ctx.fillStyle=”#00ff00”;ctx.beginPath();ctx.ellipse(s+14,fy+30,40,46,0,0,Math.PI*2);ctx.fill();
 ctx.globalAlpha=1;
 }
-
-// ===== 3D PSEUDO PERSPECTIVE HELPERS =====
-function p3d(ctx,x,y,z,col){
-var px=x+z*0.15,py=y-z*0.08;
-return {x:px,y:py};
-}
-function drawBox3D(ctx,x,y,w,h,d,col,col2,col3){
-// Front face
-ctx.fillStyle=col;rr(ctx,x,y,w,h,3);
-// Top face
-ctx.fillStyle=col2||shd(col,30);
-ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+w,y);
-ctx.lineTo(x+w+d*0.6,y-d*0.4);ctx.lineTo(x+d*0.6,y-d*0.4);ctx.closePath();ctx.fill();
-// Right face
-ctx.fillStyle=col3||shd(col,-30);
-ctx.beginPath();ctx.moveTo(x+w,y);ctx.lineTo(x+w,y+h);
-ctx.lineTo(x+w+d*0.6,y+h-d*0.4);ctx.lineTo(x+w+d*0.6,y-d*0.4);ctx.closePath();ctx.fill();
-}
-function drawSphere3D(ctx,x,y,r,col){
-var g=ctx.createRadialGradient(x-r*0.3,y-r*0.3,r*0.1,x,y,r);
-g.addColorStop(0,shd(col,60));g.addColorStop(0.5,col);g.addColorStop(1,shd(col,-50));
-ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
-// specular
-ctx.fillStyle=“rgba(255,255,255,0.35)”;ctx.beginPath();ctx.ellipse(x-r*0.25,y-r*0.28,r*0.28,r*0.18,Math.PI*0.2,0,Math.PI*2);ctx.fill();
-}
-function drawCyl3D(ctx,x1,y1,x2,y2,r,col){
-ctx.strokeStyle=col;ctx.lineWidth=r*2;ctx.lineCap=“round”;
-ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
-var g=ctx.createLinearGradient(x1-r,y1,x1+r,y1);
-g.addColorStop(0,shd(col,-40));g.addColorStop(0.35,shd(col,40));g.addColorStop(1,shd(col,-20));
-ctx.strokeStyle=g;ctx.lineWidth=r*2-2;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
 }
 
-// ===== CHARACTER DEFINITIONS =====
-var CHARS=[
-{id:“luffy”,  name:“LUFFY”,   sub:“Gum-Gum Fruit”,  hp:120,spd:5, col:”#cc2200”,
-a1:{name:“Gum-Gum Pistol”, ic:”👊”, cd:3500, dmg:22, rng:220, desc:“Stretchy arm punch”},
-a2:{name:“Gum-Gum Bazooka”,ic:”💥”, cd:5000, dmg:32, rng:180, desc:“Both arms slam”},
-a3:{name:“Gum-Gum Gatling”, ic:”🔴”, cd:7000, dmg:18, rng:120, hits:5, desc:“Rapid rubber flurry”},
-draw:dLuffy},
-{id:“zoro”,   name:“ZORO”,    sub:“3-Sword Style”,  hp:130,spd:4, col:”#228833”,
-a1:{name:“Oni Giri”,       ic:”⚔”,   cd:3000, dmg:28, rng:110, desc:“3-sword cross slash”},
-a2:{name:“Tiger Hunt”,     ic:”🐅”, cd:4500, dmg:22, rng:200, desc:“Flying sword slash”},
-a3:{name:“1080 Pound”,     ic:”🔍”, cd:6500, dmg:45, rng:140, desc:“Massive tornado cut”},
-draw:dZoro},
-{id:“nami”,   name:“NAMI”,    sub:“Clima-Tact”,     hp:100,spd:6, col:”#ff8800”,
-a1:{name:“Thunder Ball”,   ic:”⚡”,   cd:3200, dmg:20, rng:200, desc:“Electric sphere”},
-a2:{name:“Mirage Tempo”,   ic:”🌫”, cd:5500, dmg:0,  rng:0,   desc:“Dodge + confusion”},
-a3:{name:“Cyclone Tempo”,  ic:”🏆”, cd:6000, dmg:35, rng:160, desc:“Giant wind lance”},
-draw:dNami},
-{id:“sanji”,  name:“SANJI”,   sub:“Black Leg”,      hp:115,spd:6, col:”#1a1a33”,
-a1:{name:“Diable Jambe”,   ic:”🔥”, cd:3500, dmg:26, rng:90,  desc:“Flaming kick”},
-a2:{name:“Parage Shot”,    ic:”🦲”, cd:5000, dmg:20, rng:200, desc:“Multi-kick barrage”},
-a3:{name:“Hell Memories”,  ic:”☠”,   cd:7000, dmg:50, rng:100, desc:“Infernal kick”},
-draw:dSanji},
-{id:“chopper”,name:“CHOPPER”, sub:“Rumble Ball”,    hp:110,spd:5, col:”#8B4513”,
-a1:{name:“Arm Point”,      ic:”🙒”, cd:3000, dmg:24, rng:95,  desc:“Hardened arm slam”},
-a2:{name:“Guard Point”,    ic:”🛡”, cd:4500, dmg:0,  rng:0,   desc:“Fur guard shield”},
-a3:{name:“Monster Point”,  ic:”🐙”, cd:8000, dmg:55, rng:130, desc:“GIANT transformation!”},
-draw:dChopper},
-{id:“robin”,  name:“ROBIN”,   sub:“Hana-Hana”,      hp:105,spd:4, col:”#1a0a2e”,
-a1:{name:“Mil Fleur”,      ic:”🌻”, cd:3000, dmg:20, rng:200, desc:“Arm field attack”},
-a2:{name:“Gigantesco Mano”,ic:”🙌”, cd:5000, dmg:35, rng:130, desc:“Giant hand crush”},
-a3:{name:“Clutch”,         ic:”🤘”, cd:6000, dmg:28, rng:150, desc:“Full body bind”},
-draw:dRobin},
-{id:“usopp”,  name:“USOPP”,   sub:“Pop Greens”,     hp:95, spd:5, col:”#884400”,
-a1:{name:“Fire Star”,      ic:”🟊”, cd:2500, dmg:18, rng:280, desc:“Fire star bullet”},
-a2:{name:“Midori Boshi”,   ic:”🌿”, cd:4000, dmg:22, rng:260, desc:“Exploding plant”},
-a3:{name:“Thor Elefante”,  ic:”⚡”,   cd:7000, dmg:48, rng:320, desc:“Giant lightning pop”},
-draw:dUsopp},
-{id:“franky”, name:“FRANKY”,  sub:“Cyborg Body”,    hp:125,spd:4, col:”#2244aa”,
-a1:{name:“Franky Rocket”,  ic:”🚀”, cd:3500, dmg:26, rng:250, desc:“Rocket arm blast”},
-a2:{name:“Radical Beam”,   ic:”💡”, cd:5500, dmg:38, rng:300, desc:“Giant laser beam”},
-a3:{name:“Franky Shogun”,  ic:”🤖”, cd:8000, dmg:55, rng:130, desc:“Mech suit mode”},
-draw:dFranky},
-{id:“brook”,  name:“BROOK”,   sub:“Soul-Soul Fruit”, hp:100,spd:6, col:”#111”,
-a1:{name:“Arrow Notch”,    ic:”⚔”,   cd:2800, dmg:20, rng:180, desc:“Soul-imbued slash”},
-a2:{name:“Freezing Soul”,  ic:”🧊”, cd:4500, dmg:28, rng:150, desc:“Ice soul chill”},
-a3:{name:“Requiem Sword”,  ic:”🎵”, cd:7000, dmg:45, rng:130, desc:“Haunting requiem”},
-draw:dBrook},
-{id:“ace”,    name:“ACE”,     sub:“Flame-Flame”,    hp:115,spd:5, col:”#221100”,
-a1:{name:“Fire Fist”,      ic:”🔥”, cd:2500, dmg:24, rng:220, desc:“Iconic fire punch”},
-a2:{name:“Hiken”,          ic:”🔴”, cd:4500, dmg:38, rng:300, desc:“Cross fire wave”},
-a3:{name:“Hotarubi”,       ic:”🌵”, cd:6500, dmg:32, rng:160, hits:8, desc:“Firefly bomb storm”},
-draw:dAce},
-];
-
-var ENMS=[
-{name:“ALVIDA”,   arc:“EAST BLUE”,   desc:“Iron-mace pirate queen!”, hp:55, spd:2.2,em:”🔴”,col:”#cc88aa”,bg:“sea”, boss:false},
-{name:“MORGAN”,   arc:“EAST BLUE”,   desc:“Axe-Hand marine tyrant!”, hp:80, spd:2.5,em:”🪓”,col:”#4488cc”,bg:“mar”, boss:false},
-{name:“BUGGY”,    arc:“EAST BLUE”,   desc:“Chop-Chop clown pirate!”, hp:90, spd:3.0,em:”🤡”,col:”#ff4444”,bg:“sea”, boss:false},
-{name:“KURO”,     arc:“EAST BLUE”,   desc:“Black Cat assassin!”,     hp:105,spd:5.0,em:”🐱”,col:”#888888”,bg:“sea”, boss:false},
-{name:“KRIEG”,    arc:“EAST BLUE”,   desc:“Armored war machine!”,    hp:120,spd:2.5,em:”🛡”,col:”#888844”,bg:“sea”, boss:false},
-{name:“ARLONG”,   arc:“EAST BLUE”,   desc:“Fishman tyrant! BOSS!”,   hp:155,spd:3.0,em:”🦈”,col:”#44aa88”,bg:“sea”, boss:true},
-{name:“SMOKER”,   arc:“ALABASTA”,    desc:“Marine Smoker, logia!”,   hp:145,spd:3.5,em:”💨”,col:”#aaaaaa”,bg:“mar”, boss:false},
-{name:“MR. 1”,    arc:“ALABASTA”,    desc:“Every cell a blade!”,     hp:155,spd:4.0,em:”⚔”,  col:”#555577”,bg:“des”, boss:false},
-{name:“CROCODILE”,arc:“ALABASTA”,    desc:“Sand Warlord! BOSS!”,     hp:210,spd:3.0,em:”🦒”,col:”#aa8844”,bg:“des”, boss:true},
-{name:“ENEL”,     arc:“SKY ISLAND”,  desc:“God Enel! Lightning! BOSS!”,hp:225,spd:5.0,em:”⚡”,col:”#ffff44”,bg:“sky”, boss:true},
-{name:“FOXY”,     arc:“DAVY BACK”,   desc:“Slow-Slow Fruit!”,        hp:188,spd:3.0,em:”🦊”,col:”#cc7700”,bg:“sea”, boss:false},
-{name:“LUCCI”,    arc:“ENIES LOBBY”, desc:“CP9 Assassin! BOSS!”,     hp:260,spd:6.0,em:”🖦”,col:”#222222”,bg:“eni”, boss:true},
-{name:“KAKU”,     arc:“ENIES LOBBY”, desc:“CP9 Giraffe Zoan!”,       hp:205,spd:4.5,em:”🦒”,col:”#ccaa44”,bg:“eni”, boss:false},
-{name:“MORIA”,    arc:“THRILLER BARK”,desc:“Shadow Warlord! BOSS!”,  hp:285,spd:2.5,em:”👻”,col:”#664488”,bg:“drk”, boss:true},
-{name:“KUMA”,     arc:“SABAODY”,     desc:“Paw-Paw Warlord!”,        hp:265,spd:3.0,em:”🐻”,col:”#334455”,bg:“mar”, boss:false},
-{name:“HANCOCK”,  arc:“AMAZON LILY”, desc:“Empress Hancock!”,        hp:255,spd:4.0,em:”🐍”,col:”#cc4488”,bg:“sea”, boss:false},
-{name:“MAGELLAN”, arc:“IMPEL DOWN”,  desc:“Venom fruit Warden! BOSS!”,hp:310,spd:2.5,em:”☠”, col:”#553300”,bg:“drk”, boss:true},
-{name:“IVANKOV”,  arc:“IMPEL DOWN”,  desc:“Horm-Horm miracle!”,      hp:245,spd:3.5,em:”👑”,col:”#8844cc”,bg:“drk”, boss:false},
-{name:“BLACKBEARD”,arc:“MARINEFORD”,desc:“Two Devil Fruits! BOSS!”,  hp:330,spd:3.0,em:”⸻”, col:”#1a1a2a”,bg:“mar”, boss:true},
-{name:“AKAINU”,   arc:“MARINEFORD”,  desc:“Fleet Admiral Magma! BOSS!”,hp:360,spd:3.5,em:”🌋”,col:”#cc2200”,bg:“mar”,boss:true},
-{name:“AOKIJI”,   arc:“MARINEFORD”,  desc:“Admiral, Ice logia!”,     hp:305,spd:3.0,em:”🧊”,col:”#4488cc”,bg:“mar”, boss:false},
-{name:“HODY”,     arc:“FISHMAN ISL.”,desc:“Hody on steroids!”,       hp:295,spd:5.0,em:”🦈”,col:”#225588”,bg:“sea”, boss:false},
-{name:“CAESAR”,   arc:“PUNK HAZARD”, desc:“Gas-Gas Devil Fruit! BOSS!”,hp:315,spd:3.5,em:”🧪”,col:”#aaaaff”,bg:“drk”,boss:true},
-{name:“VIOLET”,   arc:“DRESSROSA”,   desc:“Glare-Glare devil fruit!”, hp:280,spd:4.0,em:”👀”,col:”#9944cc”,bg:“sea”, boss:false},
-{name:“DOFLAMINGO”,arc:“DRESSROSA”, desc:“String Warlord! BOSS!”,    hp:385,spd:4.5,em:”🎩”,col:”#ff44aa”,bg:“sea”, boss:true},
-{name:“JACK”,     arc:“ZOU”,         desc:“Jack the Drought calamity!”,hp:340,spd:3.5,em:”🦣”,col:”#334422”,bg:“drk”,boss:false},
-{name:“KATAKURI”, arc:“WHOLE CAKE”,  desc:“Mochi-Mochi master!”,     hp:400,spd:4.0,em:”🤵”,col:”#884422”,bg:“sky”, boss:true},
-{name:“BIG MOM”,  arc:“WHOLE CAKE”,  desc:“Soul Emperor! BOSS!”,     hp:425,spd:3.0,em:”🎂”,col:”#ff88cc”,bg:“sky”, boss:true},
-{name:“KING”,     arc:“WANO”,        desc:“King the Wildfire!”,      hp:380,spd:4.0,em:”🦅”,col:”#111”,bg:“wano”,  boss:false},
-{name:“KAIDO”,    arc:“WANO”,        desc:“Strongest creature! FINAL BOSS!”,hp:500,spd:4.0,em:”🦁”,col:”#6644aa”,bg:“wano”,boss:true},
-];
-
-// ===== DRAW CHARACTERS (3D Enhanced) =====
-function dLuffy(ctx,x,y,dir,st,fr,sup,f2){
-var t=f2||0;
-var ox=Math.floor(x),oy=Math.floor(y);
-// Shadow
-ctx.fillStyle=“rgba(0,0,0,0.25)”;ctx.beginPath();ctx.ellipse(ox+13,oy+68,17,5,0,0,Math.PI*2);ctx.fill();
-var lw=st===“walk”?(fr%2?5:-4):0;
-var iskick=st===“kick”;
-// 3D Legs
-drawCyl3D(ctx,ox+7,oy+46,ox+7,oy+68,5,”#1a1a66”);
-drawCyl3D(ctx,ox+19,oy+46+(iskick?-12:lw),ox+19,oy+68+(iskick?8:lw),5,”#1a1a66”);
-drawSphere3D(ctx,ox+7,oy+68,5,”#550000”);
-drawSphere3D(ctx,ox+19,oy+68+(iskick?8:lw),5,”#550000”);
-// Body 3D
-drawBox3D(ctx,ox+1,oy+22,24,24,6,”#cc2200”,”#ee3300”,”#881500”);
-// Stretch arm (special ability)
-if(st===“a1”||st===“special”||st===“punch”){
-var stretchLen=st===“a1”?160:st===“special”?100:65;
-var armX=ox+(dir>0?28:13-stretchLen);
-// rubber arm segments
-ctx.strokeStyle=”#f4b77a”;ctx.lineWidth=10;ctx.lineCap=“round”;
-var segs=8;
-ctx.beginPath();
-for(var si=0;si<=segs;si++){
-var pct=si/segs;
-var wobble=Math.sin(pct*Math.PI*3+t*0.3)*4*(1-pct)*0.5;
-var segX=ox+(dir>0?22:4)+dir*stretchLen*pct;
-var segY=oy+30+wobble;
-if(si===0)ctx.moveTo(segX,segY);else ctx.lineTo(segX,segY);
-}
-ctx.stroke();
-// gradient highlight
-var g=ctx.createLinearGradient(ox,oy+25,ox,oy+40);
-g.addColorStop(0,“rgba(255,200,130,0.6)”);g.addColorStop(1,“rgba(180,100,60,0.3)”);
-ctx.strokeStyle=g;ctx.lineWidth=5;ctx.beginPath();
-for(var si2=0;si2<=segs;si2++){
-var pct2=si2/segs;
-var w2=(Math.random()-0.5)*6*(1-pct2);
-var s2X=ox+(dir>0?22:4)+dir*stretchLen*pct2;
-var s2Y=oy+28+w2;
-if(si2===0)ctx.moveTo(s2X,s2Y);else ctx.lineTo(s2X,s2Y);
-}
-ctx.stroke();
-// Fist at end
-drawSphere3D(ctx,ox+(dir>0?22+stretchLen:4-stretchLen+26),oy+30,13,”#f4b77a”);
-spawnBurst(ox+(dir>0?22+stretchLen:4-stretchLen+26),oy+30,”#f4b77a”,2,3,4);
-} else if(st===“a3”){
-// Gatling - rapid mini punches
-for(var gi=0;gi<5;gi++){
-var gx=ox+dir*(55+gi*20)+(Math.random()-0.5)*10,gy=oy+25+(Math.random()-0.5)*15;
-drawSphere3D(ctx,gx,gy,8,”#f4b77a”);
-}
-spawnFire(ox+dir*80,oy+30,3);
-} else if(st===“a2”){
-// Bazooka - both arms
-drawCyl3D(ctx,ox+13,oy+30,ox-20,oy+28,7,”#f4b77a”);
-drawCyl3D(ctx,ox+13,oy+30,ox+46,oy+28,7,”#f4b77a”);
-drawSphere3D(ctx,ox-20,oy+28,12,”#f4b77a”);
-drawSphere3D(ctx,ox+46,oy+28,12,”#f4b77a”);
-spawnBurst(ox+dir*50,oy+30,”#f88”,4,5,6);
-} else {
-var ao=st===“walk”?Math.sin(fr/2)*4:0;
-drawCyl3D(ctx,ox+13,oy+30,ox-4,oy+32+ao,6,”#f4b77a”);
-drawCyl3D(ctx,ox+13,oy+30,ox+30,oy+32-ao,6,”#f4b77a”);
-drawSphere3D(ctx,ox-4,oy+32+ao,7,”#f4b77a”);
-drawSphere3D(ctx,ox+30,oy+32-ao,7,”#f4b77a”);
-}
-// Head 3D
-drawSphere3D(ctx,ox+13,oy+10,14,”#f4b77a”);
-// Straw hat
-ctx.fillStyle=”#d4a017”;ctx.beginPath();ctx.ellipse(ox+13,oy+3,20,6,0,0,Math.PI*2);ctx.fill();
-var hg=ctx.createLinearGradient(ox-7,oy-8,ox+33,oy+2);hg.addColorStop(0,”#c49010”);hg.addColorStop(0.5,”#f0c040”);hg.addColorStop(1,”#a07010”);
-ctx.fillStyle=hg;ctx.beginPath();ctx.arc(ox+13,oy+2,14,Math.PI,0,false);ctx.fill();
-ctx.strokeStyle=”#8B6914”;ctx.lineWidth=2.5;ctx.beginPath();ctx.ellipse(ox+13,oy+3,20,6,0,0,Math.PI*2);ctx.stroke();
-bx(ctx,ox+2,oy-1,22,4,”#cc0000”);
-// Eyes
-drawSphere3D(ctx,ox+7,oy+9,4,”#111”);drawSphere3D(ctx,ox+19,oy+9,4,”#111”);
-cr(ctx,ox+6,oy+8,1.5,”#fff”);cr(ctx,ox+18,oy+8,1.5,”#fff”);
-ctx.strokeStyle=”#cc2200”;ctx.lineWidth=1.5;ctx.lineCap=“round”;ctx.beginPath();ctx.moveTo(ox+5,oy+12);ctx.lineTo(ox+9,oy+15);ctx.stroke();
-ctx.strokeStyle=”#000”;ctx.lineWidth=2;ctx.beginPath();ctx.arc(ox+13,oy+13,6,0.2,Math.PI-0.2);ctx.stroke();
-if(sup){ctx.fillStyle=“rgba(255,60,0,0.15)”;ctx.beginPath();ctx.ellipse(ox+13,oy+34,36,42,0,0,Math.PI*2);ctx.fill();}
-}
-
-function dZoro(ctx,x,y,dir,st,fr,sup,f2){
-var t=f2||0;
-var ox=Math.floor(x),oy=Math.floor(y);
-ctx.fillStyle=“rgba(0,0,0,0.25)”;ctx.beginPath();ctx.ellipse(ox+13,oy+68,17,5,0,0,Math.PI*2);ctx.fill();
-var lw=st===“walk”?(fr%2?5:-4):0;
-drawCyl3D(ctx,ox+7,oy+46,ox+7,oy+68,5,”#111”);
-drawCyl3D(ctx,ox+19,oy+46+lw,ox+19,oy+68+lw,5,”#111”);
-drawSphere3D(ctx,ox+7,oy+68,5,”#222”);drawSphere3D(ctx,ox+19,oy+68+lw,5,”#222”);
-drawBox3D(ctx,ox+1,oy+22,24,24,6,”#228833”,”#33aa44”,”#115522”);
-// White sash
-ctx.fillStyle=“rgba(220,220,220,0.9)”;ctx.fillRect(ox+1,oy+22,24,6);
-ctx.strokeStyle=”#aaa”;ctx.lineWidth=1;ctx.strokeRect(ox+1,oy+22,24,6);
-// SWORD SWINGS
-var isAtk=st===“punch”||st===“kick”||st===“special”||st===“a1”||st===“a2”||st===“a3”||st===“combo”||st===“super”;
-var swingAng=isAtk?(dir>0?-0.5:Math.PI+0.5):0;
-var bigSwing=st===“a1”||st===“a3”||st===“super”;
-// 3 swords with swing animation
-function drawSword3D(sx,sy,len,ang,col){
-ctx.save();ctx.translate(sx,sy);ctx.rotate(ang);
-// Blade with 3D gradient
-var g=ctx.createLinearGradient(-3,0,3,len);
-g.addColorStop(0,”#fff”);g.addColorStop(0.3,col);g.addColorStop(1,”#555”);
-ctx.fillStyle=g;ctx.beginPath();ctx.moveTo(-3,0);ctx.lineTo(3,0);ctx.lineTo(1,len);ctx.lineTo(-1,len);ctx.closePath();ctx.fill();
-ctx.strokeStyle=”#777”;ctx.lineWidth=0.5;ctx.stroke();
-// Highlight
-ctx.fillStyle=“rgba(255,255,255,0.5)”;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(1,0);ctx.lineTo(0.5,len*0.6);ctx.closePath();ctx.fill();
-// Guard
-drawBox3D(ctx,-7,-5,14,8,4,”#887722”,”#ccaa33”,”#554400”);
-// Handle
-drawCyl3D(ctx,0,0,0,16,4,”#664422”);
-ctx.restore();
-}
-var base=isAtk?(bigSwing?1.4:0.9):0.2;
-if(dir>0){
-drawSword3D(ox+22,oy+14,38,swingAng-base,”#ddd”);
-drawSword3D(ox+20,oy+28,42,swingAng-base*0.7,”#c44”);
-drawSword3D(ox+22,oy+34,42,swingAng-base*0.5,”#222”);
-} else {
-drawSword3D(ox+4,oy+14,38,Math.PI+swingAng+base,”#ddd”);
-drawSword3D(ox+6,oy+28,42,Math.PI+swingAng+base*0.7,”#c44”);
-drawSword3D(ox+4,oy+34,42,Math.PI+swingAng+base*0.5,”#222”);
-}
-if(isAtk){spawnSlash(ox+(dir>0?50:-24),oy+25,dir,”#cff”);}
-if(bigSwing){
-ctx.strokeStyle=“rgba(100,255,150,0.5)”;ctx.lineWidth=3;
-ctx.beginPath();ctx.arc(ox+13,oy+28,45,dir>0?-1.8:-1.3,dir>0?0.3:Math.PI+0.3);ctx.stroke();
-spawnSlash(ox+(dir>0?55:-30),oy+25,dir,”#0f8”);
-}
-var ao=st===“walk”?Math.sin(fr/2)*4:0;
-drawCyl3D(ctx,ox+13,oy+30,ox-4,oy+32+ao,6,”#d4946a”);
-drawCyl3D(ctx,ox+13,oy+30,ox+30,oy+32-ao,6,”#d4946a”);
-drawSphere3D(ctx,ox+13,oy+10,13,”#d4946a”);
-bx(ctx,ox+1,oy+1,24,4,”#22aa33”);
-drawSphere3D(ctx,ox+7,oy+9,4,”#111”);drawSphere3D(ctx,ox+19,oy+9,4,”#111”);
-cr(ctx,ox+6,oy+8,1.5,”#fff”);cr(ctx,ox+18,oy+8,1.5,”#fff”);
-ctx.strokeStyle=”#880000”;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(ox+5,oy+5);ctx.lineTo(ox+10,oy+13);ctx.stroke();
-ctx.strokeStyle=”#000”;ctx.lineWidth=2;ctx.beginPath();ctx.arc(ox+13,oy+14,5,0.3,Math.PI-0.3);ctx.stroke();
-}
-
-function dNami(ctx,x,y,dir,st,fr,sup,f2){
-var ox=Math.floor(x),oy=Math.floor(y);
-ctx.fillStyle=“rgba(0,0,0,0.25)”;ctx.beginPath();ctx.ellipse(ox+13,oy+68,14,5,0,0,Math.PI*2);ctx.fill();
-var lw=st===“walk”?(fr%2?5:-4):0;
-drawCyl3D(ctx,ox+7,oy+44,ox+7,oy+68,4,”#cc6600”);
-drawCyl3D(ctx,ox+19,oy+44+lw,ox+19,oy+68+lw,4,”#cc6600”);
-drawSphere3D(ctx,ox+7,oy+68,5,”#aa4400”);drawSphere3D(ctx,ox+19,oy+68+lw,5,”#aa4400”);
-drawBox3D(ctx,ox+1,oy+30,24,18,5,”#ff8800”,”#ffaa33”,”#cc5500”);
-drawBox3D(ctx,ox+3,oy+22,20,10,4,”#ffaa00”,”#ffcc44”,”#cc7700”);
-// Clima-tact staff
-var sx=ox+(dir>0?28:-11);
-ctx.strokeStyle=”#774422”;ctx.lineWidth=4;ctx.lineCap=“round”;ctx.beginPath();ctx.moveTo(sx+2,oy+6);ctx.lineTo(sx+2,oy+60);ctx.stroke();
-drawSphere3D(ctx,sx+2,oy+6,7,”#ffdd00”);
-if(st===“a1”){// thunder ball
-ctx.save();ctx.globalAlpha=0.8;
-var bg=ctx.createRadialGradient(sx+2+dir*40,oy+30,0,sx+2+dir*40,oy+30,20);
-bg.addColorStop(0,”#fff”);bg.addColorStop(0.3,”#ff0”);bg.addColorStop(1,“transparent”);
-ctx.fillStyle=bg;ctx.beginPath();ctx.arc(sx+2+dir*40,oy+30,20,0,Math.PI*2);ctx.fill();
-ctx.restore();spawnLightning(sx+2+dir*40,oy+30,6);
-}
-if(st===“a3”){// cyclone
-ctx.save();ctx.globalAlpha=0.5;
-ctx.strokeStyle=”#88ccff”;ctx.lineWidth=8;ctx.beginPath();ctx.ellipse(ox+13+dir*80,oy+30,30,15,0,0,Math.PI*2);ctx.stroke();
-ctx.restore();spawnBurst(ox+13+dir*80,oy+30,”#88ccff”,6,5,5);
-}
-if(st===“a2”){// mirage - ghost copies
-ctx.save();ctx.globalAlpha=0.3;
-ctx.fillStyle=”#88ffaa”;ctx.fillRect(ox-20,oy,50,70);
-ctx.globalAlpha=0.15;ctx.fillRect(ox+40,oy,50,70);
-ctx.restore();
-}
+// NAMI
+function drawNami(ctx,x,y,dir,st,fr,sup){
+var s=Math.floor(x),fy=Math.floor(y);
+var lw=drawBody(ctx,s,fy,”#ff8800”,”#cc6600”,”#f4b77a”,””,””,dir,st,fr);
+// Orange hair
+ctx.fillStyle=”#ff5500”;ctx.beginPath();ctx.ellipse(s+14,fy+2,14,8,0,0,Math.PI*2);ctx.fill();
+rr(ctx,s-2,fy+3,7,14,3);rr(ctx,s+21,fy+3,7,11,3);
+drawHeadBase(ctx,s,fy,”#f4b77a”,dir);
+drawEyes(ctx,s,fy,”#6b4226”,dir,false);
+drawMouth(ctx,s,fy,true);
+// Clima-Tact staff
+var sax=s+(dir>0?-8:22);
+bx(ctx,sax,fy+4,5,64,”#774422”);
+// Ball ends
+ctx.fillStyle=”#ffdd00”;ctx.beginPath();ctx.ellipse(sax+2,fy+4,8,6,0,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=”#00aaff”;ctx.beginPath();ctx.ellipse(sax+2,fy+68,8,6,0,0,Math.PI*2);ctx.fill();
+// Arms
 var ao=st===“walk”?Math.sin(fr/2)*3:0;
-drawCyl3D(ctx,ox+13,oy+28,ox-3,oy+30+ao,5,”#f4b77a”);
-drawCyl3D(ctx,ox+13,oy+28,ox+29,oy+30-ao,5,”#f4b77a”);
-drawSphere3D(ctx,ox+13,oy+10,13,”#f4b77a”);
-ctx.fillStyle=”#ff5500”;ctx.beginPath();ctx.ellipse(ox+13,oy+2,14,7,0,0,Math.PI*2);ctx.fill();
-ctx.fillStyle=”#ff5500”;rr(ctx,ox-2,oy+4,7,12,3);rr(ctx,ox+21,oy+4,6,9,3);
-drawSphere3D(ctx,ox+7,oy+9,4,”#111”);drawSphere3D(ctx,ox+19,oy+9,4,”#111”);
-cr(ctx,ox+6,oy+8,1.5,”#fff”);cr(ctx,ox+18,oy+8,1.5,”#fff”);
-ctx.strokeStyle=”#000”;ctx.lineWidth=1.8;ctx.beginPath();ctx.arc(ox+13,oy+14,5,0.2,Math.PI-0.2);ctx.stroke();
+ctx.fillStyle=”#f4b77a”;rr(ctx,s-4,fy+24+ao,10,16,4);rr(ctx,s+20,fy+24-ao,10,16,4);
+// Lightning ability
+if(st===“punch”||st===“special”){
+ctx.strokeStyle=”#ffff44”;ctx.lineWidth=2.5;ctx.shadowColor=”#0af”;ctx.shadowBlur=14;
+for(var li=0;li<3;li++){
+var lx=sax+2,ly=fy+4;ctx.beginPath();ctx.moveTo(lx,ly);
+for(var ls=0;ls<6;ls++){lx+=dir*(8+Math.random()*10);ly+=(Math.random()-.5)*14;ctx.lineTo(lx,ly);}
+ctx.stroke();
+}
+ctx.shadowBlur=0;
+}
+if(st===“q”||st===“w”||st===“super”){// Tornado
+ctx.strokeStyle=“rgba(100,180,255,0.6)”;ctx.lineWidth=3;
+for(var ci=0;ci<8;ci++){var ca=(ci/8)*Math.PI*2;ctx.beginPath();ctx.ellipse(s+14+(dir*40),fy+30,20+ci*4,16+ci*3,ca,0,Math.PI*2);ctx.stroke();}
+}
+if(sup)for(var si=0;si<6;si++)addPart(s+5+si*5,fy+15,(Math.random()-.5)*3,-2-Math.random()*3,18,3,”#ffff44”,“circle”);
 }
 
-function dSanji(ctx,x,y,dir,st,fr,sup,f2){
-var ox=Math.floor(x),oy=Math.floor(y);
-ctx.fillStyle=“rgba(0,0,0,0.25)”;ctx.beginPath();ctx.ellipse(ox+13,oy+68,17,5,0,0,Math.PI*2);ctx.fill();
-var lw=st===“walk”?(fr%2?5:-4):0;
-var isk=st===“kick”||st===“a1”||st===“a2”||st===“a3”||st===“special”||st===“super”;
-var klo=isk?-12:0,koi=isk?18:0;
-drawCyl3D(ctx,ox+7,oy+46,ox+7,oy+68,5,”#1a1a33”);
-drawCyl3D(ctx,ox+19,oy+46+lw+klo,ox+19,oy+68+lw+klo+koi,5,”#1a1a33”);
-drawSphere3D(ctx,ox+7,oy+68,5,”#0a0a22”);drawSphere3D(ctx,ox+19,oy+68+lw+klo+koi,5,”#0a0a22”);
+// SANJI
+function drawSanji(ctx,x,y,dir,st,fr,sup){
+var s=Math.floor(x),fy=Math.floor(y);
+var lw=drawBody(ctx,s,fy,”#1a1a33”,”#1a1a33”,”#f4b77a”,””,””,dir,st,fr);
+// Blonde hair - swirled
+ctx.fillStyle=”#ffcc00”;ctx.beginPath();ctx.ellipse(s+14,fy+2,13,7,0,0,Math.PI*2);ctx.fill();
+ctx.strokeStyle=”#ddaa00”;ctx.lineWidth=3;ctx.lineCap=“round”;ctx.beginPath();ctx.arc(s+9,fy+6,6,Math.PI,Math.PI*1.8);ctx.stroke();
+// White shirt visible
+ctx.fillStyle=”#fff”;rr(ctx,s+9,fy+22,10,20,2);
+ctx.fillStyle=”#c00”;bx(ctx,s+12,fy+22,4,20,”#c00”);// Tie
+drawHeadBase(ctx,s,fy,”#f4b77a”,dir);
+drawEyes(ctx,s,fy,”#4a3a2a”,dir,false);
+// One eye covered by hair
+ctx.fillStyle=”#ffcc00”;rr(ctx,dir>0?s:s+12,fy+2,14,8,4);
+drawMouth(ctx,s,fy,false);
+// Cigarette
+bx(ctx,s+(dir>0?20:2),fy+13,12,3,”#fff”);bx(ctx,s+(dir>0?32:0),fy+13,4,3,”#ff8800”);
+
+var ao=st===“walk”?Math.sin(fr/2)*4:0;
+var isk=st===“kick”||st===“special”||st===“combo”||st===“q”||st===“w”;
 if(isk){
-var fireCol=st===“a3”?”#ff0055”:(st===“a1”?”#ff6600”:”#ff3300”);
-ctx.fillStyle=“rgba(255,100,0,0.6)”;ctx.beginPath();ctx.ellipse(ox+19,oy+52+lw+klo,12,15,0,0,Math.PI*2);ctx.fill();
-spawnFire(ox+19,oy+52+lw+klo,4);
-if(st===“a3”){// Hell Memories
-ctx.fillStyle=“rgba(255,0,50,0.4)”;ctx.beginPath();ctx.ellipse(ox+13,oy+40,30,40,0,0,Math.PI*2);ctx.fill();
-spawnFire(ox+13,oy+30,8);
+// Diable Jambe - fire kick
+ctx.fillStyle=”#1a1a33”;rr(ctx,s+14,fy+34,12,28,3);// kicking leg up
+var kTipX=s+14+dir*45,kTipY=fy+20;
+// Fire around kicking leg
+for(var ki=0;ki<6;ki++){
+var ka=ki/6*Math.PI*2;
+ctx.fillStyle=“rgba(255,”+(40+ki*30)+”,0,0.7)”;
+ctx.beginPath();ctx.ellipse(s+14+dir*30+Math.cos(ka)*12,fy+22+Math.sin(ka)*10,8,7,0,0,Math.PI*2);ctx.fill();
 }
+line(ctx,s+14,fy+44,kTipX,kTipY,”#f4b77a”,9);
+ctx.fillStyle=”#f4b77a”;ctx.beginPath();ctx.ellipse(kTipX,kTipY,10,9,0,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=”#f4b77a”;rr(ctx,s-4,fy+24+ao,10,17,4);
+} else {
+ctx.fillStyle=”#f4b77a”;rr(ctx,s-4,fy+24+ao,10,17,4);rr(ctx,s+20,fy+24-ao,10,17,4);
 }
-drawBox3D(ctx,ox+1,oy+22,24,24,6,”#1a1a33”,”#2a2a44”,”#000022”);
-ctx.fillStyle=”#fff”;rr(ctx,ox+8,oy+22,10,19,2);ctx.fillStyle=”#c00”;ctx.beginPath();ctx.moveTo(ox+12,oy+23);ctx.lineTo(ox+15,oy+23);ctx.lineTo(ox+13,oy+39);ctx.closePath();ctx.fill();
-var ao=st===“walk”?Math.sin(fr/2)*4:0;
-if(isk&&st===“a2”){// Parage shot - leg trail
-for(var pi=0;pi<4;pi++){ctx.fillStyle=“rgba(255,100,0,”+(0.3-pi*0.07)+”)”;ctx.beginPath();ctx.ellipse(ox+19+dir*(pi*8),oy+52+lw+klo+pi*5,8,10,0,0,Math.PI*2);ctx.fill();}
-}
-drawCyl3D(ctx,ox+13,oy+30,ox-4,oy+32+ao,6,”#1a1a33”);
-drawCyl3D(ctx,ox+13,oy+30,ox+30,oy+32-ao,6,”#1a1a33”);
-drawSphere3D(ctx,ox+13,oy+10,13,”#f4b77a”);
-ctx.fillStyle=”#ffcc00”;ctx.beginPath();ctx.ellipse(ox+13,oy+2,13,6,0,0,Math.PI*2);ctx.fill();
-ctx.strokeStyle=”#ddaa00”;ctx.lineWidth=3;ctx.lineCap=“round”;ctx.beginPath();ctx.arc(ox+9,oy+6,5,Math.PI,Math.PI*1.8);ctx.stroke();
-drawSphere3D(ctx,ox+18,oy+9,4,”#111”);cr(ctx,ox+17,oy+8,1.5,”#fff”);
-ctx.strokeStyle=”#000”;ctx.lineWidth=2;ctx.beginPath();ctx.arc(ox+13,oy+14,5,0.2,Math.PI-0.2);ctx.stroke();
-bx(ctx,ox+(dir>0?18:4),oy+13,9,3,”#eee”);
+if(sup||st===“super”)for(var fi=0;fi<8;fi++)addPart(s+5+fi*4,fy+50+Math.random()*15,(Math.random()-.5)*3,-3-Math.random()*4,14,5+Math.random()*3,”#ff4400”,“circle”);
 }
 
-function dChopper(ctx,x,y,dir,st,fr,sup,f2){
-var ox=Math.floor(x),oy=Math.floor(y);
-ctx.fillStyle=“rgba(0,0,0,0.25)”;ctx.beginPath();ctx.ellipse(ox+13,oy+68,14,5,0,0,Math.PI*2);ctx.fill();
-var lw=st===“walk”?(fr%2?4:-3):0;
-var isMonster=st===“a3”;
-if(isMonster){
-// Monster Point - giant
-ctx.save();ctx.scale(1.5,1.5);ctx.translate(-ox*0.33,-oy*0.33);
-spawnBurst(ox+13,oy+30,”#ff44aa”,6,6,7);
-}
-drawCyl3D(ctx,ox+7,oy+48,ox+7,oy+68,5,”#7a3a10”);
-drawCyl3D(ctx,ox+19,oy+48+lw,ox+19,oy+68+lw,5,”#7a3a10”);
-drawSphere3D(ctx,ox+7,oy+68,6,”#5a2a08”);drawSphere3D(ctx,ox+19,oy+68+lw,6,”#5a2a08”);
-drawBox3D(ctx,ox,oy+26,26,22,6,”#8B4513”,”#aa6633”,”#5a2a08”);
-ctx.fillStyle=”#cc3366”;rr(ctx,ox+4,oy+28,18,12,3);
-if(st===“a1”){// Arm Point
-ctx.fillStyle=“rgba(150,80,30,0.7)”;ctx.beginPath();ctx.ellipse(ox+(dir>0?36:-10),oy+32,16,12,0,0,Math.PI*2);ctx.fill();
-spawnBurst(ox+(dir>0?40:-14),oy+32,”#aa6633”,4,4,5);
-}
-if(st===“a2”){// Guard Point
-ctx.save();ctx.globalAlpha=0.6;
-ctx.fillStyle=”#8B4513”;ctx.beginPath();ctx.ellipse(ox+13,oy+34,28,28,0,0,Math.PI*2);ctx.fill();
-ctx.globalAlpha=0.8;ctx.fillStyle=”#aa6633”;ctx.beginPath();ctx.ellipse(ox+13,oy+34,20,20,0,0,Math.PI*2);ctx.fill();
-ctx.restore();
-}
+// CHOPPER
+function drawChopper(ctx,x,y,dir,st,fr,sup){
+var s=Math.floor(x),fy=Math.floor(y);
+ctx.fillStyle=“rgba(0,0,0,0.2)”;ctx.beginPath();ctx.ellipse(s+14,fy+70,16,4,0,0,Math.PI*2);ctx.fill();
+var lw=st===“walk”?(fr%2?3:-2):0;
+// Brown hooves/legs
+ctx.fillStyle=”#7a3a10”;rr(ctx,s+3,fy+48,10,22,3);rr(ctx,s+15,fy+48+lw,10,22,3);
+ctx.fillStyle=”#4a2008”;ctx.beginPath();ctx.ellipse(s+8,fy+70,7,3.5,0,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.ellipse(s+20,fy+68+lw,7,3.5,0,0,Math.PI*2);ctx.fill();
+// Body fur
+ctx.fillStyle=”#8B4513”;rr(ctx,s-1,fy+22,30,28,8);
+ctx.fillStyle=”#cc3366”;rr(ctx,s+4,fy+25,20,16,5);// pink belly
+// Arms
 var ao=st===“walk”?Math.sin(fr/2)*3:0;
-drawCyl3D(ctx,ox+13,oy+30,ox-4,oy+30+ao,7,”#7a3a10”);
-drawCyl3D(ctx,ox+13,oy+30,ox+30,oy+30-ao,7,”#7a3a10”);
+ctx.fillStyle=”#8B4513”;rr(ctx,s-5,fy+24+ao,12,14,5);rr(ctx,s+21,fy+24-ao,12,14,5);
 // Pink hat
-ctx.fillStyle=”#ff6699”;ctx.beginPath();ctx.ellipse(ox+13,oy+5,16,7,0,0,Math.PI*2);ctx.fill();
-ctx.fillStyle=”#ff88aa”;ctx.beginPath();ctx.arc(ox+13,oy+3,13,Math.PI,0,false);ctx.fill();
-bx(ctx,ox+4,oy+3,18,5,”#fff”);
-ctx.fillStyle=”#7a3a10”;bx(ctx,ox+3,oy-1,4,10,”#7a3a10”);bx(ctx,ox+19,oy-1,4,10,”#7a3a10”);
-bx(ctx,ox,oy-3,4,5,”#7a3a10”);bx(ctx,ox+22,oy-3,4,5,”#7a3a10”);
-drawSphere3D(ctx,ox+13,oy+13,13,”#c8a882”);
-ctx.fillStyle=”#cc3333”;ctx.beginPath();ctx.ellipse(ox+13,oy+16,4,3.5,0,0,Math.PI*2);ctx.fill();
-drawSphere3D(ctx,ox+7,oy+11,4,”#111”);drawSphere3D(ctx,ox+19,oy+11,4,”#111”);
-cr(ctx,ox+6,oy+10,2,”#fff”);cr(ctx,ox+18,oy+10,2,”#fff”);
-if(isMonster){ctx.restore();spawnFire(ox+13,oy+30,5);}
+ctx.fillStyle=”#ff6699”;ctx.beginPath();ctx.ellipse(s+14,fy+4,16,7,0,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=”#ff88aa”;ctx.beginPath();ctx.arc(s+14,fy+2,13,Math.PI,0,false);ctx.fill();
+bx(ctx,s+3,fy+2,22,4,”#fff”);// hat rim
+// Antler-ears
+ctx.fillStyle=”#7a3a10”;bx(ctx,s+3,fy-1,4,10,”#7a3a10”);bx(ctx,s+21,fy-1,4,10,”#7a3a10”);
+bx(ctx,s+0,fy-4,4,5,”#7a3a10”);bx(ctx,s+24,fy-4,4,5,”#7a3a10”);
+// Head
+ctx.fillStyle=”#c8a882”;ctx.beginPath();ctx.ellipse(s+14,fy+12,14,13,0,0,Math.PI*2);ctx.fill();
+drawEyes(ctx,s,fy+4,”#2a1a0a”,dir,false);
+ctx.fillStyle=”#cc3333”;ctx.beginPath();ctx.ellipse(s+14,fy+17,5,4,0,0,Math.PI*2);ctx.fill();
+ctx.strokeStyle=”#000”;ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(s+14,fy+21,4,0.3,Math.PI-0.3);ctx.stroke();
+// Monster Point
+if(sup||st===“super”||st===“special”){
+ctx.fillStyle=“rgba(255,0,100,0.2)”;ctx.beginPath();ctx.ellipse(s+14,fy+30,38,44,0,0,Math.PI*2);ctx.fill();
+ctx.strokeStyle=“rgba(255,0,180,0.6)”;ctx.lineWidth=3;ctx.stroke();
+}
 }
 
-function dRobin(ctx,x,y,dir,st,fr,sup,f2){
-var ox=Math.floor(x),oy=Math.floor(y);
-ctx.fillStyle=“rgba(0,0,0,0.25)”;ctx.beginPath();ctx.ellipse(ox+13,oy+68,14,5,0,0,Math.PI*2);ctx.fill();
-var lw=st===“walk”?(fr%2?5:-4):0;
-drawCyl3D(ctx,ox+7,oy+46,ox+7,oy+68,5,”#111122”);
-drawCyl3D(ctx,ox+19,oy+46+lw,ox+19,oy+68+lw,5,”#111122”);
-drawSphere3D(ctx,ox+7,oy+68,5,”#080815”);drawSphere3D(ctx,ox+19,oy+68+lw,5,”#080815”);
-drawBox3D(ctx,ox+1,oy+22,24,20,5,”#1a0a2e”,”#2a1040”,”#0a0018”);
-// Flower arms
-var ia=st===“punch”||st===“special”||st===“super”||st===“a1”||st===“a2”||st===“a3”||st===“combo”;
-if(ia){
-var na=st===“a3”?8:(st===“a2”?6:(st===“super”?10:4));
-var radius=st===“a2”?55:(st===“a3”?70:38);
-for(var i=0;i<na;i++){
-var ang=i/na*Math.PI*2+Math.sin(f2||0)*0.1;
-var ax=ox+13+Math.cos(ang)*radius,ay=oy+34+Math.sin(ang)*radius*0.55;
-ctx.strokeStyle=”#d4946a”;ctx.lineWidth=5;ctx.lineCap=“round”;
-ctx.beginPath();ctx.moveTo(ox+13,oy+30);ctx.quadraticCurveTo((ox+13+ax)/2,oy+15,ax,ay);ctx.stroke();
-// 3D hand at end
-drawSphere3D(ctx,ax,ay,8,”#d4946a”);
-// Flower bloom
-for(var petal=0;petal<4;petal++){
-var pa=petal/4*Math.PI*2;
-ctx.fillStyle=“rgba(255,150,200,0.4)”;ctx.beginPath();ctx.ellipse(ax+Math.cos(pa)*6,ay+Math.sin(pa)*6,5,3,pa,0,Math.PI*2);ctx.fill();
-}
-}
-if(st===“a2”){// Giant hand
-drawSphere3D(ctx,ox+13+dir*55,oy+30,20,”#d4946a”);
-spawnBurst(ox+13+dir*55,oy+30,”#ffccaa”,5,4,6);
-}
-}
+// ROBIN
+function drawRobin(ctx,x,y,dir,st,fr,sup){
+var s=Math.floor(x),fy=Math.floor(y);
+var lw=drawBody(ctx,s,fy,”#1a0a2e”,”#111122”,”#d4946a”,””,””,dir,st,fr);
+// Black hair
+ctx.fillStyle=”#111”;ctx.beginPath();ctx.ellipse(s+14,fy+2,14,8,0,0,Math.PI*2);ctx.fill();
+rr(ctx,s-3,fy+3,7,15,3);rr(ctx,s+22,fy+3,7,12,3);
+drawHeadBase(ctx,s,fy,”#d4946a”,dir);
+drawEyes(ctx,s,fy,”#4a2a8a”,dir,false);
+drawMouth(ctx,s,fy,false);
 var ao=st===“walk”?Math.sin(fr/2)*4:0;
-if(!ia){
-drawCyl3D(ctx,ox+13,oy+28,ox-3,oy+30+ao,5,”#d4946a”);
-drawCyl3D(ctx,ox+13,oy+28,ox+29,oy+30-ao,5,”#d4946a”);
+ctx.fillStyle=”#d4946a”;rr(ctx,s-4,fy+24+ao,10,16,4);rr(ctx,s+20,fy+24-ao,10,16,4);
+// Hana Hana arms blossoming from everywhere
+if(st===“punch”||st===“kick”||st===“special”||st===“combo”||st===“q”||st===“w”||sup){
+var numArms=st===“w”||st===“super”?12:st===“q”?9:st===“combo”?7:4;
+for(var ri=0;ri<numArms;ri++){
+var rang=(ri/numArms)*Math.PI*2+(Date.now()*.001);
+var rrad=st===“w”||sup?65:st===“q”?55:45;
+var rx=s+14+Math.cos(rang)*rrad,ry=fy+34+Math.sin(rang)*rrad*.65;
+// Flower petals
+ctx.fillStyle=“rgba(255,200,200,0.6)”;ctx.beginPath();ctx.ellipse(rx,ry,5,3,rang,0,Math.PI*2);ctx.fill();
+// Arm extending
+ctx.strokeStyle=”#d4946a”;ctx.lineWidth=6;ctx.lineCap=“round”;
+ctx.beginPath();ctx.moveTo(s+14,fy+30);ctx.quadraticCurveTo(s+14+Math.cos(rang)*rrad*.5,fy+30+Math.sin(rang)*rrad*.3,rx,ry);ctx.stroke();
+ctx.fillStyle=”#d4946a”;ctx.beginPath();ctx.ellipse(rx,ry,8,6,rang,0,Math.PI*2);ctx.fill();
 }
-drawSphere3D(ctx,ox+13,oy+10,13,”#d4946a”);
-ctx.fillStyle=”#111”;ctx.beginPath();ctx.ellipse(ox+13,oy+2,14,8,0,0,Math.PI*2);ctx.fill();
-rr(ctx,ox-2,oy+4,6,13,3);rr(ctx,ox+22,oy+4,5,10,3);
-drawSphere3D(ctx,ox+7,oy+9,3.5,”#111”);drawSphere3D(ctx,ox+19,oy+9,3.5,”#111”);
-cr(ctx,ox+6,oy+8,1.5,”#7755ff”);cr(ctx,ox+18,oy+8,1.5,”#7755ff”);
-ctx.strokeStyle=”#000”;ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(ox+13,oy+14,4,0.3,Math.PI-0.3);ctx.stroke();
+}
 }
 
-function dUsopp(ctx,x,y,dir,st,fr,sup,f2){
-var ox=Math.floor(x),oy=Math.floor(y);
-ctx.fillStyle=“rgba(0,0,0,0.25)”;ctx.beginPath();ctx.ellipse(ox+13,oy+68,14,5,0,0,Math.PI*2);ctx.fill();
-var lw=st===“walk”?(fr%2?5:-4):0;
-drawCyl3D(ctx,ox+7,oy+46,ox+7,oy+68,5,”#664400”);
-drawCyl3D(ctx,ox+19,oy+46+lw,ox+19,oy+68+lw,5,”#664400”);
-drawSphere3D(ctx,ox+7,oy+68,5,”#443300”);drawSphere3D(ctx,ox+19,oy+68+lw,5,”#443300”);
-drawBox3D(ctx,ox+1,oy+22,24,24,6,”#884400”,”#aa6622”,”#552200”);
-// Kabuto slingshot + KABUTO GUN
-var isFire=st===“punch”||st===“special”||st===“a1”||st===“a2”||st===“a3”;
-var gx=ox+(dir>0?-2:18),gy=oy+14;
-// Slingshot / gun body
-drawBox3D(ctx,gx,gy,8,32,5,”#553300”,”#774422”,”#331100”);
-// Kabuto fork
-ctx.strokeStyle=”#665533”;ctx.lineWidth=5;ctx.lineCap=“round”;
-ctx.beginPath();ctx.moveTo(gx+4,gy);ctx.lineTo(gx,gy-8);ctx.stroke();
-ctx.beginPath();ctx.moveTo(gx+4,gy);ctx.lineTo(gx+8,gy-8);ctx.stroke();
-if(isFire){
-// Projectile fired
-var projX=ox+(dir>0?60:-34)+Math.sin(f2||0)*5;
-var projY=oy+20+(Math.random()-0.5)*4;
-if(st===“a1”){// Fire star
-ctx.fillStyle=”#ff4400”;ctx.beginPath();ctx.arc(projX,projY,8,0,Math.PI*2);ctx.fill();
-spawnFire(projX,projY,4);
-} else if(st===“a2”){// Plant
-ctx.fillStyle=”#22aa22”;ctx.beginPath();ctx.arc(projX,projY,10,0,Math.PI*2);ctx.fill();
-spawnBurst(projX,projY,”#44ff44”,4,3,4);
-} else if(st===“a3”){// Thor - giant
-ctx.fillStyle=“rgba(255,255,0,0.8)”;ctx.beginPath();ctx.arc(projX+dir*30,projY,18,0,Math.PI*2);ctx.fill();
-spawnLightning(projX+dir*30,projY,8);
+// USOPP - SNIPER with GUN
+function drawUsopp(ctx,x,y,dir,st,fr,sup){
+var s=Math.floor(x),fy=Math.floor(y);
+var lw=drawBody(ctx,s,fy,”#884400”,”#664400”,”#cc8844”,””,””,dir,st,fr);
+// Poofy black hair
+ctx.fillStyle=”#222”;ctx.beginPath();ctx.ellipse(s+14,fy+2,14,9,0,0,Math.PI*2);ctx.fill();
+ctx.beginPath();ctx.arc(s+6,fy+0,7,Math.PI,0,false);ctx.fill();
+ctx.beginPath();ctx.arc(s+22,fy+0,7,Math.PI,0,false);ctx.fill();
+drawHeadBase(ctx,s,fy,”#cc8844”,dir);
+drawEyes(ctx,s,fy,”#2a2a1a”,dir,false);
+// LONG NOSE - Usopp’s signature!
+ctx.fillStyle=”#cc8844”;
+ctx.beginPath();ctx.moveTo(s+10,fy+12);ctx.lineTo(s+(dir>0?32:0),fy+16);ctx.lineTo(s+12,fy+19);ctx.closePath();ctx.fill();
+ctx.strokeStyle=shd(”#cc8844”,-20);ctx.lineWidth=1.5;ctx.stroke();
+drawMouth(ctx,s,fy,false);
+
+var ao=st===“walk”?Math.sin(fr/2)*4:0;
+
+// KABUTO SLINGSHOT / GUN
+var gx=s+(dir>0?-2:22),gy=fy+20;
+// Slingshot fork
+ctx.strokeStyle=”#553300”;ctx.lineWidth=3;ctx.lineCap=“round”;
+ctx.beginPath();ctx.moveTo(gx+3,gy+8);ctx.lineTo(gx+3,gy+48);ctx.stroke();// handle
+ctx.beginPath();ctx.moveTo(gx+3,gy+8);ctx.lineTo(gx+(dir>0?-8:14),gy+0);ctx.stroke();// left fork
+ctx.beginPath();ctx.moveTo(gx+3,gy+8);ctx.lineTo(gx+(dir>0?14:-8),gy+0);ctx.stroke();// right fork
+// Rubber band
+if(st===“punch”||st===“special”||st===“combo”||st===“q”||st===“w”||st===“super”){
+// SHOOTING! - band pulled back
+ctx.strokeStyle=”#884422”;ctx.lineWidth=2;
+ctx.beginPath();ctx.moveTo(gx+(dir>0?-8:14),gy+0);ctx.lineTo(gx+(dir>0?-24:20),gy+8);ctx.stroke();
+ctx.beginPath();ctx.moveTo(gx+(dir>0?14:-8),gy+0);ctx.lineTo(gx+(dir>0?-24:20),gy+8);ctx.stroke();
+// PROJECTILE VISUAL
+if(st===“w”||st===“super”){// Firebird star
+var bx2=s+(dir>0?40:-14),by2=fy+14;
+ctx.fillStyle=”#ff4400”;for(var fs=0;fs<5;fs++){var fa=fs/5*Math.PI*2;ctx.beginPath();ctx.ellipse(bx2+Math.cos(fa)*10,by2+Math.sin(fa)*10,5,3,fa,0,Math.PI*2);ctx.fill();}
 } else {
-ctx.fillStyle=”#ffcc00”;ctx.beginPath();ctx.arc(projX,projY,5,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=”#cc6600”;ctx.beginPath();ctx.arc(gx+(dir>0?-18:24),gy+4,5,0,Math.PI*2);ctx.fill();
 }
-// bullet trail
-ctx.strokeStyle=“rgba(255,200,0,0.5)”;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(gx+4,gy+16);ctx.lineTo(projX,projY);ctx.stroke();
+} else {
+ctx.strokeStyle=”#884422”;ctx.lineWidth=2;
+ctx.beginPath();ctx.moveTo(gx+(dir>0?-8:14),gy+0);ctx.lineTo(gx+(dir>0?14:-8),gy+0);ctx.stroke();
 }
-var ao=st===“walk”?Math.sin(fr/2)*4:0;
-drawCyl3D(ctx,ox+13,oy+30,ox-3,oy+32+ao,5,”#cc8844”);
-drawCyl3D(ctx,ox+13,oy+30,ox+29,oy+32-ao,5,”#cc8844”);
-drawSphere3D(ctx,ox+13,oy+10,13,”#cc8844”);
-bx(ctx,ox+2,oy,22,5,”#554422”);
-ctx.fillStyle=”#cc8844”;ctx.beginPath();ctx.moveTo(ox+10,oy+10);ctx.lineTo(ox+16,oy+10);ctx.lineTo(ox+13,oy+26);ctx.closePath();ctx.fill();
-drawSphere3D(ctx,ox+7,oy+8,4,”#111”);drawSphere3D(ctx,ox+19,oy+8,4,”#111”);
-cr(ctx,ox+6,oy+7,1.5,”#fff”);cr(ctx,ox+18,oy+7,1.5,”#fff”);
-ctx.strokeStyle=”#000”;ctx.lineWidth=1.8;ctx.beginPath();ctx.arc(ox+13,oy+13,5,0.2,Math.PI-0.2);ctx.stroke();
+ctx.fillStyle=”#cc8844”;rr(ctx,s-4,fy+24+ao,10,17,4);rr(ctx,s+20,fy+24-ao,10,17,4);
 }
 
-function dFranky(ctx,x,y,dir,st,fr,sup,f2){
-var ox=Math.floor(x),oy=Math.floor(y);
-ctx.fillStyle=“rgba(0,0,0,0.25)”;ctx.beginPath();ctx.ellipse(ox+13,oy+68,18,5,0,0,Math.PI*2);ctx.fill();
+// FRANKY
+function drawFranky(ctx,x,y,dir,st,fr,sup){
+var s=Math.floor(x),fy=Math.floor(y);
+ctx.fillStyle=“rgba(0,0,0,0.2)”;ctx.beginPath();ctx.ellipse(s+14,fy+70,18,4,0,0,Math.PI*2);ctx.fill();
 var lw=st===“walk”?(fr%2?5:-4):0;
-drawCyl3D(ctx,ox+6,oy+44,ox+6,oy+68,6,”#2244aa”);
-drawCyl3D(ctx,ox+20,oy+44+lw,ox+20,oy+68+lw,6,”#2244aa”);
-drawSphere3D(ctx,ox+6,oy+68,7,”#112288”);drawSphere3D(ctx,ox+20,oy+68+lw,7,”#112288”);
-drawBox3D(ctx,ox-2,oy+18,30,26,8,”#5588dd”,”#77aaee”,”#2255aa”);
-// Star
-ctx.fillStyle=”#fff”;ctx.save();ctx.translate(ox+13,oy+34);
-ctx.beginPath();for(var sp=0;sp<5;sp++){var a=sp*Math.PI*2/5-Math.PI/2;ctx.lineTo(Math.cos(a)*8,Math.sin(a)*8);var a2=a+Math.PI/5;ctx.lineTo(Math.cos(a2)*4,Math.sin(a2)*4);}
-ctx.closePath();ctx.fill();ctx.restore();
-var isLaser=st===“a2”||st===“super”;
-var isRocket=st===“a1”;
-var isShogun=st===“a3”;
-if(isLaser){
-var g=ctx.createLinearGradient(ox+13,oy+30,ox+13+dir*290,oy+30);
-g.addColorStop(0,“rgba(0,255,255,0.9)”);g.addColorStop(0.8,“rgba(0,150,255,0.6)”);g.addColorStop(1,“transparent”);
-ctx.strokeStyle=g;ctx.lineWidth=12;ctx.lineCap=“round”;
-ctx.beginPath();ctx.moveTo(ox+13,oy+30);ctx.lineTo(ox+13+dir*290,oy+30);ctx.stroke();
-ctx.strokeStyle=“rgba(255,255,255,0.8)”;ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(ox+13,oy+30);ctx.lineTo(ox+13+dir*290,oy+30);ctx.stroke();
-spawnBurst(ox+13+dir*200,oy+30,”#0cf”,4,6,6);
+ctx.fillStyle=”#2244aa”;rr(ctx,s+2,fy+44,12,26,3);rr(ctx,s+16,fy+44+lw,12,26,3);
+ctx.fillStyle=”#112288”;ctx.beginPath();ctx.ellipse(s+8,fy+70,7,4,0,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.ellipse(s+22,fy+68+lw,7,4,0,0,Math.PI*2);ctx.fill();
+// HUGE cyborg body
+ctx.fillStyle=”#5588dd”;rr(ctx,s-3,fy+18,34,28,6);
+ctx.fillStyle=”#3366bb”;rr(ctx,s-3,fy+18,34,8,4);// top plate
+// Chest star
+ctx.fillStyle=”#fff”;ctx.font=“20px serif”;ctx.textAlign=“center”;ctx.fillText(”*”,s+14,fy+38);
+// Cola tubes on sides
+ctx.strokeStyle=”#cc3300”;ctx.lineWidth=4;ctx.lineCap=“round”;
+ctx.beginPath();ctx.moveTo(s-3,fy+24);ctx.lineTo(s-3,fy+40);ctx.stroke();
+ctx.beginPath();ctx.moveTo(s+31,fy+24);ctx.lineTo(s+31,fy+40);ctx.stroke();
+// HUGE cyborg arms
+var ea=st===“punch”||st===“special”||st===“combo”||st===“q”||st===“w”;
+ctx.fillStyle=”#3366cc”;rr(ctx,s-10+(ea&&dir>0?16:0),fy+18,16,20,6);
+ctx.fillStyle=”#3366cc”;rr(ctx,s+22+(ea&&dir<0?-16:0),fy+18,16,20,6);
+// Laser/beam ability
+if(st===“special”||st===“q”||st===“w”||st===“super”){
+ctx.strokeStyle=st===“w”?”#ff4400”:”#00aaff”;
+ctx.lineWidth=8;ctx.shadowColor=st===“w”?”#ff4400”:”#0af”;ctx.shadowBlur=20;
+ctx.beginPath();ctx.moveTo(s+(dir>0?30:-2),fy+28);ctx.lineTo(s+(dir>0?120:-92),fy+28);ctx.stroke();
+ctx.shadowBlur=0;ctx.lineWidth=4;ctx.strokeStyle=”#fff”;
+ctx.beginPath();ctx.moveTo(s+(dir>0?30:-2),fy+28);ctx.lineTo(s+(dir>0?100:-72),fy+28);ctx.stroke();
+addPart(s+(dir>0?110:-82),fy+28,(dir>0?2:-2)*(1+Math.random()),(-1+Math.random()*2),10,5,”#00aaff”);
 }
-if(isRocket){
-var g2=ctx.createLinearGradient(ox+13+dir*40,oy+30,ox+13+dir*200,oy+30);
-g2.addColorStop(0,“rgba(255,150,0,0.8)”);g2.addColorStop(1,“transparent”);
-ctx.strokeStyle=g2;ctx.lineWidth=14;ctx.beginPath();ctx.moveTo(ox+13+dir*40,oy+30);ctx.lineTo(ox+13+dir*180,oy+30);ctx.stroke();
-drawSphere3D(ctx,ox+13+dir*40,oy+30,14,”#cc4400”);
-spawnFire(ox+13+dir*40,oy+30,5);
-}
-if(isShogun){// Franky Shogun - giant robot
-ctx.save();ctx.globalAlpha=0.85;
-drawBox3D(ctx,ox-8,oy-20,42,92,12,”#2244aa”,”#3355cc”,”#001188”);
-drawSphere3D(ctx,ox+13,oy-10,18,”#5588dd”);
-ctx.restore();
-spawnBurst(ox+13,oy+30,”#0cf”,6,5,7);
-}
-var isExt=st===“punch”||st===“special”||isRocket||isLaser;
-drawCyl3D(ctx,ox+13,oy+26,ox+(isExt&&dir>0?-14:0)-6,oy+26,10,”#3366cc”);
-drawCyl3D(ctx,ox+13,oy+26,ox+(isExt&&dir<0?40:26)+6,oy+26,10,”#3366cc”);
-drawSphere3D(ctx,ox+13,oy+10,14,”#cc8844”);
-drawBox3D(ctx,ox+3,oy-11,20,14,6,”#3333dd”,”#5555ff”,”#1111bb”);
-drawSphere3D(ctx,ox+7,oy+8,4,”#111”);drawSphere3D(ctx,ox+19,oy+8,4,”#111”);
-cr(ctx,ox+6,oy+7,1.5,”#fff”);cr(ctx,ox+18,oy+7,1.5,”#fff”);
-ctx.strokeStyle=”#000”;ctx.lineWidth=2;ctx.beginPath();ctx.arc(ox+13,oy+13,5,0.2,Math.PI-0.2);ctx.stroke();
+// Head
+ctx.fillStyle=”#cc8844”;rr(ctx,s+7,fy+13,14,7,3);
+ctx.fillStyle=”#cc8844”;ctx.beginPath();ctx.ellipse(s+14,fy+8,14,12,0,0,Math.PI*2);ctx.fill();
+// Blue pompadour
+ctx.fillStyle=”#3333dd”;ctx.beginPath();ctx.moveTo(s+2,fy+2);ctx.lineTo(s+6,fy-15);ctx.lineTo(s+22,fy-15);ctx.lineTo(s+26,fy+2);ctx.closePath();ctx.fill();
+ctx.strokeStyle=”#2222bb”;ctx.lineWidth=2;ctx.stroke();
+drawEyes(ctx,s,fy,”#2a4a8a”,dir,false);
+drawMouth(ctx,s,fy,true);
+if(sup)for(var fi=0;fi<8;fi++)addPart(s+5+fi*4,fy+20+Math.random()*30,(Math.random()-.5)*4,-3-Math.random()*3,12,4,”#00aaff”,“circle”);
 }
 
-function dBrook(ctx,x,y,dir,st,fr,sup,f2){
-var ox=Math.floor(x),oy=Math.floor(y);
-ctx.fillStyle=“rgba(0,0,0,0.25)”;ctx.beginPath();ctx.ellipse(ox+13,oy+68,13,5,0,0,Math.PI*2);ctx.fill();
-var lw=st===“walk”?(fr%2?5:-4):0;
-drawCyl3D(ctx,ox+8,oy+44,ox+8,oy+68,3,”#111”);
-drawCyl3D(ctx,ox+18,oy+44+lw,ox+18,oy+68+lw,3,”#111”);
-drawSphere3D(ctx,ox+8,oy+68,4,”#222”);drawSphere3D(ctx,ox+18,oy+68+lw,4,”#222”);
-drawBox3D(ctx,ox+3,oy+20,19,24,5,”#111”,”#222”,”#000”);
-ctx.fillStyle=”#fff”;rr(ctx,ox+8,oy+20,8,17,2);
-// Sword
-var csx=ox+(dir>0?23:-9);
-var isSlash=st===“punch”||st===“a1”||st===“a2”||st===“a3”||st===“special”||st===“super”||st===“combo”;
-var slashAng=isSlash?(dir>0?-0.4:Math.PI+0.4):0;
-ctx.save();ctx.translate(csx+2,oy+30);ctx.rotate(slashAng);
-drawCyl3D(ctx,0,-20,0,36,2.5,”#ccc”);
-drawSphere3D(ctx,0,-20,5,”#aaa”);
-ctx.restore();
-if(isSlash){
-spawnSlash(csx+2+dir*24,oy+22,dir,”#ccccff”);
-if(st===“a2”){// Freezing soul - ice
-spawnIce(csx+dir*30,oy+22,8);
-ctx.fillStyle=“rgba(100,200,255,0.4)”;ctx.beginPath();ctx.ellipse(csx+dir*40,oy+22,24,18,0,0,Math.PI*2);ctx.fill();
-}
-if(st===“a3”){// Requiem
-ctx.save();ctx.globalAlpha=0.4;ctx.fillStyle=”#8888ff”;
-ctx.beginPath();ctx.ellipse(ox+13,oy+34,40,40,0,0,Math.PI*2);ctx.fill();ctx.restore();
-spawnBurst(ox+13,oy+34,”#aaaaff”,6,4,5);
+// BROOK - detailed skeleton musician
+function drawBrook(ctx,x,y,dir,st,fr,sup){
+var s=Math.floor(x),fy=Math.floor(y);
+var lw=drawBody(ctx,s,fy,”#111”,”#111”,”#fff”,””,””,dir,st,fr);
+// Thin skeleton legs visible inside pants
+ctx.strokeStyle=”#ddd”;ctx.lineWidth=3;
+ctx.beginPath();ctx.moveTo(s+8,fy+44);ctx.lineTo(s+8,fy+68);ctx.stroke();
+ctx.beginPath();ctx.moveTo(s+20,fy+44+lw);ctx.lineTo(s+20,fy+67+lw);ctx.stroke();
+// White shirt
+ctx.fillStyle=”#fff”;rr(ctx,s+9,fy+21,10,22,2);
+ctx.fillStyle=”#333”;ctx.beginPath();ctx.moveTo(s+1,fy+21);ctx.lineTo(s+9,fy+21);ctx.lineTo(s+7,fy+32);ctx.lineTo(s+1,fy+28);ctx.closePath();ctx.fill();
+ctx.beginPath();ctx.moveTo(s+27,fy+21);ctx.lineTo(s+19,fy+21);ctx.lineTo(s+21,fy+32);ctx.lineTo(s+27,fy+28);ctx.closePath();ctx.fill();
+// Cane sword
+var csx=s+(dir>0?26:-6);
+ctx.strokeStyle=”#aaa”;ctx.lineWidth=4;ctx.lineCap=“round”;
+ctx.beginPath();ctx.moveTo(csx+2,fy+8);ctx.lineTo(csx+2,fy+70);ctx.stroke();
+ctx.fillStyle=”#888”;ctx.beginPath();ctx.ellipse(csx+2,fy+8,6,5,0,0,Math.PI*2);ctx.fill();
+if(st===“punch”||st===“kick”||st===“special”||st===“w”||st===“super”){// Ice slash
+ctx.strokeStyle=“rgba(150,200,255,0.75)”;ctx.lineWidth=3;
+for(var si=0;si<4;si++){
+ctx.beginPath();ctx.moveTo(csx+2,fy+8);ctx.lineTo(csx+2+dir*(32+si*16),fy+8+si*10);ctx.stroke();
 }
 }
+// Skeleton arms (thin)
 var ao=st===“walk”?Math.sin(fr/2)*4:0;
-drawCyl3D(ctx,ox+13,oy+28,ox-2,oy+28+ao,4,”#eee”);
-drawCyl3D(ctx,ox+13,oy+28,ox+28,oy+28-ao,4,”#eee”);
+ctx.strokeStyle=”#eee”;ctx.lineWidth=5;ctx.lineCap=“round”;
+ctx.beginPath();ctx.moveTo(s+1,fy+24+ao);ctx.lineTo(s-6,fy+38+ao);ctx.stroke();
+ctx.beginPath();ctx.moveTo(s+27,fy+24-ao);ctx.lineTo(s+34,fy+38-ao);ctx.stroke();
 // Skull head
-ctx.fillStyle=”#fff”;ctx.beginPath();ctx.ellipse(ox+13,oy+10,12,13,0,0,Math.PI*2);ctx.fill();
-ctx.fillStyle=”#111”;ctx.beginPath();ctx.arc(ox+13,oy+4,12,Math.PI,0,false);ctx.fill();
-ctx.fillStyle=”#000”;ctx.beginPath();ctx.ellipse(ox+8,oy+10,4,5,0,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.ellipse(ox+18,oy+10,4,5,0,0,Math.PI*2);ctx.fill();
-ctx.fillStyle=“rgba(140,140,255,0.8)”;ctx.beginPath();ctx.arc(ox+8,oy+10,2,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(ox+18,oy+10,2,0,Math.PI*2);ctx.fill();
-ctx.fillStyle=”#222”;ctx.beginPath();ctx.arc(ox+13,oy+15,2,0,Math.PI*2);ctx.fill();
-bx(ctx,ox+7,oy+18,12,3,”#ccc”);for(var tb=0;tb<4;tb++){bx(ctx,ox+8+tb*3,oy+18,2,3,”#000”);}
+ctx.fillStyle=”#fff”;ctx.beginPath();ctx.ellipse(s+14,fy+9,13,13,0,0,Math.PI*2);ctx.fill();
+ctx.strokeStyle=”#ccc”;ctx.lineWidth=1.5;ctx.stroke();
+// Top hat
+ctx.fillStyle=”#111”;ctx.beginPath();ctx.arc(s+14,fy+3,14,Math.PI,0,false);ctx.fill();
+rr(ctx,s-2,fy+1,32,5,2);ctx.strokeStyle=”#444”;ctx.lineWidth=1;ctx.stroke();
+// Skull eyes (empty sockets)
+ctx.fillStyle=”#000”;ctx.beginPath();ctx.ellipse(s+8,fy+11,5,6,0,0,Math.PI*2);ctx.fill();
+ctx.beginPath();ctx.ellipse(s+20,fy+11,5,6,0,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=“rgba(100,100,255,0.5)”;ctx.beginPath();ctx.arc(s+8,fy+11,2.5,0,Math.PI*2);ctx.fill();
+ctx.beginPath();ctx.arc(s+20,fy+11,2.5,0,Math.PI*2);ctx.fill();
+// Teeth grin
+ctx.fillStyle=”#fff”;bx(ctx,s+8,fy+19,14,4,”#fff”);
+for(var ti=0;ti<5;ti++)bx(ctx,s+9+ti*3,fy+19,2.5,4,”#000”);
+if(sup||st===“super”){ctx.fillStyle=“rgba(100,150,255,0.2)”;ctx.beginPath();ctx.ellipse(s+14,fy+9,20,24,0,0,Math.PI*2);ctx.fill();ctx.strokeStyle=“rgba(150,200,255,0.55)”;ctx.lineWidth=3;ctx.stroke();}
 }
 
-function dAce(ctx,x,y,dir,st,fr,sup,f2){
-var t=f2||0;
-var ox=Math.floor(x),oy=Math.floor(y);
-ctx.fillStyle=“rgba(0,0,0,0.25)”;ctx.beginPath();ctx.ellipse(ox+13,oy+68,17,5,0,0,Math.PI*2);ctx.fill();
-var lw=st===“walk”?(fr%2?5:-4):0;
-drawCyl3D(ctx,ox+7,oy+46,ox+7,oy+68,5,”#221100”);
-drawCyl3D(ctx,ox+19,oy+46+lw,ox+19,oy+68+lw,5,”#221100”);
-drawSphere3D(ctx,ox+7,oy+68,5,”#110800”);drawSphere3D(ctx,ox+19,oy+68+lw,5,”#110800”);
-// No shirt - tattooed chest
-drawSphere3D(ctx,ox+13,oy+34,16,”#cc8844”);
-// ASCE tattoo
-ctx.fillStyle=“rgba(0,80,200,0.7)”;ctx.font=“bold 8px sans-serif”;ctx.textAlign=“center”;ctx.fillText(“A”,ox+7,oy+26);ctx.fillText(“C”,ox+13,oy+32);ctx.fillText(“E”,ox+19,oy+26);
-// Shorts
-drawBox3D(ctx,ox+1,oy+42,24,12,5,”#331100”,”#442211”,”#221100”);
-bx(ctx,ox+1,oy+42,24,3,”#cc6600”);
-var ia=st===“punch”||st===“special”||st===“a1”||st===“a2”||st===“a3”||st===“combo”||st===“super”;
-var ao=st===“walk”?Math.sin(fr/2)*4:0;
-if(ia){
-// Fire arms
-var armCol=“rgba(255,80,0,0.85)”;
-drawCyl3D(ctx,ox+13,oy+30,ox-10,oy+28+ao,8,armCol);
-drawCyl3D(ctx,ox+13,oy+30,ox+36,oy+28-ao,8,armCol);
-spawnFire(ox-10,oy+28,3);spawnFire(ox+36,oy+28,3);
-if(st===“a1”){// Fire Fist - projectile
-var ffx=ox+(dir>0?60:-34),ffy=oy+28;
-var fg=ctx.createRadialGradient(ffx,ffy,0,ffx,ffy,24);
-fg.addColorStop(0,”#fff”);fg.addColorStop(0.3,”#ffaa00”);fg.addColorStop(0.7,”#ff4400”);fg.addColorStop(1,“transparent”);
-ctx.fillStyle=fg;ctx.beginPath();ctx.arc(ffx,ffy,24,0,Math.PI*2);ctx.fill();
-spawnFire(ffx,ffy,6);
-}
-if(st===“a2”){// Hiken - cross fire
-var g3=ctx.createLinearGradient(ox+13,oy+28,ox+13+dir*260,oy+28);
-g3.addColorStop(0,“rgba(255,100,0,0.9)”);g3.addColorStop(1,“rgba(255,0,0,0.1)”);
-ctx.strokeStyle=g3;ctx.lineWidth=18;ctx.lineCap=“round”;
-ctx.beginPath();ctx.moveTo(ox+13,oy+28);ctx.lineTo(ox+13+dir*260,oy+28);ctx.stroke();
-for(var hi=0;hi<8;hi++){spawnFire(ox+13+dir*(20+hi*30),oy+28,4);}
-}
-if(st===“a3”){// Hotarubi - fire swarm
-for(var fi=0;fi<8;fi++){
-var fa=fi/8*Math.PI*2+t*2;
-var fx=ox+13+Math.cos(fa)*40,fy=oy+34+Math.sin(fa)*22;
-var fg2=ctx.createRadialGradient(fx,fy,0,fx,fy,10);
-fg2.addColorStop(0,”#fff”);fg2.addColorStop(0.5,”#ff6600”);fg2.addColorStop(1,“transparent”);
-ctx.fillStyle=fg2;ctx.beginPath();ctx.arc(fx,fy,10,0,Math.PI*2);ctx.fill();
-spawnFire(fx,fy,2);
-}
-}
-} else {
-drawCyl3D(ctx,ox+13,oy+30,ox-4,oy+32+ao,6,”#cc8844”);
-drawCyl3D(ctx,ox+13,oy+30,ox+30,oy+32-ao,6,”#cc8844”);
-drawSphere3D(ctx,ox-4,oy+32+ao,7,”#cc8844”);
-drawSphere3D(ctx,ox+30,oy+32-ao,7,”#cc8844”);
-}
-drawSphere3D(ctx,ox+13,oy+10,13,”#cc8844”);
-// Orange hat (rim down)
-ctx.fillStyle=”#222”;ctx.beginPath();ctx.ellipse(ox+13,oy+3,14,7,0,0,Math.PI*2);ctx.fill();
-ctx.fillStyle=”#333”;ctx.beginPath();ctx.arc(ox+13,oy+2,10,Math.PI,0,false);ctx.fill();
-ctx.fillStyle=”#cc6600”;ctx.beginPath();ctx.arc(ox+13,oy+3,3,0,Math.PI*2);ctx.fill();
+// ACE - fire powers!
+function drawAce(ctx,x,y,dir,st,fr,sup){
+var s=Math.floor(x),fy=Math.floor(y),t=Date.now()/1000;
+var lw=drawBody(ctx,s,fy,”#221100”,”#221100”,”#cc8844”,””,””,dir,st,fr);
+// Orange belt/tattoo area
+bx(ctx,s+2,fy+40,24,5,”#cc6600”);
+// ACE tattoo
+ctx.fillStyle=”#cc3300”;ctx.font=“5px Arial”;ctx.textAlign=“left”;ctx.fillText(“ACE”,s+7,fy+37);
+// Black hat with beads
+ctx.fillStyle=”#222”;ctx.beginPath();ctx.arc(s+14,fy+2,13,Math.PI,0,false);ctx.fill();
+ctx.fillStyle=”#444”;ctx.beginPath();ctx.ellipse(s+14,fy+2,16,4,0,0,Math.PI*2);ctx.fill();
+ctx.strokeStyle=”#999”;ctx.lineWidth=1;ctx.stroke();
+// Bead necklace on hat
+for(var bi=0;bi<8;bi++){ctx.fillStyle=”#888”;ctx.beginPath();ctx.arc(s+5+bi*3.5,fy+1,2,0,Math.PI*2);ctx.fill();}
+drawHeadBase(ctx,s,fy,”#cc8844”,dir);
+drawEyes(ctx,s,fy,”#2a1a0a”,dir,false);
+drawMouth(ctx,s,fy,true);
 // Freckles
-ctx.fillStyle=“rgba(150,80,0,0.7)”;
-for(var frk=0;frk<6;frk++){ctx.beginPath();ctx.arc(ox+5+(frk%3)*3,oy+13+(frk>2?3:0),1.5,0,Math.PI*2);ctx.fill();}
-drawSphere3D(ctx,ox+7,oy+9,4,”#111”);drawSphere3D(ctx,ox+19,oy+9,4,”#111”);
-cr(ctx,ox+6,oy+8,1.5,”#fff”);cr(ctx,ox+18,oy+8,1.5,”#fff”);
-ctx.strokeStyle=”#000”;ctx.lineWidth=2;ctx.beginPath();ctx.arc(ox+13,oy+13,5,0.2,Math.PI-0.2);ctx.stroke();
-if(ia){ctx.fillStyle=“rgba(255,60,0,0.15)”;ctx.beginPath();ctx.ellipse(ox+13,oy+34,38,44,0,0,Math.PI*2);ctx.fill();}
-}
+ctx.fillStyle=“rgba(100,60,20,0.6)”;
+for(var fi=0;fi<6;fi++){ctx.beginPath();ctx.arc(s+5+fi*4,fy+13,1.5,0,Math.PI*2);ctx.fill();}
 
-// ===== ENEMY DRAW =====
-function dEnemy(ctx,x,y,dir,st,fr,ed,sup){
-var ox=Math.floor(x),oy=Math.floor(y),t=(Date.now()-t0)*0.001;
-ctx.fillStyle=“rgba(0,0,0,0.25)”;ctx.beginPath();ctx.ellipse(ox+13,oy+68,16,5,0,0,Math.PI*2);ctx.fill();
-var c=ed.col||”#888”,lw=st===“walk”?(fr%2?5:-4):0;
-var isAtk=st===“punch”||st===“kick”||st===“special”||st===“super”||st===“combo”||st===“a1”;
-drawCyl3D(ctx,ox+7,oy+46,ox+7,oy+68,5,shd(c,-40));
-drawCyl3D(ctx,ox+19,oy+46+lw,ox+19,oy+68+lw,5,shd(c,-40));
-drawSphere3D(ctx,ox+7,oy+68,5,shd(c,-60));drawSphere3D(ctx,ox+19,oy+68+lw,5,shd(c,-60));
-drawBox3D(ctx,ox+1,oy+22,24,24,6,c,shd(c,30),shd(c,-30));
+var ao=st===“walk”?Math.sin(fr/2)*4:0;
+var ia=st===“punch”||st===“kick”||st===“special”||st===“combo”||st===“q”||st===“w”||st===“super”;
+
+if(ia){
+// FIRE POWERS - arm becomes flame
+var fColor=st===“super”?”#ffffff”:st===“w”?”#ff8800”:”#ff4400”;
+ctx.fillStyle=fColor;
+// Flaming arm extends toward enemy
+ctx.save();
+var fArmX=s+(dir>0?24:-6),fArmY=fy+28;
+var fTipX=fArmX+dir*(st===“punch”||st===“combo”?55:40),fTipY=fy+30;
+// FIRE ARM - glowing tube
+ctx.shadowColor=”#ff4400”;ctx.shadowBlur=20;
+ctx.strokeStyle=fColor;ctx.lineWidth=12;ctx.lineCap=“round”;
+ctx.beginPath();ctx.moveTo(s+(dir>0?22:6),fy+28);ctx.lineTo(fTipX,fTipY);ctx.stroke();
+ctx.lineWidth=6;ctx.strokeStyle=”#fff”;ctx.beginPath();ctx.moveTo(s+(dir>0?22:6),fy+28);ctx.lineTo(fTipX-dir*8,fTipY);ctx.stroke();
+ctx.shadowBlur=0;
+// Fire fist
+ctx.fillStyle=”#ff6600”;ctx.beginPath();ctx.ellipse(fTipX,fTipY,13,11,0,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=”#ffaa00”;ctx.beginPath();ctx.ellipse(fTipX,fTipY,8,7,0,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=”#fff”;ctx.beginPath();ctx.ellipse(fTipX,fTipY,4,4,0,0,Math.PI*2);ctx.fill();
+ctx.restore();
+// Fire particles
+for(var fp=0;fp<3;fp++)addPart(fTipX+(Math.random()-.5)*14,fTipY-Math.random()*10,(Math.random()-.5)*3,-2-Math.random()*3,10,4+Math.random()*4,[”#ff4400”,”#ff8800”,”#ffcc00”][fp],“circle”);
+ctx.fillStyle=”#cc8844”;rr(ctx,s+(dir>0?-5:20),fy+24+ao,10,17,4);
+} else {
+ctx.fillStyle=”#cc8844”;rr(ctx,s-5,fy+24+ao,10,17,4);rr(ctx,s+21,fy+24-ao,10,17,4);
+}
+// Constant fire aura on body
+if(ia||sup){
+for(var fa2=0;fa2<4;fa2++){
+addPart(s+4+fa2*6,fy+15+Math.random()*30,(Math.random()-.5)*2,-2-Math.random()*3,8+Math.random()*6,4+Math.random()*4,[”#ff2200”,”#ff6600”,”#ffaa00”][Math.floor(Math.random()*3)],“circle”);
+}
+}
+if(st===“q”||st===“w”){// Big fireball
+ctx.fillStyle=“rgba(255,100,0,0.7)”;ctx.beginPath();ctx.ellipse(s+14+dir*80,fy+30,30,28,0,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=“rgba(255,200,0,0.7)”;ctx.beginPath();ctx.ellipse(s+14+dir*80,fy+30,18,16,0,0,Math.PI*2);ctx.fill();
+}
+}
+// ENEMIES
+var ENMS=[
+{name:“ALVIDA”,arc:“EAST BLUE”,desc:“Iron-mace pirate queen!”,hp:55,spd:2.2,em:”🔴”,col:”#cc88aa”,bg:“sea”,boss:false},
+{name:“HELMEPPO”,arc:“EAST BLUE”,desc:“Morgan’s cowardly son fights dirty.”,hp:65,spd:2.8,em:”⚔”,col:”#aaaacc”,bg:“sea”,boss:false},
+{name:“MORGAN”,arc:“EAST BLUE”,desc:“Axe-Hand marine tyrant!”,hp:80,spd:2.5,em:”🪓”,col:”#4488cc”,bg:“mar”,boss:false},
+{name:“BUGGY”,arc:“EAST BLUE”,desc:“Chop-Chop clown pirate!”,hp:90,spd:3.0,em:”🤡”,col:”#ff4444”,bg:“sea”,boss:false},
+{name:“KURO”,arc:“EAST BLUE”,desc:“Black Cat captain - razor claws!”,hp:105,spd:5.0,em:”🐱”,col:”#888888”,bg:“sea”,boss:false},
+{name:“KRIEG”,arc:“EAST BLUE”,desc:“Don Krieg! Armored war machine!”,hp:120,spd:2.5,em:”🛡”,col:”#888844”,bg:“sea”,boss:false},
+{name:“ARLONG”,arc:“EAST BLUE”,desc:“Fishman tyrant! BOSS!”,hp:155,spd:3.0,em:”🦈”,col:”#44aa88”,bg:“sea”,boss:true,projType:“ball”,projCol:”#44aa88”},
+{name:“SMOKER”,arc:“ALABASTA”,desc:“Marine Smoker - Smoke logia!”,hp:145,spd:3.5,em:”💨”,col:”#aaaaaa”,bg:“mar”,boss:false,projType:“ball”,projCol:“rgba(180,180,180,0.8)”},
+{name:“MR. 3”,arc:“ALABASTA”,desc:“Wax-Wax Fruit - Encases in wax!”,hp:138,spd:2.5,em:”🕯”,col:”#ffcc44”,bg:“des”,boss:false},
+{name:“MR. 1”,arc:“ALABASTA”,desc:“Every cell a blade! Daz Bones!”,hp:155,spd:4.0,em:”⚔”,col:”#555577”,bg:“des”,boss:false},
+{name:“CROCODILE”,arc:“ALABASTA”,desc:“Warlord Crocodile - Sand-Sand! BOSS!”,hp:210,spd:3.0,em:”🦒”,col:”#aa8844”,bg:“des”,boss:true,projType:“sand”,projCol:”#cc9944”},
+{name:“BELLAMY”,arc:“SKY ISLAND”,desc:“The Hyena - Spring-Spring Fruit!”,hp:178,spd:4.0,em:”🦁”,col:”#ffaa00”,bg:“sky”,boss:false},
+{name:“ENEL”,arc:“SKY ISLAND”,desc:“God Enel - Lightning logia! BOSS!”,hp:225,spd:5.0,em:”⚡”,col:”#ffff44”,bg:“sky”,boss:true,projType:“thunder”,projCol:”#ffff00”},
+{name:“FOXY”,arc:“DAVY BACK”,desc:“Slow-Slow Fruit freezes time!”,hp:188,spd:3.0,em:”🦊”,col:”#cc7700”,bg:“sea”,boss:false},
+{name:“LUCCI”,arc:“ENIES LOBBY”,desc:“CP9 top assassin Rokushiki! BOSS!”,hp:260,spd:6.0,em:”🖦”,col:”#222222”,bg:“eni”,boss:true,projType:“ball”,projCol:”#555”},
+{name:“KAKU”,arc:“ENIES LOBBY”,desc:“CP9 agent - Giraffe Zoan!”,hp:205,spd:4.5,em:”🦒”,col:”#ccaa44”,bg:“eni”,boss:false},
+{name:“JABRA”,arc:“ENIES LOBBY”,desc:“CP9 Wolf Zoan fighter!”,hp:198,spd:4.5,em:”🐺”,col:”#664422”,bg:“eni”,boss:false},
+{name:“MORIA”,arc:“THRILLER BARK”,desc:“Shadow-Shadow Warlord! BOSS!”,hp:285,spd:2.5,em:”👻”,col:”#664488”,bg:“drk”,boss:true,projType:“ball”,projCol:”#220033”},
+{name:“KUMA”,arc:“SABAODY”,desc:“Warlord Kuma - Paw-Paw repulsion!”,hp:265,spd:3.0,em:”🐻”,col:”#334455”,bg:“mar”,boss:false,projType:“ball”,projCol:”#8888cc”},
+{name:“HANCOCK”,arc:“AMAZON LILY”,desc:“Empress Hancock! Mero Mero power!”,hp:255,spd:4.0,em:”🐍”,col:”#cc4488”,bg:“sea”,boss:false,projType:“ball”,projCol:”#ff88cc”},
+{name:“MAGELLAN”,arc:“IMPEL DOWN”,desc:“Warden Magellan - Venom! BOSS!”,hp:310,spd:2.5,em:”☠”,col:”#553300”,bg:“drk”,boss:true,projType:“ball”,projCol:”#44aa00”},
+{name:“IVANKOV”,arc:“IMPEL DOWN”,desc:“Ivankov - Horm-Horm miracle worker!”,hp:245,spd:3.5,em:”👑”,col:”#8844cc”,bg:“drk”,boss:false},
+{name:“BLACKBEARD”,arc:“MARINEFORD”,desc:“Teach! Two Devil Fruits! BOSS!”,hp:330,spd:3.0,em:”⸻”,col:”#1a1a2a”,bg:“mar”,boss:true,projType:“ball”,projCol:”#220033”},
+{name:“AKAINU”,arc:“MARINEFORD”,desc:“Fleet Admiral - Magma-Magma! BOSS!”,hp:360,spd:3.5,em:”🌋”,col:”#cc2200”,bg:“mar”,boss:true,projType:“fireball”,projCol:”#ff4400”},
+{name:“AOKIJI”,arc:“MARINEFORD”,desc:“Admiral Aokiji - Ice-Ice absolute zero!”,hp:305,spd:3.0,em:”🧊”,col:”#4488cc”,bg:“mar”,boss:false,projType:“ice”,projCol:”#aaddff”},
+{name:“HODY”,arc:“FISHMAN ISL.”,desc:“Hody Jones on energy steroids!”,hp:295,spd:5.0,em:”🦈”,col:”#225588”,bg:“sea”,boss:false},
+{name:“CAESAR”,arc:“PUNK HAZARD”,desc:“Caesar Clown - Gas-Gas! BOSS!”,hp:315,spd:3.5,em:”🧪”,col:”#aaaaff”,bg:“drk”,boss:true,projType:“ball”,projCol:“rgba(150,150,255,0.8)”},
+{name:“DOFLAMINGO”,arc:“DRESSROSA”,desc:“Doflamingo - String-String! BOSS!”,hp:385,spd:4.5,em:”🎩”,col:”#ff44aa”,bg:“sea”,boss:true,projType:“string”,projCol:”#ffccee”},
+{name:“BIG MOM”,arc:“WHOLE CAKE”,desc:“Big Mom - Soul-Soul Emperor! BOSS!”,hp:425,spd:3.0,em:”🎂”,col:”#ff88cc”,bg:“sky”,boss:true,projType:“ball”,projCol:”#ff44cc”},
+{name:“KAIDO”,arc:“WANO”,desc:“King of Beasts! Strongest creature! FINAL BOSS!”,hp:500,spd:4.0,em:”🦁”,col:”#6644aa”,bg:“wano”,boss:true,projType:“fireball”,projCol:”#0044ff”},
+];
+
+// ENEMY DRAW - generic but styled
+function drawEnemy(ctx,x,y,dir,st,fr,ed,sup){
+var s=Math.floor(x),fy=Math.floor(y),t=Date.now()/1000,c=ed.col||”#888”;
+ctx.fillStyle=“rgba(0,0,0,0.25)”;ctx.beginPath();ctx.ellipse(s+14,fy+70,17,4,0,0,Math.PI*2);ctx.fill();
+var lw=st===“walk”?(fr%2?5:-4):0;
+// Legs
+ctx.fillStyle=shd(c,-50);rr(ctx,s+3,fy+44,11,26,3);rr(ctx,s+15,fy+44+lw,11,26,3);
+ctx.fillStyle=shd(c,-70);ctx.beginPath();ctx.ellipse(s+8,fy+70,7,3.5,0,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.ellipse(s+22,fy+68+lw,7,3.5,0,0,Math.PI*2);ctx.fill();
+// Body
+ctx.fillStyle=c;rr(ctx,s+0,fy+20,28,26,5);ctx.strokeStyle=shd(c,-30);ctx.lineWidth=2;ctx.stroke();
 if(ed.boss){
-ctx.strokeStyle=“rgba(255,40,40,0.4)”;ctx.lineWidth=3;
-ctx.beginPath();ctx.ellipse(ox+13,oy+34,30,36,0,0,Math.PI*2);ctx.stroke();
-spawnBurst(ox+13,oy+34,“rgba(255,40,40,0.3)”,1,8,4);
+// Boss glow
+for(var ba=0;ba<3;ba++){ctx.strokeStyle=“rgba(255,40,40,”+(0.25-ba*.07)+”)”;ctx.lineWidth=3;ctx.beginPath();ctx.ellipse(s+14,fy+33,30+ba*7,34+ba*7,0,0,Math.PI*2);ctx.stroke();}
 }
-var ext=isAtk?dir*16:0;
-drawCyl3D(ctx,ox+13,oy+30,ox-4+ext,oy+32,6,shd(c,20));
-drawCyl3D(ctx,ox+13,oy+30,ox+30,oy+32,6,shd(c,20));
-if(isAtk){
-drawSphere3D(ctx,ox-4+ext+(dir>0?18:0),oy+32,10,shd(c,30));
-spawnBurst(ox-4+ext+(dir>0?18:0),oy+32,c,2,4,4);
+// Arms
+var ext=st===“punch”||st===“super”?dir*14:0;
+ctx.fillStyle=shd(c,10);rr(ctx,s-5+ext,fy+22,12,18,5);rr(ctx,s+21,fy+22,12,18,5);
+if(st===“punch”||st===“super”){
+ctx.fillStyle=shd(c,25);ctx.beginPath();ctx.ellipse(s-5+ext+(dir>0?14:0),fy+31,10,9,0,0,Math.PI*2);ctx.fill();
 }
-drawSphere3D(ctx,ox+13,oy+10,14,shd(c,30));
-var ec=ed.boss?”#f00”:”#333”;
-drawSphere3D(ctx,ox+7,oy+9,4.5,”#fff”);drawSphere3D(ctx,ox+19,oy+9,4.5,”#fff”);
-drawSphere3D(ctx,ox+7,oy+9,3,ec);drawSphere3D(ctx,ox+19,oy+9,3,ec);
-ctx.strokeStyle=”#000”;ctx.lineWidth=3;ctx.lineCap=“round”;
-ctx.beginPath();ctx.moveTo(ox+4,oy+5);ctx.lineTo(ox+11,oy+7);ctx.stroke();
-ctx.beginPath();ctx.moveTo(ox+22,oy+5);ctx.lineTo(ox+15,oy+7);ctx.stroke();
-ctx.beginPath();ctx.arc(ox+13,oy+16,5,Math.PI+0.2,2*Math.PI-0.2);ctx.stroke();
-eExtras(ctx,ox,oy,ed,st,t,dir);
-}
-function eExtras(ctx,f,fy,ed,st,t,dir){
-var ia=st===“punch”||st===“special”||st===“super”||st===“combo”;
-if(ed.name===“ARLONG”){ctx.fillStyle=”#4a8”;ctx.beginPath();ctx.moveTo(f+9,fy+10);ctx.lineTo(f+17,fy+10);ctx.lineTo(f+13,fy+27);ctx.closePath();ctx.fill();}
-if(ed.name===“BUGGY”){ctx.fillStyle=”#f11”;ctx.beginPath();ctx.ellipse(f+13,fy+14,6,5,0,0,Math.PI*2);ctx.fill();ctx.fillStyle=”#05f”;ctx.beginPath();ctx.moveTo(f+1,fy+0);ctx.lineTo(f+6,fy-10);ctx.lineTo(f+13,fy+0);ctx.lineTo(f+20,fy-10);ctx.lineTo(f+25,fy+0);ctx.fill();}
-if(ed.name===“SMOKER”){ctx.fillStyle=“rgba(200,200,200,0.4)”;for(var sm=0;sm<5;sm++){ctx.beginPath();ctx.ellipse(f+10+Math.cos(t+sm)*12,fy+20+sm*5,6,4,0,0,Math.PI*2);ctx.fill();}}
-if(ed.name===“ENEL”){
-ctx.fillStyle=”#fff”;ctx.beginPath();ctx.ellipse(f+2,fy+10,5,7,0,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.ellipse(f+24,fy+10,5,7,0,0,Math.PI*2);ctx.fill();
-if(ia){spawnLightning(f+13+dir*30,fy+28,5);}
-}
-if(ed.name===“CROCODILE”){ctx.strokeStyle=”#aaa”;ctx.lineWidth=4;ctx.lineCap=“round”;var hx=f+(dir>0?26:0);ctx.beginPath();ctx.moveTo(hx,fy+26);ctx.lineTo(hx,fy+37);ctx.arcTo(hx+dir*8,fy+37,hx+dir*8,fy+31,4);ctx.stroke();if(ia){spawnBurst(f+13+dir*40,fy+32,”#ccaa44”,4,4,5);}}
-if(ed.name===“AKAINU”){if(ia){spawnFire(f+13+dir*20,fy+28,4);}ctx.strokeStyle=”#cc0000”;ctx.lineWidth=3;ctx.lineCap=“round”;ctx.beginPath();ctx.moveTo(f+5,fy+3);ctx.lineTo(f+21,fy+17);ctx.stroke();ctx.beginPath();ctx.moveTo(f+21,fy+3);ctx.lineTo(f+5,fy+17);ctx.stroke();}
-if(ed.name===“BLACKBEARD”){if(ia){ctx.fillStyle=“rgba(0,0,0,0.7)”;ctx.beginPath();ctx.ellipse(f+13+dir*30,fy+32,24,20,0,0,Math.PI*2);ctx.fill();}}
-if(ed.name===“KAIDO”){ctx.fillStyle=”#888844”;ctx.beginPath();ctx.moveTo(f+4,fy-10);ctx.lineTo(f+1,fy-26);ctx.lineTo(f+8,fy-10);ctx.closePath();ctx.fill();ctx.beginPath();ctx.moveTo(f+22,fy-10);ctx.lineTo(f+25,fy-26);ctx.lineTo(f+18,fy-10);ctx.closePath();ctx.fill();if(ia){spawnFire(f+13+dir*20,fy+28,6);}}
-if(ed.name===“LUCCI”){ctx.fillStyle=”#111”;ctx.beginPath();ctx.ellipse(f+13,fy+1,16,5,0,0,Math.PI*2);ctx.fill();rr(ctx,f+5,fy-14,16,16,2);if(ia){ctx.strokeStyle=“rgba(255,255,255,0.5)”;ctx.lineWidth=3;ctx.beginPath();ctx.arc(f+13+dir*32,fy+32,20,0,Math.PI*2);ctx.stroke();}}
-if(ed.name===“BIG MOM”){ctx.fillStyle=”#ff88cc”;ctx.beginPath();ctx.ellipse(f+13,fy-2,18,7,0,0,Math.PI*2);ctx.fill();if(ia){spawnBurst(f+13+dir*20,fy+28,”#ff88cc”,5,4,6);}}
-if(ed.name===“DOFLAMINGO”){ctx.fillStyle=”#ff88cc”;ctx.beginPath();ctx.ellipse(f+13,fy+2,14,6,0,0,Math.PI*2);ctx.fill();if(ia){ctx.strokeStyle=“rgba(255,200,220,0.5)”;ctx.lineWidth=1;for(var ds=0;ds<6;ds++){ctx.beginPath();ctx.moveTo(f+13,fy+28);ctx.lineTo(f+13+dir*(18+ds*8),fy+10+ds*4);ctx.stroke();}}}
+// Head
+ctx.fillStyle=shd(c,25);rr(ctx,s+7,fy+13,14,8,3);ctx.beginPath();ctx.ellipse(s+14,fy+8,14,13,0,0,Math.PI*2);ctx.fill();
+// Eyes - mean/evil
+ctx.fillStyle=”#fff”;ctx.beginPath();ctx.ellipse(s+8,fy+7,4,4,0,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.ellipse(s+20,fy+7,4,4,0,0,Math.PI*2);ctx.fill();
+var ec=ed.boss?”#f00”:”#333”;ctx.fillStyle=ec;ctx.beginPath();ctx.ellipse(s+8,fy+7,2.5,2.5,0,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.ellipse(s+20,fy+7,2.5,2.5,0,0,Math.PI*2);ctx.fill();
+// Pupils
+cr(ctx,s+9,fy+7.5,1,”#000”);cr(ctx,s+21,fy+7.5,1,”#000”);
+// Angry brow
+ctx.strokeStyle=”#000”;ctx.lineWidth=2.5;ctx.lineCap=“round”;
+ctx.beginPath();ctx.moveTo(s+4,fy+3);ctx.lineTo(s+12,fy+5);ctx.stroke();
+ctx.beginPath();ctx.moveTo(s+24,fy+3);ctx.lineTo(s+16,fy+5);ctx.stroke();
+// Mouth
+ctx.beginPath();ctx.arc(s+14,fy+14,5,Math.PI+0.3,2*Math.PI-0.3);ctx.stroke();
+// Special enemy extras
+eExtras(ctx,s,fy,ed,st,t);
+if(sup||st===“super”){ctx.fillStyle=“rgba(255,0,0,0.18)”;ctx.beginPath();ctx.ellipse(s+14,fy+33,34,40,0,0,Math.PI*2);ctx.fill();}
 }
 
-// ===== BACKGROUND 3D =====
+function eExtras(ctx,s,fy,ed,st,t){
+var n=ed.name;
+if(n===“BUGGY”){ctx.fillStyle=”#f11”;ctx.beginPath();ctx.ellipse(s+14,fy+14,7,6,0,0,Math.PI*2);ctx.fill();ctx.fillStyle=”#06f”;ctx.beginPath();ctx.moveTo(s+0,fy-1);ctx.lineTo(s+6,fy-13);ctx.lineTo(s+14,fy-1);ctx.lineTo(s+22,fy-13);ctx.lineTo(s+28,fy-1);ctx.fill();}
+if(n===“ARLONG”){ctx.fillStyle=”#44aa77”;ctx.beginPath();ctx.moveTo(s+9,fy+9);ctx.lineTo(s+19,fy+9);ctx.lineTo(s+14,fy+28);ctx.closePath();ctx.fill();}
+if(n===“SMOKER”){ctx.fillStyle=“rgba(200,200,200,0.4)”;for(var sm=0;sm<8;sm++){ctx.beginPath();ctx.ellipse(s+8+Math.cos(t+sm)*14,fy+20+sm*4,5,4,0,0,Math.PI*2);ctx.fill();}}
+if(n===“ENEL”){ctx.fillStyle=”#ffff44”;ctx.beginPath();ctx.ellipse(s+2,fy+9,6,7,0,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.ellipse(s+26,fy+9,6,7,0,0,Math.PI*2);ctx.fill();if(st===“punch”||st===“super”){ctx.strokeStyle=“rgba(255,255,80,0.8)”;ctx.lineWidth=2;for(var el=0;el<5;el++){ctx.beginPath();var lx=s+14,ly=fy+33;ctx.moveTo(lx,ly);for(var lp=0;lp<6;lp++){lx+=(4+Math.random()*8)*(el%2?1:-1);ly+=(Math.random()-.5)*12;ctx.lineTo(lx,ly);}ctx.stroke();}}}
+if(n===“AKAINU”){for(var md=0;md<6;md++){ctx.fillStyle=“rgba(255,”+(20+md*18)+”,0,0.7)”;ctx.beginPath();ctx.ellipse(s+4+md*4,fy+20+md*3,3,5+md,0,0,Math.PI*2);ctx.fill();}ctx.strokeStyle=”#cc0000”;ctx.lineWidth=3;ctx.lineCap=“round”;ctx.beginPath();ctx.moveTo(s+4,fy+2);ctx.lineTo(s+24,fy+18);ctx.stroke();ctx.beginPath();ctx.moveTo(s+24,fy+2);ctx.lineTo(s+4,fy+18);ctx.stroke();}
+if(n===“BLACKBEARD”){if(st===“special”||st===“super”){ctx.fillStyle=“rgba(0,0,0,0.6)”;ctx.beginPath();ctx.ellipse(s+14+(st===“super”?0:24),fy+33,24,22,0,0,Math.PI*2);ctx.fill();ctx.strokeStyle=“rgba(100,0,180,0.6)”;ctx.lineWidth=2;ctx.stroke();}ctx.fillStyle=”#111”;for(var sc=0;sc<4;sc++){ctx.strokeStyle=”#aa1111”;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(s+5+sc*5,fy+2);ctx.lineTo(s+5+sc*5,fy+12);ctx.stroke();}}
+if(n===“KAIDO”){ctx.fillStyle=”#888844”;ctx.beginPath();ctx.moveTo(s+4,fy-8);ctx.lineTo(s+1,fy-24);ctx.lineTo(s+9,fy-8);ctx.closePath();ctx.fill();ctx.beginPath();ctx.moveTo(s+24,fy-8);ctx.lineTo(s+27,fy-24);ctx.lineTo(s+19,fy-8);ctx.closePath();ctx.fill();}
+if(n===“DOFLAMINGO”){ctx.strokeStyle=“rgba(255,200,230,0.6)”;ctx.lineWidth=1.5;for(var ds=0;ds<8;ds++){ctx.beginPath();ctx.moveTo(s+14,fy+26);ctx.lineTo(s+14+(ds%2?1:-1)*(14+ds*8),fy+8+ds*5);ctx.stroke();}ctx.fillStyle=”#ff88cc”;rr(ctx,s+1,fy+6,10,6,2);rr(ctx,s+17,fy+6,10,6,2);}
+if(n===“BIG MOM”){ctx.fillStyle=”#ff88cc”;ctx.beginPath();ctx.ellipse(s+14,fy-3,20,8,0,0,Math.PI*2);ctx.fill();ctx.strokeStyle=”#cc55aa”;ctx.lineWidth=2;ctx.stroke();}
+if(n===“CROCODILE”){ctx.strokeStyle=”#bbb”;ctx.lineWidth=5;ctx.lineCap=“round”;var hx=s+(st===“punch”?28:26);ctx.beginPath();ctx.moveTo(hx,fy+24);ctx.lineTo(hx,fy+38);ctx.lineTo(hx+8,fy+38);ctx.arcTo(hx+8,fy+31,hx,fy+31,5);ctx.stroke();}
+}
+
+// BACKGROUNDS
 function drawBG(bg){
-var t=(Date.now()-t0)*0.001;
-var configs={
-sea:{sky:”#0a1a3a”,sky2:”#1a3a6a”,mid:”#1a4a7a”,floor:”#7a3a10”},
-mar:{sky:”#12203a”,sky2:”#223060”,mid:”#1a3055”,floor:”#5a5a66”},
-des:{sky:”#3a2a0a”,sky2:”#5a4a1a”,mid:”#4a3a18”,floor:”#cc9944”},
-sky:{sky:”#4477bb”,sky2:”#6699dd”,mid:”#88bbee”,floor:”#d8d8d8”},
-eni:{sky:”#180808”,sky2:”#280808”,mid:”#280808”,floor:”#553333”},
-drk:{sky:”#050508”,sky2:”#080a14”,mid:”#080a14”,floor:”#1a1a22”},
-wano:{sky:”#100818”,sky2:”#200a28”,mid:”#1a0a28”,floor:”#2a1a38”}
-};
-var cfg=configs[bg]||configs.sea;
-// Sky gradient
-var g=ctx.createLinearGradient(0,0,0,280);g.addColorStop(0,cfg.sky);g.addColorStop(1,cfg.sky2);
-ctx.fillStyle=g;ctx.fillRect(0,0,GW,280);
-// Stars
+var SKY={sea:”#0a1a3a”,mar:”#12203a”,des:”#3a2a0a”,sky:”#4477bb”,eni:”#180808”,drk:”#050508”,wano:”#100818”};
+var MID={sea:”#1a4a7a”,mar:”#1a3055”,des:”#4a3a18”,sky:”#88bbee”,eni:”#280808”,drk:”#080a14”,wano:”#1a0a28”};
+var FLR={sea:”#7a3a10”,mar:”#5a5a66”,des:”#cc9944”,sky:”#d8d8d8”,eni:”#553333”,drk:”#1a1a22”,wano:”#2a1a38”};
+var sc=SKY[bg]||SKY.sea,mc=MID[bg]||MID.sea,fc=FLR[bg]||FLR.sea;
+var gg=ctx.createLinearGradient(0,0,0,270);gg.addColorStop(0,sc);gg.addColorStop(1,shd(sc,20));
+ctx.fillStyle=gg;ctx.fillRect(0,0,GW,270);
+if(bg!==“sky”){
 ctx.fillStyle=“rgba(255,255,255,0.7)”;
 [[50,18],[130,38],[215,12],[315,52],[435,20],[555,46],[665,14],[762,36]].forEach(function(p){ctx.fillRect(p[0],p[1],2,2);});
-// Moon
 ctx.fillStyle=”#fffcd0”;ctx.beginPath();ctx.arc(678,56,22,0,Math.PI*2);ctx.fill();
-ctx.fillStyle=cfg.sky;ctx.beginPath();ctx.arc(690,50,18,0,Math.PI*2);ctx.fill();
-// Clouds for sky bg
-if(bg===“sky”){
-ctx.fillStyle=“rgba(255,255,255,0.5)”;
-[[120,160,100,42],[580,130,80,35],[380,200,130,50]].forEach(function(cl){ctx.beginPath();ctx.ellipse(cl[0],cl[1],cl[2],cl[3],0,0,Math.PI*2);ctx.fill();});
+ctx.fillStyle=sc;ctx.beginPath();ctx.arc(690,50,18,0,Math.PI*2);ctx.fill();
 }
-// Desert mountains 3D
-if(bg===“des”){
-var mg=ctx.createLinearGradient(0,150,0,280);mg.addColorStop(0,”#7a5a20”);mg.addColorStop(1,”#4a3a10”);
-ctx.fillStyle=mg;ctx.beginPath();ctx.moveTo(0,280);ctx.lineTo(80,165);ctx.lineTo(180,240);ctx.lineTo(300,145);ctx.lineTo(420,270);ctx.lineTo(560,140);ctx.lineTo(700,230);ctx.lineTo(800,170);ctx.lineTo(800,280);ctx.closePath();ctx.fill();
-}
-// Wano torii gates 3D
-if(bg===“wano”){
-[[60,650],[200,740]].forEach(function(xs){
-var x1=xs[0],x2=xs[1];
-bx(ctx,x1,120,22,210,”#a03020”);bx(ctx,x2-22,120,22,210,”#a03020”);
-ctx.fillStyle=”#cc3322”;ctx.fillRect(x1-10,115,x2-x1+32,16);
-ctx.fillStyle=”#cc3322”;ctx.fillRect(x1-5,145,x2-x1+22,12);
-// 3D depth on torii
-ctx.fillStyle=”#882211”;ctx.fillRect(x1+22,120,8,210);ctx.fillRect(x2-22,120,8,210);
-});
-}
-// Mid ground
-var mg2=ctx.createLinearGradient(0,260,0,340);mg2.addColorStop(0,cfg.mid);mg2.addColorStop(1,shd(cfg.mid,-25));
-ctx.fillStyle=mg2;ctx.fillRect(0,260,GW,80);
-// Water waves
-if(bg===“sea”||bg===“mar”){
-for(var w=0;w<5;w++){
-ctx.strokeStyle=“rgba(100,200,255,”+(0.1+w*0.04)+”)”;ctx.lineWidth=2;
-ctx.beginPath();var wy=268+w*12;
-for(var wx=0;wx<GW;wx+=4){
-var wh=Math.sin((wx+t*30+w*28)/34)*4;
-if(wx===0)ctx.moveTo(wx,wy+wh);else ctx.lineTo(wx,wy+wh);
-}ctx.stroke();
-}
-}
-// Floor with 3D perspective lines
-var fg2=ctx.createLinearGradient(0,334,0,400);fg2.addColorStop(0,cfg.floor);fg2.addColorStop(1,shd(cfg.floor,-30));
-ctx.fillStyle=fg2;ctx.fillRect(0,334,GW,66);
-// Perspective grid
-ctx.strokeStyle=“rgba(0,0,0,0.15)”;ctx.lineWidth=1;
-for(var pl=0;pl<GW;pl+=55){ctx.beginPath();ctx.moveTo(pl,334);ctx.lineTo(400+(pl-400)*0.3,400);ctx.stroke();}
-for(var rl=0;rl<4;rl++){ctx.beginPath();ctx.moveTo(0,334+rl*22);ctx.lineTo(GW,334+rl*22);ctx.stroke();}
-// Ship mast
-if(bg===“sea”||bg===“mar”||bg===“eni”){
-bx(ctx,388,40,22,300,”#6B3410”);
-// Sail with depth
-var sg=ctx.createLinearGradient(388,44,410,142);sg.addColorStop(0,“rgba(255,255,255,0.92)”);sg.addColorStop(1,“rgba(200,200,200,0.7)”);
-ctx.fillStyle=sg;ctx.beginPath();ctx.moveTo(388,44);ctx.lineTo(400,44);ctx.lineTo(412,142);ctx.lineTo(388,142);ctx.closePath();ctx.fill();
-ctx.strokeStyle=”#aaa”;ctx.lineWidth=1;ctx.stroke();
-// Sail shadow
-ctx.fillStyle=“rgba(0,0,0,0.1)”;ctx.beginPath();ctx.moveTo(410,44);ctx.lineTo(440,54);ctx.lineTo(450,142);ctx.lineTo(412,142);ctx.closePath();ctx.fill();
-}
+if(bg===“sky”){ctx.fillStyle=“rgba(255,255,255,0.55)”;[[120,160,100,42],[580,130,80,35],[380,200,130,50]].forEach(function(c){ctx.beginPath();ctx.ellipse(c[0],c[1],c[2],c[3],0,0,Math.PI*2);ctx.fill();});}
+if(bg===“des”){ctx.fillStyle=shd(sc,15);ctx.beginPath();ctx.moveTo(100,270);ctx.lineTo(200,155);ctx.lineTo(300,270);ctx.fill();ctx.beginPath();ctx.moveTo(500,270);ctx.lineTo(620,138);ctx.lineTo(740,270);ctx.fill();}
+if(bg===“wano”){ctx.strokeStyle=“rgba(200,50,50,0.6)”;ctx.lineWidth=7;[[60,120],[650,710]].forEach(function(xs){ctx.beginPath();ctx.moveTo(xs[0],270);ctx.lineTo(xs[0],162);ctx.stroke();ctx.beginPath();ctx.moveTo(xs[1],270);ctx.lineTo(xs[1],162);ctx.stroke();ctx.beginPath();ctx.moveTo(xs[0]-10,162);ctx.lineTo(xs[1]+10,162);ctx.stroke();ctx.beginPath();ctx.moveTo(xs[0]-8,178);ctx.lineTo(xs[1]+8,178);ctx.stroke();});}
+var wg=ctx.createLinearGradient(0,260,0,400);wg.addColorStop(0,mc);wg.addColorStop(1,shd(mc,-25));
+ctx.fillStyle=wg;ctx.fillRect(0,260,GW,140);
+if(bg===“sea”||bg===“mar”){ctx.strokeStyle=“rgba(100,200,255,0.18)”;ctx.lineWidth=2;for(var w=0;w<4;w++){ctx.beginPath();var wy=272+w*16;for(var wx=0;wx<GW;wx+=3){var wh=Math.sin((wx+Date.now()*.02+w*28)/34)*4;if(wx===0)ctx.moveTo(wx,wy+wh);else ctx.lineTo(wx,wy+wh);}ctx.stroke();}}
+var dg=ctx.createLinearGradient(0,330,0,400);dg.addColorStop(0,fc);dg.addColorStop(1,shd(fc,-25));
+ctx.fillStyle=dg;ctx.fillRect(0,334,GW,66);
+ctx.strokeStyle=“rgba(0,0,0,0.12)”;ctx.lineWidth=2;for(var pl=0;pl<GW;pl+=66){ctx.beginPath();ctx.moveTo(pl,334);ctx.lineTo(pl,400);ctx.stroke();}
+ctx.beginPath();ctx.moveTo(0,348);ctx.lineTo(GW,348);ctx.stroke();
+if(bg===“sea”||bg===“mar”||bg===“eni”){bx(ctx,388,42,22,296,”#6B3410”);ctx.fillStyle=“rgba(255,255,255,0.85)”;ctx.beginPath();ctx.moveTo(388,44);ctx.lineTo(400,44);ctx.lineTo(410,142);ctx.lineTo(388,142);ctx.closePath();ctx.fill();}
 }
 
-// ===== GAME STATE =====
-function mkP1(ch,sx){return{ch:ch,x:sx,y:FLOOR,vx:0,vy:0,hp:ch.hp,mhp:ch.hp,sp:0,grnd:true,face:1,st:“idle”,stT:0,hs:0,combo:0,lh:0,af:0,at:0,isAI:false};}
-function mkP2(ed,sx){return{ed:ed,x:sx,y:FLOOR,vx:0,vy:0,hp:ed.hp,mhp:ed.hp,sp:0,grnd:true,face:-1,st:“idle”,stT:0,hs:0,af:0,at:0,isAI:true,ait:0,aist:“idle”,aidt:0,aia:“punch”};}
+// GAME STATE
+var FLOOR=330,GRAV=0.55,JF=-13;
+var gs=“title”,cr2=0,pc=null,hand2=“right”;
+var p1=null,p2=null;
+var tv=60,ti=null,raf=null;
+var shk=0,sx2=0,sy2=0;
+var CD={punch:0,kick:0,special:0,combo:0,q:0,w:0};
+var abilTO=null;
 
+function getCD(m){return m===“punch”?pc.abilities.punch.cd:m===“kick”?pc.abilities.kick.cd:m===“special”?pc.abilities.special.cd:m===“combo”?pc.abilities.combo.cd:m===“q”?pc.abilities.q.cd:pc.abilities.w.cd;}
+function mkP1(ch,sx){return{ch:ch,x:sx,y:FLOOR,vx:0,vy:0,hp:ch.hp,mhp:ch.hp,sp:0,grnd:true,face:1,st:“idle”,stT:0,hs:0,combo:0,lh:0,af:0,at:0,isAI:false,hitW:14};}
+function mkP2(ed,sx){return{ed:ed,x:sx,y:FLOOR,vx:0,vy:0,hp:ed.hp,mhp:ed.hp,sp:0,grnd:true,face:-1,st:“idle”,stT:0,hs:0,af:0,at:0,isAI:true,ait:0,aist:“idle”,aidt:0,aia:“punch”,hitW:14};}
+
+// INPUT
 var vk={left:false,right:false,up:false};
 var kb={};
-
 window.addEventListener(“keydown”,function(e){
 if(kb[e.code])return;kb[e.code]=true;
-if(gs===“title”&&e.code===“Enter”){showCharSel();return;}
+if(gs===“title”&&(e.code===“Enter”||e.code===“Space”)){showCharSel();return;}
 if(gs!==“fight”)return;
-if(e.code===“KeyW”&&p1&&p1.grnd){p1.vy=JF;p1.grnd=false;}
-if(e.code===“KeyU”)pAtk(“punch”);
-if(e.code===“KeyI”)pAtk(“kick”);
-if(e.code===“KeyO”)pAtk(“special”);
-if(e.code===“KeyP”)pAtk(“combo”);
-if(e.code===“KeyL”)pAtk(“super”);
-if(e.code===“Digit1”)pAtk(“a1”);
-if(e.code===“Digit2”)pAtk(“a2”);
-if(e.code===“Digit3”)pAtk(“a3”);
+if(e.code===“KeyW”&&p1.grnd){p1.vy=JF;p1.grnd=false;}
+var map={KeyU:“punch”,KeyI:“kick”,KeyO:“special”,KeyP:“combo”,KeyQ:“q”,KeyE:“w”,KeyL:“super”};
+if(map[e.code])pAtk(map[e.code]);
 });
 window.addEventListener(“keyup”,function(e){kb[e.code]=false;});
 
@@ -1064,243 +986,270 @@ el.addEventListener(“mousedown”,dn);el.addEventListener(“mouseup”,up);
 document.querySelectorAll(”.ab[data-a]”).forEach(function(btn){
 var a=btn.dataset.a;
 function act(e){if(e.cancelable)e.preventDefault();if(gs!==“fight”)return;if(a===“jump”){if(p1&&p1.grnd){p1.vy=JF;p1.grnd=false;}}else pAtk(a);}
-btn.addEventListener(“touchstart”,act,{passive:false});
-btn.addEventListener(“mousedown”,act);
+btn.addEventListener(“touchstart”,act,{passive:false});btn.addEventListener(“mousedown”,act);
 });
 
+// COOLDOWNS
 function onCD(m){return m!==“super”&&Date.now()<CD[m];}
-function startCD(m){if(m!==“super”)CD[m]=Date.now()+(CDM[m]||2000);}
-function cdP(m){var r=CD[m]-Date.now(),mx=CDM[m]||2000;return r>0?r/mx:0;}
+function startCD(m){if(m!==“super”)CD[m]=Date.now()+getCD(m);}
+function cdPct(m){if(m===“super”)return 0;var r=CD[m]-Date.now();return r>0?r/getCD(m):0;}
 function updCD(){
-[“punch”,“kick”,“special”,“combo”,“a1”,“a2”,“a3”].forEach(function(m){
+[“punch”,“kick”,“special”,“combo”,“q”,“w”].forEach(function(m){
 var btn=document.querySelector(”.ab[data-a=’”+m+”’]”);if(!btn)return;
-var p2=cdP(m),ov=btn.querySelector(”.cdo”);
-if(ov){ov.style.background=p2>0?“conic-gradient(rgba(0,0,0,0.65) “+Math.round(p2*100)+”%, transparent “+Math.round(p2*100)+”%)”:“none”;}
-btn.style.opacity=p2>0?“0.4”:“1”;
+var p=cdPct(m),ov=btn.querySelector(”.cdo”);
+if(ov)ov.style.background=p>0?“conic-gradient(rgba(0,0,0,0.65) “+Math.round(p*100)+”%, transparent “+Math.round(p*100)+”%)”:“none”;
+btn.style.opacity=p>0?“0.45”:“1”;
 });
 }
 
-function pAtk(type){
-if(!p1||p1.hs>0||p1.st===“super”)return;
-if(onCD(type)){var btn=document.querySelector(”.ab[data-a=’”+type+”’]”);if(btn){btn.style.borderColor=”#f00”;setTimeout(function(){btn.style.borderColor=””;},160);}return;}
-startCD(type);
-var ch=pc;
-var dmg=0,rng=90,hits=1,lbl=“HIT!”,col=”#fff”;
-if(type===“punch”){dmg=8;rng=90;lbl=“PUNCH!”;col=”#f88”;}
-else if(type===“kick”){dmg=12;rng=92;lbl=“KICK!”;col=”#fa0”;}
-else if(type===“special”){dmg=18;rng=190;lbl=“SPECIAL!”;col=”#f60”;}
-else if(type===“combo”){dmg=26;rng=115;lbl=“COMBO!!”;col=”#ff0”;}
-else if(type===“super”){if(p1.sp<100)return;p1.sp=0;dmg=44;rng=230;lbl=ch.name+” SUPER!”;col=”#FFD700”;}
-else if(type===“a1”&&ch.a1){dmg=ch.a1.dmg;rng=ch.a1.rng;hits=ch.a1.hits||1;lbl=ch.a1.name+”!”;col=”#f09”;}
-else if(type===“a2”&&ch.a2){dmg=ch.a2.dmg;rng=ch.a2.rng;lbl=ch.a2.name+”!”;col=”#0cf”;}
-else if(type===“a3”&&ch.a3){dmg=ch.a3.dmg;rng=ch.a3.rng;lbl=ch.a3.name+”!”;col=”#c60”;}
-p1.st=type===“super”?“super”:type;p1.stT=type===“super”?42:(type.startsWith(“a”)?30:22);
-if(type===“super”){p1.st=“super”;}
-if(dmg>0&&Math.abs(p1.x-p2.x)<rng){
-for(var h=0;h<hits;h++){doHit(p1,p2,Math.floor(dmg/hits),type,col);}
-showHT(lbl,p1.x,p1.y-80,col);
-} else if(dmg===0&&type===“a2”&&ch.id===“nami”){
-// Mirage - teleport
-p1.x=clamp(30,750,p1.x+(Math.random()>0.5?120:-120));
-showHT(“MIRAGE!”,p1.x,p1.y-60,”#88ffaa”);
+// SHOW ABILITY NAME
+function showAbil(name,desc){
+var pop=G(“abilpop”),an=G(“apn”),ad=G(“apd”);
+if(!pop)return;
+an.textContent=name;ad.textContent=desc;
+pop.classList.add(“show”);
+if(abilTO)clearTimeout(abilTO);
+abilTO=setTimeout(function(){pop.classList.remove(“show”);},1100);
+}
+
+// FIRE ABILITY-SPECIFIC PROJECTILE
+function fireAbilProj(type,fromP,ab){
+var owner=fromP===p1?“p1”:“p2”;
+var dir=fromP.face;
+var ox=fromP.x+(dir>0?28:0),oy=fromP.y-34;
+if(type===“punch”&&pc&&pc.id===“usopp”){// Impact Wolf
+addProj(ox,oy,dir*14,-1,ab.dmg,”#cc8844”,8,owner,“ball”);
+}else if(type===“special”&&pc&&pc.id===“usopp”){
+for(var ui=0;ui<3;ui++)addProj(ox,oy+(ui-1)*8,dir*(12+ui*2),(-1+ui*.5),ab.dmg*.6,”#cc6600”,7,owner,“ball”);
+}else if(pc&&pc.id===“ace”&&(type===“punch”||type===“q”||type===“w”)){
+addProj(ox,oy,dir*13,-0.5,ab.dmg,”#ff4400”,type===“w”?20:14,owner,“fireball”);
+}else if(pc&&pc.id===“nami”&&(type===“punch”||type===“special”||type===“q”)){
+addProj(ox,oy,dir*11,0,ab.dmg,”#ffff44”,10,owner,“thunder”);
+}else if(pc&&pc.id===“franky”&&(type===“special”||type===“q”||type===“w”)){
+addProj(ox,oy,dir*15,0,ab.dmg,type===“w”?”#ff4400”:”#00aaff”,12,owner,“bullet”);
 }
 }
 
-function doHit(att,def,dmg,type,col){
-if(dmg<=0)return;
+// ATTACKS
+function pAtk(type){
+if(!p1||p1.hs>0||(p1.st===“super”&&p1.stT>10))return;
+if(onCD(type)){
+var btn=document.querySelector(”.ab[data-a=’”+type+”’]”);
+if(btn){btn.style.borderColor=”#f00”;setTimeout(function(){btn.style.borderColor=””;},160);}return;
+}
+if(type!==“super”)startCD(type);
+var ab=pc.abilities[type];if(!ab)return;
+showAbil(ab.name,ab.desc);
+var dmg=ab.dmg,rng=ab.rng;
+if(type===“super”){if(p1.sp<100)return;p1.sp=0;p1.st=“super”;p1.stT=45;if(Math.abs(p1.x-p2.x)<rng)doHit(p1,p2,dmg,“super”);return;}
+p1.st=type;p1.stT=type===“combo”?30:22;
+fireAbilProj(type,p1,ab);
+if(Math.abs(p1.x-p2.x)<rng){
+doHit(p1,p2,dmg,type);p1.sp=Math.min(100,p1.sp+(type===“combo”?16:9));
+}
+}
+
+function doHit(att,def,dmg,type){
+// ACTUAL DAMAGE - NPC does damage too!
 def.hp=Math.max(0,def.hp-dmg);
-def.hs=type===“super”?38:(type===“combo”||type.startsWith(“a”)?26:14);
-def.vx=att.face*(type===“super”?11:(type===“combo”||type.startsWith(“a”))?7:4);
-if(type===“super”){shk=18;def.vy=-9;}else if(type===“combo”||type.startsWith(“a”))shk=11;else shk=5;
-spawnBurst(def.x+13,def.y-30,col||”#fff”,6,5,5);
+def.hs=type===“super”?40:type===“combo”?26:type===“q”||type===“w”?22:14;
+def.vx=att.face*(type===“super”?11:type===“combo”?7:type===“q”?8:5);
+if(type===“super”){shk=18;def.vy=-9;}else if(type===“combo”||type===“q”||type===“w”)shk=10;else shk=5;
+// Hit particles
+var hx=def.x+14,hy=def.y-34;
+for(var pi=0;pi<8;pi++)addPart(hx+(Math.random()-.5)*20,hy+(Math.random()-.5)*20,(Math.random()-.5)*6,(Math.random()-0.6)*5,10+Math.random()*8,3+Math.random()*4,type===“super”?”#FFD700”:type===“combo”?”#ff8800”:”#fff”,“circle”);
 if(!att.isAI){var now=Date.now();if(now-att.lh<700)att.combo++;else att.combo=1;att.lh=now;if(att.combo>=3)showCombo(att.combo+” HIT COMBO!”);}
+var lbl={punch:“HIT!”,kick:“SMASH!”,special:“SPECIAL!”,combo:“COMBO!!”,q:“POWER!”,w:“ULTIMATE!”,super:“SUPER!!”};
+var clr={punch:”#fff”,kick:”#fa0”,special:”#f60”,combo:”#ff0”,q:”#0ff”,w:”#f0f”,super:”#FFD700”};
+showHT(lbl[type]||“HIT!”,def.x+14,def.y-50,clr[type]||”#fff”);
 updHUD();
 if(def.hp<=0)endBattle(att===p1?“player”:“enemy”);
 }
 
-// ===== AI - ACTUALLY DEALS DAMAGE =====
+// AI - now does REAL damage!
 function runAI(){
-if(!p2||p2.hs>0)return;
-var dist=Math.abs(p2.x-p1.x);
-var agg=0.32+cr2*0.022,rt=Math.max(10,38-cr2);
+if(!p2||p2.hp<=0)return;
+var dist=Math.abs(p2.x-p1.x),agg=0.3+cr2*0.025,rt=Math.max(10,40-cr2);
 p2.aidt–;
 if(p2.aidt>0){
 if(p2.aist===“approach”){p2.vx=p2.face>0?-p2.ed.spd:p2.ed.spd;p2.st=“walk”;}
 else if(p2.aist===“retreat”){p2.vx=p2.face>0?p2.ed.spd:-p2.ed.spd;p2.st=“walk”;}
-else if(p2.aist===“jump”&&p2.grnd){p2.vy=JF;p2.grnd=false;p2.vx=(p1.x>p2.x?1:-1)*4;}
-else{p2.vx*=0.7;if(Math.abs(p2.vx)<0.5){p2.vx=0;if(p2.st===“walk”)p2.st=“idle”;}}
+else if(p2.aist===“jump”&&p2.grnd){p2.vy=JF;p2.grnd=false;p2.vx=(p1.x>p2.x?1:-1)*3.5;}
+else{p2.vx*=0.55;if(Math.abs(p2.vx)<0.5){p2.vx=0;if(p2.st===“walk”)p2.st=“idle”;}}
 return;
 }
 p2.aidt=Math.floor(rt+Math.random()*14);
 var r=Math.random();
-p2.face=p1.x<p2.x?-1:1;
 if(dist>280)p2.aist=“approach”;
-else if(dist<35&&r<0.4)p2.aist=“retreat”;
+else if(dist<36&&r<0.38)p2.aist=“retreat”;
 else if(dist<100&&r<agg){
-p2.aist=“attack”;
-var r2=Math.random();
-if(r2<0.1&&p2.sp>=100)p2.aia=“super”;
-else if(r2<0.2)p2.aia=“combo”;
-else if(r2<0.35)p2.aia=“special”;
-else if(r2<0.55)p2.aia=“kick”;
-else p2.aia=“punch”;
+p2.aist=“attack”;var r2=Math.random();
+if(r2<0.1&&p2.sp>=100)p2.aia=“super”;else if(r2<0.24)p2.aia=“combo”;else if(r2<0.42)p2.aia=“special”;else if(r2<0.62)p2.aia=“kick”;else p2.aia=“punch”;
 aiAtk(p2.aia);p2.aist=“idle”;
-} else p2.aist=r<0.6?“approach”:r<0.78?“jump”:“idle”;
-}
-function aiAtk(type){
-if(!p2||p2.hs>0||!p1)return;
-var dmgMap={punch:8,kick:13,special:16,combo:24,super:42};
-var rngMap={punch:92,kick:94,special:200,combo:118,super:240};
-var dmg=dmgMap[type]||8,rng=rngMap[type]||90;
-// Scale damage by round
-dmg=Math.floor(dmg*(1+cr2*0.03));
-p2.st=type===“super”?“super”:type;p2.stT=type===“super”?40:22;
-if(type===“super”){if(p2.sp<100)return;p2.sp=0;}
-if(Math.abs(p2.x-p1.x)<rng){
-doHit(p2,p1,dmg,type,”#f88”);
-showHT(p2.ed.name+” “+type.toUpperCase()+”!”,p2.x,p2.y-80,”#f44”);
-}
+} else p2.aist=r<0.62?“approach”:r<0.78?“jump”:“idle”;
+p2.face=p1.x<p2.x?-1:1;
+// AI shoots projectiles
+if(p2.ed.projType&&dist<280&&dist>80&&Math.random()<0.06+cr2*0.004){aiShoot();}
 }
 
-// ===== LOOP =====
+function aiAtk(type){
+if(!p2||p2.hs>0)return;
+// REAL damage values based on round
+var base=6+cr2*.8;
+var dmgMap={punch:Math.round(base),kick:Math.round(base*1.4),special:Math.round(base*2.2),combo:Math.round(base*2.8),super:Math.round(base*4)};
+var dmg=dmgMap[type]||Math.round(base);
+var rng={punch:95,kick:92,special:170,combo:110,super:230}[type]||90;
+if(type===“super”){if(p2.sp<100)return;p2.sp=0;p2.st=“super”;p2.stT=40;if(Math.abs(p2.x-p1.x)<rng)doHit(p2,p1,dmg,“super”);}
+else if(type===“combo”){p2.st=“punch”;p2.stT=26;if(Math.abs(p2.x-p1.x)<rng)doHit(p2,p1,dmg,“combo”);}
+else{p2.st=type;p2.stT=20;if(Math.abs(p2.x-p1.x)<rng)doHit(p2,p1,dmg,type);}
+}
+
+function aiShoot(){
+if(!p2||!p2.ed.projType)return;
+var dir=p2.face,ox=p2.x+(dir>0?28:0),oy=p2.y-34;
+var base=5+cr2*.7;
+addProj(ox,oy,dir*10+(Math.random()-.5)*2,(Math.random()-.5)*2,Math.round(base*1.8),p2.ed.projCol||”#f00”,10,“p2”,p2.ed.projType||“ball”);
+p2.sp=Math.min(100,p2.sp+8);
+}
+
+// MAIN LOOP
 function loop(){
 raf=requestAnimationFrame(loop);
 if(gs!==“fight”)return;
-var T=(Date.now()-t0)*0.001;
-if(shk>0){sx2=(Math.random()-.5)*shk;sy2=(Math.random()-.5)*shk;shk-=1.8;}else{sx2=0;sy2=0;}
-updCD();stepP1(T);runAI();stepF(p2);
-stepParticles();draw(T);
+if(shk>0){sx2=(Math.random()-.5)*shk;sy2=(Math.random()-.5)*shk;shk-=1.4;}else{sx2=0;sy2=0;}
+updCD();stepP1();runAI();stepF(p2);stepParts();stepProjs();draw();
 }
-function stepP1(T){
+
+function stepP1(){
 if(!p1)return;
 var ml=kb[“KeyA”]||vk.left,mr=kb[“KeyD”]||vk.right,mu=kb[“KeyW”]||vk.up;
 if(p1.hs>0){p1.hs–;p1.st=“hurt”;}
-else if(p1.st!==“super”&&p1.stT<=0){
+else if(p1.stT<=0&&p1.st!==“super”){
 if(mu&&p1.grnd){p1.vy=JF;p1.grnd=false;}
-if(ml){p1.vx=-pc.spd;p1.st=“walk”;p1.face=-1;}
-else if(mr){p1.vx=pc.spd;p1.st=“walk”;p1.face=1;}
-else{p1.vx*=0.75;p1.st=p1.grnd?“idle”:“jump”;}
+if(ml){p1.vx=-pc.spd;p1.st=“walk”;p1.face=-1;}else if(mr){p1.vx=pc.spd;p1.st=“walk”;p1.face=1;}else{p1.vx*=0.72;p1.st=p1.grnd?“idle”:“jump”;}
 }
 if(p1.stT>0)p1.stT–;
 stepF(p1);
-if(p1.hs<=0&&p1.st!==“super”&&p2)p1.face=p2.x>p1.x?1:-1;
-if(p1.sp<100)p1.sp=Math.min(100,p1.sp+0.07);
+if(p1.hs<=0&&p1.st!==“super”)p1.face=p2.x>p1.x?1:-1;
+if(p1.sp<100)p1.sp=Math.min(100,p1.sp+0.055);
 }
+
 function stepF(f){
 f.x+=f.vx;f.vy+=GRAV;f.y+=f.vy;
 if(f.y>=FLOOR){f.y=FLOOR;f.vy=0;f.grnd=true;if(f.st===“jump”)f.st=“idle”;}else f.grnd=false;
-f.x=Math.max(20,Math.min(760,f.x));
+f.x=clamp(18,762,f.x);
 f.at++;if(f.at>8){f.at=0;f.af=(f.af+1)%4;}
-if(f.sp<100)f.sp=Math.min(100,f.sp+0.05);
-if(f.isAI)f.face=p1&&p1.x<f.x?-1:1;
-f.vx*=0.78;
+if(f.sp<100)f.sp=Math.min(100,f.sp+0.035);
+if(f.stT>0){f.stT–;if(f.stT===0&&f.st!==“idle”&&f.st!==“walk”&&f.st!==“hurt”&&f.st!==“jump”)f.st=“idle”;}
+if(f.isAI)f.face=p1.x<f.x?-1:1;
 }
 
-function draw(T){
+// DRAW FRAME
+function draw(){
 ctx.save();ctx.translate(Math.round(sx2),Math.round(sy2));
 var bg=ENMS[cr2]?ENMS[cr2].bg:“sea”;
 drawBG(bg);
-drawParticles();
-drawFF(p1,false,T);drawFF(p2,true,T);
+// Hurt flash
+if(p2&&p2.hs>0&&p2.hs%3===0){ctx.fillStyle=“rgba(255,0,0,0.18)”;ctx.fillRect(0,0,GW,GH);}
+if(p1&&p1.hs>0&&p1.hs%3===0){ctx.fillStyle=“rgba(255,255,255,0.12)”;ctx.fillRect(0,0,GW,GH);}
+drawParts();
+drawProjs();
+drawFighter(p2,true);
+drawFighter(p1,false);
 ctx.restore();
 }
-function drawFF(f,isEnemy,T){
+
+function drawFighter(f,isEnemy){
 if(!f)return;
 ctx.save();
 var sup=f.st===“super”;
 if(f.face===-1){
-ctx.translate(f.x+14,0);ctx.scale(-1,1);
-if(isEnemy)dEnemy(ctx,-14,f.y-68,-1,f.st,f.af,f.ed,sup);
-else pc.draw(ctx,-14,f.y-68,-1,f.st,f.af,sup,T);
+ctx.translate(f.x+28,0);ctx.scale(-1,1);
+if(isEnemy)drawEnemy(ctx,0,f.y-70,-1,f.st,f.af,f.ed,sup);
+else pc.draw(ctx,0,f.y-70,-1,f.st,f.af,sup);
 } else {
-if(isEnemy)dEnemy(ctx,f.x,f.y-68,1,f.st,f.af,f.ed,sup);
-else pc.draw(ctx,f.x,f.y-68,1,f.st,f.af,sup,T);
+if(isEnemy)drawEnemy(ctx,f.x,f.y-70,1,f.st,f.af,f.ed,sup);
+else pc.draw(ctx,f.x,f.y-70,1,f.st,f.af,sup);
 }
+// HP bar above fighter
+var bw=50,bh=6,bx3=f.x+14-bw/2,by3=f.y-82;
+ctx.fillStyle=“rgba(0,0,0,0.6)”;ctx.fillRect(bx3-1,by3-1,bw+2,bh+2);
+ctx.fillStyle=f.hp/f.mhp>0.5?”#00cc00”:f.hp/f.mhp>0.25?”#ff8800”:”#cc0000”;
+ctx.fillRect(bx3,by3,Math.round(bw*f.hp/f.mhp),bh);
 ctx.restore();
 }
 
+// HUD
 function updHUD(){
 if(!p1||!p2)return;
 var p1p=p1.hp/p1.mhp*100,p2p=p2.hp/p2.mhp*100;
 var b1=G(“p1h”),b2=G(“p2h”);
-if(b1){b1.style.width=p1p+”%”;b1.className=“hpb”+(p1p<25?” lo”:p1p<50?” mi”:””);}
-if(b2){b2.style.width=p2p+”%”;b2.className=“hpb”+(p2p<25?” lo”:p2p<50?” mi”:””);}
-var s1=G(“p1s”),s2=G(“p2s”);
-if(s1)s1.style.width=p1.sp+”%”;if(s2)s2.style.width=p2.sp+”%”;
+if(b1){b1.style.width=clamp(0,100,p1p)+”%”;b1.className=“hpb”+(p1p<25?” lo”:p1p<50?” mi”:””);}
+if(b2){b2.style.width=clamp(0,100,p2p)+”%”;b2.className=“hpb”+(p2p<25?” lo”:p2p<50?” mi”:””);}
+if(G(“p1s”))G(“p1s”).style.width=clamp(0,100,p1.sp)+”%”;
+if(G(“p2s”))G(“p2s”).style.width=clamp(0,100,p2.sp)+”%”;
 }
 
 var htTO=null;
 function showHT(txt,x,y,col){
 var el=G(“htxt”);if(!el)return;
 if(htTO)clearTimeout(htTO);
-var cx=Math.max(0,Math.min(GW-50,x))*csc,cy=Math.max(0,Math.min(GH-20,y))*csc;
-el.style.left=cx+“px”;el.style.top=cy+“px”;
-el.style.color=col||”#fff”;el.style.fontSize=Math.round(clamp(8,12,2.8)*csc)+“px”;
+el.style.left=clamp(5,GW-80,x)*csc+“px”;
+el.style.top=clamp(5,GH-30,y)*csc+“px”;
+el.style.color=col||”#fff”;el.style.fontSize=Math.round(clamp(7,12,2.6)*csc)+“px”;
 el.textContent=txt;el.style.opacity=“1”;
-htTO=setTimeout(function(){if(el)el.style.opacity=“0”;},700);
+htTO=setTimeout(function(){el.style.opacity=“0”;},650);
 }
-function showCombo(txt){var el=G(“ctxt”);if(!el)return;el.textContent=txt;el.style.opacity=“1”;setTimeout(function(){if(el)el.style.opacity=“0”;},1000);}
-function showMsg(txt,dur,cb){
-var el=G(“mtxt”);if(!el)return;
-el.textContent=txt;el.classList.add(“show”);
-setTimeout(function(){el.classList.remove(“show”);if(cb)setTimeout(cb,300);},dur||1400);
-}
+function showCombo(txt){var el=G(“ctxt”);if(!el)return;el.textContent=txt;el.style.opacity=“1”;setTimeout(function(){el.style.opacity=“0”;},900);}
+function showMsg(txt,dur,cb){var el=G(“mtxt”);if(!el)return;el.textContent=txt;el.classList.add(“show”);setTimeout(function(){el.classList.remove(“show”);if(cb)setTimeout(cb,300);},dur||1400);}
 
-function updateAbilityBar(){
-if(!pc)return;
-var a1ic=G(“a1ic”),a2ic=G(“a2ic”),a3ic=G(“a3ic”);
-if(a1ic&&pc.a1)a1ic.innerHTML=pc.a1.ic;
-if(a2ic&&pc.a2)a2ic.innerHTML=pc.a2.ic;
-if(a3ic&&pc.a3)a3ic.innerHTML=pc.a3.ic;
-CDM.a1=pc.a1?pc.a1.cd:3500;
-CDM.a2=pc.a2?pc.a2.cd:5000;
-CDM.a3=pc.a3?pc.a3.cd:6000;
-}
-
+// BATTLE
 function startBattle(){
-CD={punch:0,kick:0,special:0,combo:0,a1:0,a2:0,a3:0};
-PARTICLES=[];updCD();
+CD={punch:0,kick:0,special:0,combo:0,q:0,w:0};updCD();PARTS=[];PROJS=[];
 var ed=ENMS[cr2];if(!ed)return;
-var bh=Math.round(ed.hp*(1+cr2*0.038));
+var bh=Math.round(ed.hp*(1+cr2*0.04));
 p2=mkP2(ed,620);p2.hp=bh;p2.mhp=bh;
 p1=mkP1(pc,120);
 G(“p1n”).textContent=pc.name;G(“p2n”).textContent=ed.name;
 G(“rnd”).textContent=“RD “+(cr2+1)+”/30”;
 tv=60;G(“tmr”).textContent=tv;
 if(ti)clearInterval(ti);
-ti=setInterval(function(){if(gs!==“fight”)return;tv–;if(G(“tmr”))G(“tmr”).textContent=tv;if(tv<=0)endBattle(“time”);},1000);
-updHUD();updateAbilityBar();
-gs=“fight”;if(!raf)loop();
+ti=setInterval(function(){if(gs!==“fight”)return;tv–;G(“tmr”).textContent=tv;if(tv<=0)endBattle(“time”);},1000);
+// Update Q/W button labels
+if(G(“qlb”))G(“qlb”).textContent=pc.abilities.q.name.slice(0,5);
+if(G(“wlb”))G(“wlb”).textContent=pc.abilities.w.name.slice(0,5);
+updHUD();gs=“fight”;if(!raf)loop();
 showMsg(“FIGHT!”,900);
 }
+
 function endBattle(result){
 gs=“end”;if(ti)clearInterval(ti);ti=null;
 if(result===“player”){
 if(cr2>=29){showMsg(“PIRATE KING!”,2400,function(){showGO(true);});}
 else{showMsg(“VICTORY!”,1200,function(){cr2++;showStory();});}
-} else {
-showMsg(“KO!”,1400,function(){showGO(false);});
+} else {showMsg(“KO!”,1400,function(){showGO(false);});}
 }
-}
+
 function showGO(win){
-G(“sarc”).textContent=win?“VICTORY”:“GAME OVER”;
+var ed=ENMS[clamp(0,29,cr2)];
+G(“sarc”).textContent=win?“CONGRATULATIONS!”:“GAME OVER”;
 G(“srnd”).textContent=“ROUND “+(cr2+1)+” / 30”;
 G(“semo”).innerHTML=win?”🎉”:”💀”;
-G(“sname”).textContent=win?“PIRATE KING!”:“DEFEATED”;
-G(“sdesc”).textContent=win?“You conquered the Grand Line!”:“Recover and try again!”;
+G(“sname”).textContent=win?“YOU ARE PIRATE KING!”:“DEFEATED!”;
+G(“sdesc”).textContent=win?“You conquered all 30 rounds and became King of Pirates!”:“Train harder and challenge again!”;
 G(“sfbtn”).textContent=win?“PLAY AGAIN”:“TRY AGAIN”;
-G(“sfbtn”).onclick=function(){cr2=win?0:cr2;gs=“title”;show(“st”);};
+G(“sfbtn”).onclick=function(){cr2=win?0:cr2;gs=“title”;PARTS=[];PROJS=[];show(“st”);};
 show(“si”);
 }
 
+// SCREENS
 function showCharSel(){
 var grid=G(“cgrid”);if(!grid)return;
 grid.innerHTML=””;
 CHARS.forEach(function(ch){
 var card=document.createElement(“div”);card.className=“ccard”;
-var cv=document.createElement(“canvas”);cv.width=64;cv.height=80;
-var c2=cv.getContext(“2d”);
-ch.draw(c2,10,68,1,“idle”,0,false,0);
+var cv=document.createElement(“canvas”);cv.width=62;cv.height=82;
+var c2=cv.getContext(“2d”);ch.draw(c2,7,74,1,“idle”,0,false);
 card.appendChild(cv);
 var dn=document.createElement(“div”);dn.className=“cn”;dn.textContent=ch.name;card.appendChild(dn);
 var da=document.createElement(“div”);da.className=“ca”;da.textContent=ch.sub;card.appendChild(da);
@@ -1321,21 +1270,18 @@ G(“hL”).addEventListener(“touchstart”,function(e){e.preventDefault();set
 G(“hR”).addEventListener(“touchstart”,function(e){e.preventDefault();setHand(“right”);},{passive:false});
 
 function setHand(h){
-hand2=h;
-document.querySelectorAll(”.hbtn”).forEach(function(b){b.classList.remove(“sel”);});
+hand2=h;document.querySelectorAll(”.hbtn”).forEach(function(b){b.classList.remove(“sel”);});
 G(h===“left”?“hL”:“hR”).classList.add(“sel”);
 var tc=G(“tc”),ls=G(“lside”),rs=G(“rside”);
-if(h===“left”){tc.insertBefore(rs,ls);}else{if(ls.nextSibling!==rs)tc.insertBefore(ls,rs);}
+if(h===“left”&&ls&&rs){tc.insertBefore(rs,ls);}else if(ls&&rs){tc.insertBefore(ls,rs);}
 showStory();
 }
+
 function showStory(){
 var ed=ENMS[cr2];if(!ed)return;
-G(“sarc”).textContent=ed.arc;
-G(“srnd”).textContent=“ROUND “+(cr2+1)+” OF 30”;
-G(“semo”).innerHTML=ed.em;
-G(“sname”).textContent=ed.name+(ed.boss?” [BOSS]”:””);
-G(“sdesc”).textContent=ed.desc;
-G(“sfbtn”).textContent=“FIGHT!”;
+G(“sarc”).textContent=ed.arc;G(“srnd”).textContent=“ROUND “+(cr2+1)+” OF 30”;
+G(“semo”).innerHTML=ed.em;G(“sname”).textContent=ed.name+(ed.boss?” - BOSS”:””);
+G(“sdesc”).textContent=ed.desc;G(“sfbtn”).textContent=“FIGHT!”;
 G(“sfbtn”).onclick=function(){show(“sg”);resizeCanvas();setTimeout(startBattle,80);};
 show(“si”);
 }
@@ -1344,8 +1290,10 @@ G(“st”).addEventListener(“click”,showCharSel);
 G(“st”).addEventListener(“touchstart”,function(e){e.preventDefault();showCharSel();},{passive:false});
 
 resizeCanvas();
+
 })();
 </script>
 
 </body>
 </html>
+Sent from my iPad

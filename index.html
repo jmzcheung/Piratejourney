@@ -91,108 +91,105 @@ body{background:#000;font-family:"Press Start 2P","Courier New",Courier,monospac
 <script>
 // Preload font - works offline too via cache
 (function(){
- if(document.fonts&&document.fonts.load){
-   document.fonts.load('12px "Press Start 2P"').then(function(){
-     document.body.style.fontFamily='"Press Start 2P","Courier New",Courier,monospace';
-   });
- }
+  if(document.fonts&&document.fonts.load){
+    document.fonts.load('12px "Press Start 2P"').then(function(){
+      document.body.style.fontFamily='"Press Start 2P","Courier New",Courier,monospace';
+    });
+  }
 })();
 </script>
 </head>
 <body>
 <div id="st" class="screen on">
- <div style="font-size:clamp(7px,2.2vw,11px);color:#444;letter-spacing:7px;">GRAND LINE</div>
- <h1>ONE PIECE</h1>
- <h2>PIRATE KING'S JOURNEY</h2>
- <div style="font-size:clamp(4px,1.3vw,6.5px);color:#444;margin-top:2px;">30 ROUNDS - STORY MODE - 10 FIGHTERS</div>
- <div class="blink" style="margin-top:26px;">TAP TO BEGIN</div>
+  <div style="font-size:clamp(7px,2.2vw,11px);color:#444;letter-spacing:7px;">GRAND LINE</div>
+  <h1>ONE PIECE</h1>
+  <h2>PIRATE KING'S JOURNEY</h2>
+  <div style="font-size:clamp(4px,1.3vw,6.5px);color:#444;margin-top:2px;">30 ROUNDS - STORY MODE - 10 FIGHTERS</div>
+  <div class="blink" style="margin-top:26px;">TAP TO BEGIN</div>
 </div>
 <div id="sc" class="screen">
- <h2>CHOOSE YOUR FIGHTER</h2>
- <div style="font-size:clamp(4px,1.3vw,6px);color:#555;text-align:center;">EACH CHARACTER HAS UNIQUE DEVIL FRUIT ABILITIES</div>
- <div class="cgrid" id="cgrid"></div>
- <button class="sbtn" id="csbtn">SELECT A FIGHTER</button>
+  <h2>CHOOSE YOUR FIGHTER</h2>
+  <div style="font-size:clamp(4px,1.3vw,6px);color:#555;text-align:center;">EACH CHARACTER HAS UNIQUE DEVIL FRUIT ABILITIES</div>
+  <div class="cgrid" id="cgrid"></div>
+  <button class="sbtn" id="csbtn">SELECT A FIGHTER</button>
 </div>
 <div id="sh" class="screen">
- <h2>DOMINANT HAND?</h2>
- <div class="hrow">
-   <div class="hbtn" id="hL"><div class="hi">&#129120;</div>LEFT</div>
-   <div class="hbtn" id="hR"><div class="hi">&#129121;</div>RIGHT</div>
- </div>
+  <h2>DOMINANT HAND?</h2>
+  <div class="hrow">
+    <div class="hbtn" id="hL"><div class="hi">&#129120;</div>LEFT</div>
+    <div class="hbtn" id="hR"><div class="hi">&#129121;</div>RIGHT</div>
+  </div>
 </div>
 <div id="si" class="screen">
- <h3 id="sarc"></h3>
- <div class="elbl" id="srnd"></div>
- <div style="font-size:clamp(26px,8vw,48px);margin:6px 0;" id="semo"></div>
- <div class="ebig" id="sname"></div>
- <p class="edesc" id="sdesc"></p>
- <button class="sbtn rdy" id="sfbtn">FIGHT!</button>
+  <h3 id="sarc"></h3>
+  <div class="elbl" id="srnd"></div>
+  <div style="font-size:clamp(26px,8vw,48px);margin:6px 0;" id="semo"></div>
+  <div class="ebig" id="sname"></div>
+  <p class="edesc" id="sdesc"></p>
+  <button class="sbtn rdy" id="sfbtn">FIGHT!</button>
 </div>
 <div id="sg" class="screen">
- <div id="hud">
-   <div class="hs">
-     <div style="font-size:clamp(3.5px,1.1vw,5px);color:#4af;">YOU</div>
-     <div class="hn" id="p1n">LUFFY</div>
-     <div class="hpbg"><div class="hpb" id="p1h" style="width:100%"></div></div>
-     <div class="hsbg"><div class="hsb" id="p1s" style="width:0%"></div></div>
-   </div>
-   <div style="text-align:center;flex-shrink:0;"><div id="rnd">RD 1/30</div><div id="tmr">60</div></div>
-   <div class="hs" style="text-align:right;">
-     <div style="font-size:clamp(3.5px,1.1vw,5px);color:#f44;text-align:right;">ENEMY</div>
-     <div class="hn" style="text-align:right;" id="p2n">ENEMY</div>
-     <div class="hpbg"><div class="hpb" id="p2h" style="width:100%;"></div></div>
-     <div class="hsbg"><div class="hsb" id="p2s" style="width:0%;"></div></div>
-   </div>
- </div>
- <div id="cvw">
-   <canvas id="gc"></canvas>
-   <div id="ctxt"></div>
-   <div id="htxt"></div>
-   <div id="movl"><div id="mtxt"></div></div>
-   <div id="abilpop"><div class="apname" id="apn"></div><div class="apdesc" id="apd"></div></div>
- </div>
- <div id="tc">
-   <div id="lside" style="display:flex;align-items:flex-end;gap:5px;">
-     <div class="dp" id="dpd">
-       <div class="de"></div><div class="db" id="dU">&#9650;</div><div class="de"></div>
-       <div class="db" id="dL">&#9664;</div><div class="de"></div><div class="db" id="dR">&#9654;</div>
-       <div class="de"></div><div class="de"></div><div class="de"></div>
-     </div>
-   </div>
-   <div class="abs2" id="rside">
-     <div class="arow">
-       <div class="ab abq" data-a="q"><div class="ic">&#9889;</div><div class="lb" id="qlb">Q</div><div class="cdo" id="cd-q"></div></div>
-       <div class="ab abw" data-a="w"><div class="ic">&#128293;</div><div class="lb" id="wlb">W</div><div class="cdo" id="cd-w"></div></div>
-       <div class="ab abco" data-a="combo"><div class="ic">&#128165;</div><div class="lb">COMBO</div><div class="cdo" id="cd-combo"></div></div>
-       <div class="ab absu" data-a="super"><div class="ic">&#9889;</div><div class="lb">SUPER</div></div>
-     </div>
-     <div class="arow">
-       <div class="ab abp" data-a="punch"><div class="ic">&#128074;</div><div class="lb">PUNCH</div><div class="cdo" id="cd-punch"></div></div>
-       <div class="ab abk" data-a="kick"><div class="ic">&#129459;</div><div class="lb">KICK</div><div class="cdo" id="cd-kick"></div></div>
-       <div class="ab abs_" data-a="special"><div class="ic">&#10024;</div><div class="lb">SPEC</div><div class="cdo" id="cd-special"></div></div>
-       <div class="ab abj" data-a="jump"><div class="ic">&#11014;</div><div class="lb">JUMP</div></div>
-     </div>
-   </div>
- </div>
+  <div id="hud">
+    <div class="hs">
+      <div style="font-size:clamp(3.5px,1.1vw,5px);color:#4af;">YOU</div>
+      <div class="hn" id="p1n">LUFFY</div>
+      <div class="hpbg"><div class="hpb" id="p1h" style="width:100%"></div></div>
+      <div class="hsbg"><div class="hsb" id="p1s" style="width:0%"></div></div>
+    </div>
+    <div style="text-align:center;flex-shrink:0;"><div id="rnd">RD 1/30</div><div id="tmr">60</div></div>
+    <div class="hs" style="text-align:right;">
+      <div style="font-size:clamp(3.5px,1.1vw,5px);color:#f44;text-align:right;">ENEMY</div>
+      <div class="hn" style="text-align:right;" id="p2n">ENEMY</div>
+      <div class="hpbg"><div class="hpb" id="p2h" style="width:100%;"></div></div>
+      <div class="hsbg"><div class="hsb" id="p2s" style="width:0%;"></div></div>
+    </div>
+  </div>
+  <div id="cvw">
+    <canvas id="gc"></canvas>
+    <div id="ctxt"></div>
+    <div id="htxt"></div>
+    <div id="movl"><div id="mtxt"></div></div>
+    <div id="abilpop"><div class="apname" id="apn"></div><div class="apdesc" id="apd"></div></div>
+  </div>
+  <div id="tc">
+    <div id="lside" style="display:flex;align-items:flex-end;gap:5px;">
+      <div class="dp" id="dpd">
+        <div class="de"></div><div class="db" id="dU">&#9650;</div><div class="de"></div>
+        <div class="db" id="dL">&#9664;</div><div class="de"></div><div class="db" id="dR">&#9654;</div>
+        <div class="de"></div><div class="de"></div><div class="de"></div>
+      </div>
+    </div>
+    <div class="abs2" id="rside">
+      <div class="arow">
+        <div class="ab abq" data-a="q"><div class="ic">&#9889;</div><div class="lb" id="qlb">Q</div><div class="cdo" id="cd-q"></div></div>
+        <div class="ab abw" data-a="w"><div class="ic">&#128293;</div><div class="lb" id="wlb">W</div><div class="cdo" id="cd-w"></div></div>
+        <div class="ab abco" data-a="combo"><div class="ic">&#128165;</div><div class="lb">COMBO</div><div class="cdo" id="cd-combo"></div></div>
+        <div class="ab absu" data-a="super"><div class="ic">&#9889;</div><div class="lb">SUPER</div></div>
+      </div>
+      <div class="arow">
+        <div class="ab abp" data-a="punch"><div class="ic">&#128074;</div><div class="lb">PUNCH</div><div class="cdo" id="cd-punch"></div></div>
+        <div class="ab abk" data-a="kick"><div class="ic">&#129459;</div><div class="lb">KICK</div><div class="cdo" id="cd-kick"></div></div>
+        <div class="ab abs_" data-a="special"><div class="ic">&#10024;</div><div class="lb">SPEC</div><div class="cdo" id="cd-special"></div></div>
+        <div class="ab abj" data-a="jump"><div class="ic">&#11014;</div><div class="lb">JUMP</div></div>
+      </div>
+    </div>
+  </div>
 </div>
 <script>
 // Prevent iOS double-tap zoom globally
+// Prevent multi-touch zoom only
 document.addEventListener("touchstart",function(e){if(e.touches.length>1)e.preventDefault();},{passive:false});
-var lastTap=0;
-document.addEventListener("touchend",function(e){
- var now=Date.now();
- if(now-lastTap<400){e.preventDefault();}
- lastTap=now;
-},{passive:false});
-// Prevent pinch zoom
 document.addEventListener("gesturestart",function(e){e.preventDefault();},{passive:false});
-document.addEventListener("gesturechange",function(e){e.preventDefault();},{passive:false});
 
 document.addEventListener(“DOMContentLoaded”,function(){
 // UTILS
 function G(id){return document.getElementById(id);}
 function clamp(lo,hi,v){return Math.max(lo,Math.min(hi,v));}
-function show(scr){document.querySelectorAll(”.screen”).forEach(function(s){s.classList.remove(“on”);});G(scr).classList.add(“on”);resizeCanvas();}
+function show(scr){
+document.querySelectorAll(”.screen”).forEach(function(s){s.classList.remove(“on”);});
+var el=G(scr);if(el)el.classList.add(“on”);
+try{resizeCanvas();}catch(e){}
+}
 function rr(ctx,x,y,w,h,r){x=Math.floor(x);y=Math.floor(y);r=Math.max(0,Math.min(r,Math.abs(w)/2,Math.abs(h)/2));ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y,x+w,y+r,r);ctx.lineTo(x+w,y+h-r);ctx.arcTo(x+w,y+h,x+w-r,y+h,r);ctx.lineTo(x+r,y+h);ctx.arcTo(x,y+h,x,y+h-r,r);ctx.lineTo(x,y+r);ctx.arcTo(x,y,x+r,y,r);ctx.closePath();ctx.fill();}
 function bx(ctx,x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(Math.floor(x),Math.floor(y),Math.ceil(w),Math.ceil(h));}
 function cr(ctx,x,y,r,c){ctx.fillStyle=c;ctx.beginPath();ctx.arc(Math.floor(x),Math.floor(y),r,0,Math.PI*2);ctx.fill();}
@@ -1277,6 +1274,7 @@ G(“sname”).textContent=win?“YOU ARE PIRATE KING!”:“DEFEATED!”;
 G(“sdesc”).textContent=win?“You conquered all 30 rounds and became King of Pirates!”:“Train harder and challenge again!”;
 G(“sfbtn”).textContent=win?“PLAY AGAIN”:“TRY AGAIN”;
 G(“sfbtn”).onclick=function(){cr2=win?0:cr2;gs=“title”;PARTS=[];PROJS=[];show(“st”);};
+G(“sfbtn”).ontouchstart=function(e){e.preventDefault();cr2=win?0:cr2;gs=“title”;PARTS=[];PROJS=[];show(“st”);};
 show(“si”);
 }
 
@@ -1297,15 +1295,14 @@ card.classList.add(“sel”);pc=ch;
 G(“csbtn”).textContent=“FIGHT AS “+ch.name;G(“csbtn”).className=“sbtn rdy”;
 }
 card.addEventListener(“click”,selCard);
-card.addEventListener(“touchend”,function(e){if(e.cancelable)e.preventDefault();selCard();},{passive:false});
-card.addEventListener(“pointerup”,function(e){if(e.pointerType===“touch”)selCard();});
+card.addEventListener(“touchstart”,function(e){e.preventDefault();selCard();},{passive:false});
 grid.appendChild(card);
 });
 cr2=0;show(“sc”);
 }
 
 G(“csbtn”).addEventListener(“click”,function(){if(pc)show(“sh”);});
-G(“csbtn”).addEventListener(“touchend”,function(e){if(e.cancelable)e.preventDefault();if(pc)show(“sh”);},{passive:false});
+G(“csbtn”).addEventListener(“touchstart”,function(e){e.preventDefault();if(pc)show(“sh”);},{passive:false});
 G(“hL”).addEventListener(“click”,function(){setHand(“left”);});
 G(“hR”).addEventListener(“click”,function(){setHand(“right”);});
 G(“hL”).addEventListener(“touchstart”,function(e){e.preventDefault();setHand(“left”);},{passive:false});
@@ -1325,19 +1322,18 @@ G(“sarc”).textContent=ed.arc;G(“srnd”).textContent=“ROUND “+(cr2+1)+
 G(“semo”).innerHTML=ed.em;G(“sname”).textContent=ed.name+(ed.boss?” - BOSS”:””);
 G(“sdesc”).textContent=ed.desc;G(“sfbtn”).textContent=“FIGHT!”;
 G(“sfbtn”).onclick=function(){show(“sg”);resizeCanvas();setTimeout(startBattle,80);};
+G(“sfbtn”).ontouchstart=function(e){e.preventDefault();show(“sg”);resizeCanvas();setTimeout(startBattle,80);};
 show(“si”);
 }
 
-var stTapped=false;
-function tapTitle(e){
-if(e&&e.cancelable)e.preventDefault();
-if(stTapped)return;
-stTapped=true;
-try{showCharSel();}catch(err){stTapped=false;}
-}
-G(“st”).addEventListener(“click”,tapTitle);
-G(“st”).addEventListener(“touchend”,tapTitle,{passive:false});
-G(“st”).addEventListener(“pointerup”,function(e){if(e.pointerType===“touch”)tapTitle(e);});
+// Title screen - works on iOS Safari, Android, desktop
+G(“st”).addEventListener(“touchstart”,function(e){
+e.preventDefault();
+showCharSel();
+},{passive:false});
+G(“st”).addEventListener(“click”,function(){
+showCharSel();
+});
 
 resizeCanvas();
 

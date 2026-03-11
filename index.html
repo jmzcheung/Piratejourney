@@ -5,10 +5,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>ONE PIECE FIGHTER</title>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+</style>
+<style>
+html,body{height:100%;width:100%;}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;}
-body{background:#000;font-family:"Press Start 2P",monospace;overflow:hidden;width:100vw;height:100vh;}
+body{background:#000;font-family:"Press Start 2P","Courier New",Courier,monospace;overflow:hidden;width:100vw;height:100vh;}
 .screen{display:none;position:fixed;inset:0;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:14px;overflow-y:auto;}
 .screen.on{display:flex;}
 #st{background:radial-gradient(ellipse at 50% 40%,#0d1a3a,#020508);}
@@ -82,6 +85,16 @@ body{background:#000;font-family:"Press Start 2P",monospace;overflow:hidden;widt
 .abq{background:rgba(0,220,255,.35);border-color:#0df;}
 .abw{background:rgba(255,0,180,.38);border-color:#f0b;}
 </style>
+<script>
+// Preload font - works offline too via cache
+(function(){
+ if(document.fonts&&document.fonts.load){
+   document.fonts.load('12px "Press Start 2P"').then(function(){
+     document.body.style.fontFamily='"Press Start 2P","Courier New",Courier,monospace';
+   });
+ }
+})();
+</script>
 </head>
 <body>
 <div id="st" class="screen on">
